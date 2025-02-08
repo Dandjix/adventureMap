@@ -3,10 +3,14 @@ import mongoose from 'mongoose'
 
 import dotenv from 'dotenv'
 
+import { authRoutes } from './routes/authRoutes';
+
 dotenv.config()
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const app = express()
+app.use(express.json())
+
+
 
 mongoose
 .connect(process.env.MONGO_URI as string)
@@ -17,10 +21,9 @@ mongoose
     console.log(`mongodb could not be connected : ${e}`);
 })
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello, TypeScript with Express!');
-});
+app.use('/auth',authRoutes)
 
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
