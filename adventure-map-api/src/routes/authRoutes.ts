@@ -3,6 +3,8 @@ import User from '../models/User';
 import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';
 
+import jwt from 'jsonwebtoken'
+
 export const authRoutes = express.Router();
 
 authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => {
@@ -23,7 +25,13 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
             return 
         }
 
-        res.send('Logged in successfully');
+        const token = jwt.sign(
+            { id: user._id, username: user.username }, // Payload
+            process.env.JWT_SECRET || 'your_secret_key', // Secret key
+            { expiresIn: '1h' } // Expiration time
+        );
+
+        res.send({message:'Logged in successfully',token});
     } catch (err) {
         res.status(500).send('Error logging in');
     }

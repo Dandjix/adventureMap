@@ -2,8 +2,7 @@ import express, { Request, Response } from 'express';
 import mongoose from 'mongoose'
 
 import dotenv from 'dotenv'
-
-import { authRoutes } from './routes/authRoutes';
+import routes from './routes';
 
 dotenv.config()
 
@@ -21,7 +20,7 @@ mongoose
     console.log(`mongodb could not be connected : ${e}`);
 })
 
-app.use('/auth',authRoutes)
+app.use("/",routes)
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
