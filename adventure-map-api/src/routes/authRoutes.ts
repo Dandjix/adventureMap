@@ -30,7 +30,7 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
 
         res.setHeader("Authorization",`Bearer ${token}`)
 
-        res.send(`Logged in successfully. token : ${token}`);
+        res.send({message:`Logged in successfully.`,token});
     } catch (err) {
         res.status(500).send('Error logging in');
     }

@@ -1,19 +1,34 @@
 import logo from './logo.svg';
 import './App.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import IUser from './models/User';
 
 import Navbar from './components/navbar';
+import { getUserProfile } from './services/accountService';
 
 function App() {
   const [user,setUser] = useState<IUser|undefined>(undefined)
+  const [token,setToken] = useState<string>("")
+
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      if (token) {
+        const userProfile = await getUserProfile(token);
+        setUser(userProfile);
+      }
+    };
+    
+    fetchUserProfile();
+  }, [token]);
+
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <Navbar user={user}></Navbar>
+        <Navbar user={user} setToken={setToken}></Navbar>
         <p>
           Edit <code>src/App.js</code> and save to reload 3.
         </p>
