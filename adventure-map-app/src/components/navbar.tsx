@@ -1,7 +1,7 @@
 import { useState } from "react";
 import IUser from "../models/User";
 import LoginPopup from "./account/loginPopup";
-import Button from '@mui/material/Button';
+import { Button } from "@mui/material";
 
 const Navbar = ({user,setToken}:{user?: IUser,setToken:Function}) => {
     const [loginPopupOpen,setLoginPopupOpen] = useState(false)
