@@ -21,9 +21,14 @@ const Navbar = ({user,setToken}:{user?: IUser,setToken:Function}) => {
     <div>
         <LoginPopup isOpen={loginPopupOpen} onClose={()=>setLoginPopupOpen(false)} onLoginSuccess={onLoginSuccess}></LoginPopup>
         {user ? (
-            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={logout}>
-                Log Out
-            </button>
+            <div>
+                <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={logout}>
+                    Log Out
+                </button>
+                <h1>
+                    {user.username}
+                </h1>
+            </div>
         ) : (
             <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={
                 () => {
