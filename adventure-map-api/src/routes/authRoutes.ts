@@ -14,7 +14,7 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
     try {
         // Find the user by username
         const user = await User.findOne({ username });
-        if (!user) {
+        if (!user || user.account_type!="Password") {
             res.status(400).send('Invalid username or password');
             return 
         }
