@@ -11,17 +11,22 @@ const Navbar = ({user,setToken}:{user?: IUser,setToken:Function}) => {
         setToken(token)
     }
 
+    function logout()
+    {
+        console.log("setting token to null")
+        localStorage.removeItem("token")
+        setToken(null)
+    }
     return ( 
     <div>
         <LoginPopup isOpen={loginPopupOpen} onClose={()=>setLoginPopupOpen(false)} onLoginSuccess={onLoginSuccess}></LoginPopup>
         {user ? (
-            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={() => console.log("Logging out...")}>
+            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={logout}>
                 Log Out
             </button>
         ) : (
             <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={
                 () => {
-                    console.log("Logging in...")
                     setLoginPopupOpen(true)
                 }
             }>

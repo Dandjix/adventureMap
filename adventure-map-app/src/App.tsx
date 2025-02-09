@@ -10,13 +10,17 @@ import { getUserProfile } from './services/accountService';
 
 function App() {
   const [user,setUser] = useState<IUser|undefined>(undefined)
-  const [token,setToken] = useState<string>("")
+  const [token,setToken] = useState<string|null>(localStorage.getItem("token"))
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       if (token) {
         const userProfile = await getUserProfile(token);
         setUser(userProfile);
+      }
+      else
+      {
+        setUser(undefined);
       }
     };
     
