@@ -3,12 +3,14 @@ import mongoose from 'mongoose'
 
 import dotenv from 'dotenv'
 import routes from './routes';
+import passport from 'passport';
 
 dotenv.config()
 
 const app = express()
 app.use(express.json())
 
+app.use(passport.initialize());
 
 
 mongoose

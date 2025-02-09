@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';
 
 import jwt from 'jsonwebtoken'
+import jwtSign from '../plugins/jwtSign';
 
 export const authRoutes = express.Router();
 
@@ -25,13 +26,11 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
             return 
         }
 
-        const token = jwt.sign(
-            { id: user._id, username: user.username }, // Payload
-            process.env.JWT_SECRET || 'your_secret_key', // Secret key
-            { expiresIn: '1h' } // Expiration time
-        );
+        const token = jwtSign(user)
 
-        res.send({message:'Logged in successfully',token});
+        res.setHeader("Authorization",`Bearer ${token}`)
+
+        res.send(`Logged in successfully. token : ${token}`);
     } catch (err) {
         res.status(500).send('Error logging in');
     }
