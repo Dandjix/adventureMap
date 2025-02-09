@@ -1,6 +1,7 @@
 import { useState } from "react";
 import IUser from "../models/User";
 import LoginPopup from "./account/loginPopup";
+import Button from '@mui/material/Button';
 
 const Navbar = ({user,setToken}:{user?: IUser,setToken:Function}) => {
     const [loginPopupOpen,setLoginPopupOpen] = useState(false)
@@ -22,21 +23,21 @@ const Navbar = ({user,setToken}:{user?: IUser,setToken:Function}) => {
         <LoginPopup isOpen={loginPopupOpen} onClose={()=>setLoginPopupOpen(false)} onLoginSuccess={onLoginSuccess}></LoginPopup>
         {user ? (
             <div>
-                <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={logout}>
+                <Button className="bg-red-500 text-white px-4 py-2 rounded" onClick={logout}>
                     Log Out
-                </button>
+                </Button>
                 <h1>
                     {user.username}
                 </h1>
             </div>
         ) : (
-            <button className="bg-red-500 text-white px-4 py-2 rounded" onClick={
+            <Button className="bg-red-500 text-white px-4 py-2 rounded" onClick={
                 () => {
                     setLoginPopupOpen(true)
                 }
             }>
                 Log In
-            </button>
+            </Button>
         )}
     </div> 
     );
