@@ -4,7 +4,7 @@ import IUser from './models/User';
 
 import Navbar from './components/navbar';
 import { getUserProfile } from './services/accountService';
-import { BrowserRouter, Route, Routes} from "react-router";
+import { Route, Routes} from "react-router";
 
 import AccountPage from './pages/AccountPage';
 import HomePage from './pages/HomePage';
@@ -35,13 +35,11 @@ function App() {
       <header>
         <h1>there was the logo here</h1>
         <Navbar user={user} setToken={setToken}></Navbar>
-        <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<HomePage/>}></Route>
-            <Route path='/account' element={<AccountPage user={user}/>}></Route>
-            <Route path='/*' element={<NotFoundPage/>}></Route>
-          </Routes>
-        </BrowserRouter>
+        <Routes>
+          <Route path='/' element={<HomePage/>}></Route>
+          <Route path='/account' element={<AccountPage user={user}/>}></Route>
+          <Route path='/*' element={<NotFoundPage/>}></Route>
+        </Routes>
       </header>
     </div>
   );
