@@ -1,48 +1,65 @@
 import { useEffect, useState } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { NativeRouter, Route, Routes } from 'react-router-native';
 
 import IUser from './models/User';
-
-import Navbar from './components/navbar';
+import Navbar from './components/Navbar';
 import { getUserProfile } from './services/accountService';
-import { Route, Routes} from "react-router";
 
 import AccountPage from './pages/AccountPage';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
-  
+
 function App() {
-  const [user,setUser] = useState<IUser|undefined>(undefined)
-  const [token,setToken] = useState<string|null>(localStorage.getItem("token"))
+  const [user, setUser] = useState<IUser | undefined>(undefined);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
+    const fetchToken = async () => {
+      const storedToken = await AsyncStorage.getItem('token');
+      setToken(storedToken);
+    };
+
     const fetchUserProfile = async () => {
       if (token) {
         const userProfile = await getUserProfile(token);
         setUser(userProfile);
-      }
-      else
-      {
+      } else {
         setUser(undefined);
       }
     };
-    
+
+    fetchToken();
     fetchUserProfile();
   }, [token]);
 
-
   return (
-    <div>
-      <header>
-        <h1>there was the logo here</h1>
-        <Navbar user={user} setToken={setToken}></Navbar>
+    <NativeRouter>
+      <View style={styles.container}>
+        <Text style={styles.logo}>there was the logo here</Text>
+        <Navbar user={user} setToken={setToken} />
         <Routes>
-          <Route path='/' element={<HomePage/>}></Route>
-          <Route path='/account' element={<AccountPage user={user}/>}></Route>
-          <Route path='/*' element={<NotFoundPage/>}></Route>
+          <Route path='/' element={<HomePage />} />
+          <Route path='/account' element={<AccountPage user={user} />} />
+          <Route path='/*' element={<NotFoundPage />} />
         </Routes>
-      </header>
-    </div>
+      </View>
+    </NativeRouter>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  logo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+});
 
 export default App;
