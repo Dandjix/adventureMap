@@ -1,0 +1,26 @@
+{
+  "name": "adventureMapApp",
+  "version": "0.0.1",
+  "private": true,
+  "main": "index.web.tsx",
+  "react-native-web": {
+    "main": "index.web.js"
+  },
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "web": "expo start --web"
+  },
+  "dependencies": {
+    "@expo/metro-runtime": "~4.0.1",
+    "@types/react-dom": "^19.0.3",
+    "expo": "^52.0.31",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-native": "0.77.0",
+    "react-native-web": "^0.19.13"
+  },
+  "devDependencies": {
+    "@types/react": "~18.3.12",
+    "typescript": "^5.3.3"
+  }
+}
