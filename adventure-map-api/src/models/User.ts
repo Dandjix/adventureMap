@@ -3,10 +3,11 @@ import bcrypt from 'bcryptjs';
 
 // Define the User interface
 export interface IUser extends Document {
-  username: string;
-  email: string;
-  password: string | undefined;
-  account_type:'Password'|'Google';
+  username: string
+  email: string
+  password: string | undefined
+  account_type:'Password'|'Google'
+  role:'Player'|'Admin'|'GameMaker'
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -15,6 +16,7 @@ const userSchema = new Schema<IUser>({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   account_type:{type:String,enum:['Password','Google'],default:'Password'},
+  role:{type:String,enum:['Player','Admin','GameMaker'],default:'Player'},
   password: { type: String},
 });
 
