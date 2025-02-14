@@ -1,15 +1,17 @@
+import { BodyPart } from "./BodyPart";
 import { SidedBodyPart } from "./SidedBodyPart";
 
-export class Hand extends SidedBodyPart
+export class Hand extends BodyPart implements SidedBodyPart
 {
     natural_toughness: number
     size: number
-
+    side:"right"|"left"
     /**
      * a hand is kinda small, so 0.5.
      */
     constructor(side:"right"|"left",natural_toughness : number,size:number=0.5) {
-        super(side);
+        super()
+        this.side = side
         this.natural_toughness = natural_toughness
         this.size = size
     }

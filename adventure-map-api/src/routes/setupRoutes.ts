@@ -68,12 +68,20 @@ setupRoutes.post("/fight", async (req: Request, res: Response) :Promise<void> =>
     const alice = new Human("Alice",WorldDate.now(world),world,"female")
 
     const rings = []
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 11; i++) {
         rings.push(new Ring())
     }
 
     for (let i = 0; i < rings.length; i++) {
-        console.log(bob.equip(rings[i]))
+        bob.equip(rings[i])
+    }
+
+    for (let i = 0; i < 11; i++) {
+        console.log("ring : ");
+        
+        console.log(bob.unEquipAccessory("left hand",0))
+        console.log();
+        
     }
 
     // torso.equipArmor()

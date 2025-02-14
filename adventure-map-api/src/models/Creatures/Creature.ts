@@ -80,7 +80,7 @@ export abstract class Creature
     {
         if(!accessoryToEquip.species.includes(this.getSpeciesName()))
         {
-            console.log("wrong species");
+            // console.log("wrong species");
             
             return false
         }
@@ -89,14 +89,14 @@ export abstract class Creature
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
             
-            console.log(JSON.stringify(bodyPart));
-            console.log(bodyPart.getName());
+            // console.log(JSON.stringify(bodyPart));
+            // console.log(bodyPart.getName());
             
-            console.log(accessoryToEquip.bodyParts.includes(bodyPart.getName())
-            ,!bodyPart.isMissing()
-            ,!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()));
+            // console.log(accessoryToEquip.bodyParts.includes(bodyPart.getName())
+            // ,!bodyPart.isMissing()
+            // ,!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()));
             
-            console.log();
+            // console.log();
             
 
             if(
@@ -156,7 +156,7 @@ export abstract class Creature
             if(bodyPart.getName()==bodyPartToUnequip && bodyPart.accessories.length>index)
             {
                 const accessory = bodyPart.accessories[index]
-                bodyPart.accessories = bodyPart.accessories.splice(index,1)
+                bodyPart.accessories.splice(index,1)
                 return accessory
             }
         }
