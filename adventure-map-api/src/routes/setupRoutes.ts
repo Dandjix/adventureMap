@@ -8,8 +8,10 @@ import { authenticateUser } from '../middlewares/auth/authenticateUser';
 import { Human } from '../models/Creatures/Human';
 import { WorldDate } from '../models/util/WorldDate';
 import {World} from '../models/World/World';
-import Backpack from '../models/Creatures/Items/Backpack';
+import Backpack from '../models/Creatures/Items/Accessories/Backpack';
 import { Torso } from '../models/Creatures/BodyParts/Torso';
+import { Helmet } from '../models/Creatures/Items/Armor/Helmet';
+import { Ring } from '../models/Creatures/Items/Accessories/Ring';
 
 export const setupRoutes = express.Router();
 
@@ -62,12 +64,17 @@ setupRoutes.post("/fight", async (req: Request, res: Response) :Promise<void> =>
     )
 
 
-    const c1 = new Human("Bob",WorldDate.now(world),world,"Male")
-    const c2 = new Human("Alice",WorldDate.now(world),world,"Female")
+    const bob = new Human("Bob",WorldDate.now(world),world,"male")
+    const alice = new Human("Alice",WorldDate.now(world),world,"female")
 
-    const torso = c1.body_parts.find(v => v instanceof Torso)!
+    const rings = []
+    for (let i = 0; i < 11; i++) {
+        rings.push(new Ring())
+    }
 
-    const backback = new Backpack(10)
+    for (let i = 0; i < rings.length; i++) {
+        console.log(bob.equip(rings[i]))
+    }
 
     // torso.equipArmor()
     

@@ -18,7 +18,7 @@ export class Torso extends BodyPart
         return true
     }
     getName(): string {
-        return "Torso"
+        return "torso"
     }
 
     getCanEquipArmor(): boolean {

@@ -6,7 +6,7 @@ export class Leg extends SidedBodyPart
     natural_toughness: number
     size: number
 
-    constructor(side:"Right"|"Left",natural_toughness : number, size : number = 0.5) {
+    constructor(side:"right"|"left",natural_toughness : number, size : number = 0.5) {
         super(side);
         this.natural_toughness = natural_toughness
         this.size = size
@@ -16,7 +16,7 @@ export class Leg extends SidedBodyPart
         return false
     }
     getName(): string {
-        return this.side+" Leg"
+        return this.side+" leg"
     }
     getCanEquipArmor(): boolean {
         return true

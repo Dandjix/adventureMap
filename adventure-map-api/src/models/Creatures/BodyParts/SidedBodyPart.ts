@@ -2,9 +2,9 @@ import { BodyPart } from "./BodyPart";
 
 export abstract class SidedBodyPart extends BodyPart
 {
-    readonly side : "Right"|"Left"
+    readonly side : "right"|"left"
 
-    constructor(side: "Right"|"Left") {
+    constructor(side: "right"|"left") {
         super();
         this.side = side
     }

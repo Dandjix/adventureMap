@@ -8,7 +8,7 @@ export class Hand extends SidedBodyPart
     /**
      * a hand is kinda small, so 0.5.
      */
-    constructor(side:"Right"|"Left",natural_toughness : number,size:number=0.5) {
+    constructor(side:"right"|"left",natural_toughness : number,size:number=0.5) {
         super(side);
         this.natural_toughness = natural_toughness
         this.size = size
@@ -21,7 +21,7 @@ export class Hand extends SidedBodyPart
         return false
     }
     getName(): string {
-        return this.side+" Hand"
+        return this.side+" hand"
     }
     getCanEquipArmor(): boolean {
         return true

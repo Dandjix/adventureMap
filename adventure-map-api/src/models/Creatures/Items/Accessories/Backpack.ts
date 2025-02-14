@@ -1,9 +1,9 @@
-import { Torso } from "../BodyParts/Torso";
-import { Creature } from "../Creature";
-import { Human } from "../Human";
-import { Accessory } from "./Accessory/Accessory";
+import { Torso } from "../../BodyParts/Torso";
+import { Creature } from "../../Creature";
+import { Human } from "../../Human";
+import { Accessory } from "./Accessory";
 
-export default class Backpack extends Accessory<[Torso],[Human]>
+export default class Backpack extends Accessory
 {
     capacity : number
 
@@ -11,7 +11,7 @@ export default class Backpack extends Accessory<[Torso],[Human]>
         throw new Error("Method not implemented.");
     }
     getName(): string {
-        return "Backpack"
+        return "backpack"
     }
     getWeight(): number {
         return 10
@@ -20,7 +20,7 @@ export default class Backpack extends Accessory<[Torso],[Human]>
      *
      */
     constructor(capacity : number) {
-        super();
+        super(["torso"],["human"]);
         this.capacity = capacity
     }
 }

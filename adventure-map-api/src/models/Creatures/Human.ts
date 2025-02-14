@@ -6,34 +6,37 @@ import { Hand } from "./BodyParts/Hand";
 import { Head } from "./BodyParts/Head";
 import { Torso } from "./BodyParts/Torso";
 import { GenderedCreature } from "./GenderedCreature";
-import { Accessory } from "./Items/Accessory/Accessory";
-import { ArmorPiece } from "./Items/ArmorPiece";
+import { Accessory } from "./Items/Accessories/Accessory";
+import { ArmorPiece } from "./Items/Armor/ArmorPiece";
 import { Item } from "./Items/Item";
 import { Weapon } from "./Items/Weapon";
 
 export class Human extends Adventurer implements GenderedCreature
 {
+    getSpeciesName(): string {
+        return "human"
+    }
     stowedItems: Item[];
 
-    natural_attractiveness: number;
-    natural_speed: number;
-    natural_health: number;
-    natural_berserk: number;
-    natural_strength: number;
-    body_parts: BodyPart[];
+    naturalAttractiveness: number;
+    naturalSpeed: number;
+    naturalHealth: number;
+    naturalBerserk: number;
+    naturalStrength: number;
+    bodyParts: BodyPart[];
     /**
      *
      */
-    constructor(creature_name : string, date_of_birth : WorldDate, world : World,gender:"Male"|"Female",sexual_orientation:"Heterosexual" | "Homosexual" | "Bisexual" | "Asexual" = "Heterosexual") {
+    constructor(creature_name : string, date_of_birth : WorldDate, world : World,gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
         super(creature_name,date_of_birth,world);
-        this.natural_speed = 100
-        this.natural_health = 100
-        this.natural_berserk = 0.5
-        this.natural_strength = 100
-        this.natural_attractiveness = 0
-        this.body_parts = [
-            new Hand("Left",0.75),
-            new Hand("Right",0.75),
+        this.naturalSpeed = 100
+        this.naturalHealth = 100
+        this.naturalBerserk = 0.5
+        this.naturalStrength = 100
+        this.naturalAttractiveness = 0
+        this.bodyParts = [
+            new Hand("left",0.75),
+            new Hand("right",0.75),
             new Torso(1),
             new Head(0.66)
         ]
@@ -42,6 +45,6 @@ export class Human extends Adventurer implements GenderedCreature
         this.gender = gender
         this.sexual_orientation = sexual_orientation
     }
-    gender: "Male" | "Female";
-    sexual_orientation: "Heterosexual" | "Homosexual" | "Bisexual" | "Asexual";
+    gender: "male" | "female";
+    sexual_orientation: "heterosexual" | "homosexual" | "bisexual" | "asexual";
 }
