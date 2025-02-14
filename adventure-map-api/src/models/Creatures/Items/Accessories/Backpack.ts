@@ -1,6 +1,6 @@
 import { Torso } from "../../BodyParts/Torso";
 import { Creature } from "../../Creature";
-import { Human } from "../../Human";
+import { Human } from "../../Species/Human";
 import { Accessory } from "./Accessory";
 
 export default class Backpack extends Accessory

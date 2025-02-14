@@ -17,7 +17,11 @@ export class Ring extends Accessory
      *
      */
     constructor() {
-        super(["left hand","right hand","#index hand"],["human","abomination"]);
+        super(["left hand",
+            "right hand",
+            
+            "#index left hand",
+            "#index right hand"],["human","abomination"]);
     }
     
 }

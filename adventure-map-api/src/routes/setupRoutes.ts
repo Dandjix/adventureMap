@@ -5,13 +5,14 @@ import express, { Request, Response } from 'express';
 
 import jwt from 'jsonwebtoken'
 import { authenticateUser } from '../middlewares/auth/authenticateUser';
-import { Human } from '../models/Creatures/Human';
+import { Human } from '../models/Creatures/Species/Human';
 import { WorldDate } from '../models/util/WorldDate';
 import {World} from '../models/World/World';
 import Backpack from '../models/Creatures/Items/Accessories/Backpack';
 import { Torso } from '../models/Creatures/BodyParts/Torso';
 import { Helmet } from '../models/Creatures/Items/Armor/Helmet';
 import { Ring } from '../models/Creatures/Items/Accessories/Ring';
+import { Abomination } from '../models/Creatures/Species/Abomination';
 
 export const setupRoutes = express.Router();
 
@@ -64,7 +65,7 @@ setupRoutes.post("/fight", async (req: Request, res: Response) :Promise<void> =>
     )
 
 
-    const bob = new Human("Bob",WorldDate.now(world),world,"male")
+    const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
     const alice = new Human("Alice",WorldDate.now(world),world,"female")
 
     const rings = []

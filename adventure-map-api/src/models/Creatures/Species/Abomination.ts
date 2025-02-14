@@ -1,17 +1,16 @@
-import { WorldDate } from "../util/WorldDate";
-import { World } from "../World/World";
-import { Adventurer } from "./Adventurer";
-import { BodyPart } from "./BodyParts/BodyPart";
-import { Hand } from "./BodyParts/Hand";
-import { Head } from "./BodyParts/Head";
-import { Torso } from "./BodyParts/Torso";
-import { GenderedCreature } from "./GenderedCreature";
-import { Accessory } from "./Items/Accessories/Accessory";
-import { ArmorPiece } from "./Items/Armor/ArmorPiece";
-import { Item } from "./Items/Item";
-import { Weapon } from "./Items/Weapon";
+import { WorldDate } from "../../util/WorldDate";
+import { World } from "../../World/World";
+import { Adventurer } from "../Adventurer";
+import { BodyPart } from "../BodyParts/BodyPart";
+import { Hand } from "../BodyParts/Hand";
+import { Head } from "../BodyParts/Head";
+import { NumerousHand } from "../BodyParts/NumerousHand";
+import { Torso } from "../BodyParts/Torso";
+import { Creature } from "../Creature";
+import { GenderedCreature } from "../GenderedCreature";
+import { Item } from "../Items/Item";
 
-export class Human extends Adventurer implements GenderedCreature
+export class Abomination extends Creature implements GenderedCreature
 {
     getSpeciesName(): string {
         return "human"
@@ -34,12 +33,18 @@ export class Human extends Adventurer implements GenderedCreature
         this.naturalBerserk = 0.5
         this.naturalStrength = 100
         this.naturalAttractiveness = 0
+
         this.bodyParts = [
-            new Hand("left",0.75),
-            new Hand("right",0.75),
             new Torso(1),
             new Head(0.66)
         ]
+
+        for (let i = 0; i < 10; i++) {
+            this.bodyParts.push(new NumerousHand("right",0.25,i))
+            this.bodyParts.push(new NumerousHand("left",0.25,i))
+        }
+
+
         this.stowedItems = []
 
         this.gender = gender

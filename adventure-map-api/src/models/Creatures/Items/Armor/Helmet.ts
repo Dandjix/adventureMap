@@ -1,7 +1,7 @@
 import { BodyPart } from "../../BodyParts/BodyPart";
 import { Head } from "../../BodyParts/Head";
 import { Creature } from "../../Creature";
-import { Human } from "../../Human";
+import { Human } from "../../Species/Human";
 import { ArmorPiece } from "./ArmorPiece";
 
 export class Helmet extends ArmorPiece {
