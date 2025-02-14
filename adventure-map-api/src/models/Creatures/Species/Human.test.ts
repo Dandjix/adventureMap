@@ -19,7 +19,7 @@ test("one backpack equipped, no other can be equipped", () => {
   expect(bob.equip(backpack2)).toBe(false)
 });
 
-test("ring equip tests", () => {
+test("ring equip test", () => {
   const world = new World(
     "Tropica",
     new Date()
