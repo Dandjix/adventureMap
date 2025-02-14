@@ -80,12 +80,24 @@ export abstract class Creature
     {
         if(!accessoryToEquip.species.includes(this.getSpeciesName()))
         {
+            console.log("wrong species");
+            
             return false
         }
 
 
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
+            
+            console.log(JSON.stringify(bodyPart));
+            console.log(bodyPart.getName());
+            
+            console.log(accessoryToEquip.bodyParts.includes(bodyPart.getName())
+            ,!bodyPart.isMissing()
+            ,!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()));
+            
+            console.log();
+            
 
             if(
                 accessoryToEquip.bodyParts.includes(bodyPart.getName())

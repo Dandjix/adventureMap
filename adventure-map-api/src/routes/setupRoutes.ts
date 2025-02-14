@@ -68,7 +68,7 @@ setupRoutes.post("/fight", async (req: Request, res: Response) :Promise<void> =>
     const alice = new Human("Alice",WorldDate.now(world),world,"female")
 
     const rings = []
-    for (let i = 0; i < 11; i++) {
+    for (let i = 0; i < 1; i++) {
         rings.push(new Ring())
     }
 
