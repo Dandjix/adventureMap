@@ -5,6 +5,11 @@ import express, { Request, Response } from 'express';
 
 import jwt from 'jsonwebtoken'
 import { authenticateUser } from '../middlewares/auth/authenticateUser';
+import { Human } from '../models/Creatures/Human';
+import { WorldDate } from '../models/util/WorldDate';
+import {World} from '../models/World/World';
+import Backpack from '../models/Creatures/Items/Backpack';
+import { Torso } from '../models/Creatures/BodyParts/Torso';
 
 export const setupRoutes = express.Router();
 
@@ -48,4 +53,23 @@ setupRoutes.patch('/makeAdmin', async (req: Request, res: Response) :Promise<voi
     } catch (err) {
         res.status(500).send(`Error making user admin : ${err}`);
     }
+})
+
+setupRoutes.post("/fight", async (req: Request, res: Response) :Promise<void> => {
+    const world = new World(
+        "Tropica",
+        new Date()
+    )
+
+
+    const c1 = new Human("Bob",WorldDate.now(world),world,"Male")
+    const c2 = new Human("Alice",WorldDate.now(world),world,"Female")
+
+    const torso = c1.body_parts.find(v => v instanceof Torso)!
+
+    const backback = new Backpack(10)
+
+    // torso.equipArmor()
+    
+    res.status(200).json(world)
 })

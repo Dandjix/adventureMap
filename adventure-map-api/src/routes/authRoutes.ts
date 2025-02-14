@@ -4,7 +4,7 @@ import bcrypt from 'bcryptjs';
 import express, { Request, Response } from 'express';
 
 import jwt from 'jsonwebtoken'
-import jwtSign from '../plugins/jwtSign';
+import jwtSign from '../util/jwtSign';
 
 export const authRoutes = express.Router();
 
