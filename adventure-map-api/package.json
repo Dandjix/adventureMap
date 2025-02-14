@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test": "jest"
   },
   "author": "Timon Dubreuil",
   "license": "ISC",
@@ -28,10 +29,13 @@
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jest": "^29.5.14",
     "@types/jsonwebtoken": "^9.0.8",
     "@types/mongoose": "^5.11.97",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.16",
-    "@types/passport-local": "^1.0.38"
+    "@types/passport-local": "^1.0.38",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5"
   }
 }

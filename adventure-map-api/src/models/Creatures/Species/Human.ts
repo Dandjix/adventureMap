@@ -6,10 +6,11 @@ import { Hand } from "../BodyParts/Hand";
 import { Head } from "../BodyParts/Head";
 import { Leg } from "../BodyParts/Leg";
 import { Torso } from "../BodyParts/Torso";
+import { Creature } from "../Creature";
 import { GenderedCreature } from "../GenderedCreature";
 import { Item } from "../Items/Item";
 
-export class Human extends Adventurer implements GenderedCreature
+export class Human extends Creature implements GenderedCreature, Adventurer
 {
     getSpeciesName(): string {
         return "human"

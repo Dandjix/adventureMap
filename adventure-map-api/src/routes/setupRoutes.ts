@@ -57,35 +57,3 @@ setupRoutes.patch('/makeAdmin', async (req: Request, res: Response) :Promise<voi
         res.status(500).send(`Error making user admin : ${err}`);
     }
 })
-
-setupRoutes.post("/fight", async (req: Request, res: Response) :Promise<void> => {
-    const world = new World(
-        "Tropica",
-        new Date()
-    )
-
-
-    const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
-    const alice = new Human("Alice",WorldDate.now(world),world,"female")
-
-    const rings = []
-    for (let i = 0; i < 11; i++) {
-        rings.push(new Ring())
-    }
-
-    for (let i = 0; i < rings.length; i++) {
-        bob.equip(rings[i])
-    }
-
-    for (let i = 0; i < 11; i++) {
-        console.log("ring : ");
-        
-        console.log(bob.unEquipAccessory("left hand",0))
-        console.log();
-        
-    }
-
-    // torso.equipArmor()
-    
-    res.status(200).json(world)
-})
