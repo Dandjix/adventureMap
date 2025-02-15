@@ -2,28 +2,54 @@ import { WorldDate } from "../../util/WorldDate";
 import { World } from "../../World/World";
 import Backpack from "../Items/Accessories/Backpack";
 import { Ring } from "../Items/Accessories/Ring";
-
-
-import { Adventurer } from "../Adventurer";
-import { BodyPart } from "../BodyParts/BodyPart";
-import { Hand } from "../BodyParts/Hand";
-import { Head } from "../BodyParts/Head";
-import { NumerousHand } from "../BodyParts/NumerousHand";
-import { Torso } from "../BodyParts/Torso";
-import { Creature } from "../Creature";
-import { GenderedCreature } from "../GenderedCreature";
-import { Item } from "../Items/Item";
-import { Abomination } from "./Abomination";
+import { Abomination } from "../Species/Abomination";
+import { Human } from "../Species/Human";
 
 let world : World
-beforeAll(()=>{
-    world = new World(
-        "Tropica",
-        new Date()
-      )
+
+beforeAll(()=>
+{
+  world = new World(
+    "Tropica",
+    new Date()
+)
 })
 
-test("ring equip test", () => {
+test("human one backpack equipped, no other can be equipped", () => {
+
+
+
+  const bob = new Human("Bob",WorldDate.now(world),world,"male")
+  const backpack1 = new Backpack(10)
+  const backpack2 = new Backpack(10)
+
+  expect(bob.equip(backpack1)).toBe(true)
+  expect(bob.equip(backpack2)).toBe(false)
+});
+
+test("human ring equip test", () => {
+  const bob = new Human("Bob",WorldDate.now(world),world,"male")
+
+  const rings = []
+  for (let i = 0; i < 11; i++) {
+    rings.push(new Ring())
+  }
+
+  for (let i = 0; i < rings.length; i++) {
+    // console.log("equipping ",i," ring");
+    
+    expect(bob.equip(rings[i])).toBe(i<10)//the first ten are ok, the eleventh is false
+  }
+
+  for (let i = 0; i < 5; i++) {    
+    expect(bob.unEquipAccessory("left hand",0)).toBeDefined()
+  }
+  expect(bob.unEquipAccessory("left hand",0)).toBeUndefined()
+});
+
+//abomination --
+
+test("abomination ring equip test", () => {
 
   const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
 
@@ -47,7 +73,7 @@ test("ring equip test", () => {
   expect(bob.equipAccessory(new Ring(),`#0 left hand`)).toBe(false)
 });
 
-test("ring unequip test", () => {
+test("abomination unequip test", () => {
 
   const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
 
