@@ -4,6 +4,7 @@ import Backpack from "../Items/Accessories/Backpack";
 import { Ring } from "../Items/Accessories/Ring";
 import { Abomination } from "../Species/Abomination";
 import { Human } from "../Species/Human";
+import { NumerousHand } from "./NumerousHand";
 
 let world : World
 
@@ -94,3 +95,18 @@ test("abomination unequip test", () => {
   }
   expect(bob.unEquipAccessory(`#3 left hand`,0)).toBeUndefined()
 });
+
+test("ring equipped on correct hand",()=>{
+  const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
+
+  expect(bob.equipAccessory(new Ring(),`#3 left hand`)).toBe(true)
+
+  for (let i = 0; i < bob.bodyParts.length; i++) {
+    const part = bob.bodyParts[i]
+
+    if(part.getName()=="4th left hand")
+    {
+      expect(part.accessories.length).toBe(1)
+    }
+  }
+})

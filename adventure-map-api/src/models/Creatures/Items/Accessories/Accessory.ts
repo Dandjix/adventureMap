@@ -1,4 +1,4 @@
-import { BodyPart } from "../../BodyParts/BodyPart";
+import { BodyPart, validateBodyPartOptions } from "../../BodyParts/BodyPart";
 import { Creature } from "../../Creature";
 import { Item } from "../Item";
 
@@ -11,6 +11,11 @@ export abstract class Accessory extends Item
      *
      */
     constructor(bodyParts : string[],creatures : string[]) {
+        if(!validateBodyPartOptions(bodyParts))
+        {
+            throw new Error("the body part options for that armor piece are incorrect")
+        }
+
         super();
         this.bodyParts = bodyParts
         this.species = creatures

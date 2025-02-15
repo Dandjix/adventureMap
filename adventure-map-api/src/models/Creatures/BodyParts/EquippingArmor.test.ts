@@ -29,7 +29,7 @@ test("equipping armor",()=>
     expect(bob.unEquipArmor("head")).toBeUndefined()
 })
 
-test("equipping sided armor",()=>{
+test("equipping sided armor (gauntlets)",()=>{
     const bob = new Human("bob",new WorldDate(0,world),world,"male")
 
     const g1 = new Gauntlet("left")

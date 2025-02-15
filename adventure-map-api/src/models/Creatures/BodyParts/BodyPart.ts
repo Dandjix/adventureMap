@@ -1,7 +1,7 @@
 import { clamp } from "../../../util/clamp"
 import { Accessory } from "../Items/Accessories/Accessory"
 import { ArmorPiece } from "../Items/Armor/ArmorPiece"
-import { getQualificator } from "./NumerousBodyPart"
+import { getIndex, getQualificator } from "./NumerousBodyPart"
 
 export abstract class BodyPart
 {
@@ -64,8 +64,16 @@ export abstract class BodyPart
  */
 export function bodyPartIncludes(bodyParts : string[],bodyPartName : string)
 {
+
+    // const qualificators = bodyPartName.match(/\b[0-9]{1,}[a-z]{2,2}\b/g)
+    // qualificators && qualificators.forEach(qualificator =>{
+    //     const index = getIndex(qualificator)
+    // })
     let matcherBodyPartName = bodyPartName.replace(/\b[0-9]{1,}[a-z]{2,2}\b/g,"#index")
-    matcherBodyPartName = matcherBodyPartName.replace(/\bleft|right\b/g,"#side")
+    const {anySide} = getSidedNess(bodyParts)
+    
+    if(anySide)
+        matcherBodyPartName = matcherBodyPartName.replace(/\bleft|right\b/g,"#side")
 
     // console.log(
     //     "bodyParts : ",
@@ -104,4 +112,35 @@ export function nameMatches(realBodyPartName : string, matcher : string)
     // console.log("matcher : ",matcher,"real : ",realBodyPartName);
     
     return matcher == realBodyPartName
+}
+/**
+ * some options are not allowed. Namely : 
+ * ["right hand","#side hand"]
+ * does not work : you either accept either right or left interchangeably with #side (a ring for instance does not care if it is put on a right or left hand),
+ * or ["right hand"] for an item that can only be put on a right hand
+ * or ["right hand","left hand"] for an item that is sided and can only be put on the right or left side depending on its own sidedness 
+ * @param bodyParts the body part options to evaluate
+ * @returns whether the list is valid
+ */
+export function validateBodyPartOptions(bodyParts:string[])
+{
+    const {anySide,specificSide} = getSidedNess(bodyParts)
+    return !(anySide && specificSide)
+}
+
+export function getSidedNess(bodyParts:string[])
+{
+    let anySide = false
+    let specificSide = false
+    for (let i = 0; i < bodyParts.length; i++) {
+        const bp = bodyParts[i];
+        if(bp.includes("left") || bp.includes("right"))
+            specificSide = true
+        else if(bp.includes("#side"))
+            anySide = true
+
+        if(specificSide && anySide)
+            return {anySide:true,specificSide:true}
+    }
+    return {anySide:anySide,specificSide:specificSide}
 }
