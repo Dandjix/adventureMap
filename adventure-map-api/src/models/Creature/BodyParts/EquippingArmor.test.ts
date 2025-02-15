@@ -16,7 +16,7 @@ beforeAll(()=>
 
 test("equipping armor",()=>
 {
-    const bob = new Human("bob",new WorldDate(0,world),world,"male")
+    const bob = new Human("bob",new WorldDate(0,world),"male")
 
     const helmet1 = new Helmet(world.materialIndex.materials["gold"])
     const helmet2 = new Helmet(world.materialIndex.materials["steel"])
@@ -30,7 +30,7 @@ test("equipping armor",()=>
 })
 
 test("equipping sided armor (gauntlets)",()=>{
-    const bob = new Human("bob",new WorldDate(0,world),world,"male")
+    const bob = new Human("bob",new WorldDate(0,world),"male")
 
     const g1 = new Gauntlet(world.materialIndex.materials["steel"],"left")
     const g2 = new Gauntlet(world.materialIndex.materials["steel"],"left")

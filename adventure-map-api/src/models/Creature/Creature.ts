@@ -41,10 +41,9 @@ export abstract class Creature
      */
     abstract getSpeciesName() : string
 
-    constructor(creature_name : string, date_of_birth :WorldDate, world : World) {
+    constructor(creature_name : string, date_of_birth :WorldDate) {
         this.creatureName = creature_name
         this.dateOfBirth = date_of_birth
-        world.creatures.push(this)
     }
 
     public equip(item : ArmorPiece|Accessory): boolean

@@ -19,7 +19,7 @@ test("human one backpack equipped, no other can be equipped", () => {
 
 
 
-  const bob = new Human("Bob",WorldDate.now(world),world,"male")
+  const bob = new Human("Bob",WorldDate.now(world),"male")
   const backpack1 = new Backpack(world.materialIndex.materials["cow leather"],10)
   const backpack2 = new Backpack(world.materialIndex.materials["cow leather"],10)
 
@@ -28,7 +28,7 @@ test("human one backpack equipped, no other can be equipped", () => {
 });
 
 test("human ring equip test", () => {
-  const bob = new Human("Bob",WorldDate.now(world),world,"male")
+  const bob = new Human("Bob",WorldDate.now(world),"male")
 
   const rings = []
   for (let i = 0; i < 11; i++) {
@@ -51,7 +51,7 @@ test("human ring equip test", () => {
 
 test("abomination ring equip test", () => {
 
-  const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
+  const bob = new Abomination("Bob",WorldDate.now(world),"male")
 
   let numberOfLeftHands = 0
   bob.bodyParts.forEach((bodyPart)=>{
@@ -75,7 +75,7 @@ test("abomination ring equip test", () => {
 
 test("abomination unequip test", () => {
 
-  const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
+  const bob = new Abomination("Bob",WorldDate.now(world),"male")
 
   const rings = []
   for (let i = 0; i < 5; i++) {
@@ -96,7 +96,7 @@ test("abomination unequip test", () => {
 });
 
 test("ring equipped on correct hand",()=>{
-  const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
+  const bob = new Abomination("Bob",WorldDate.now(world),"male")
 
   expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(true)
 

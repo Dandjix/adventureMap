@@ -26,8 +26,8 @@ export class Human extends Creature implements GenderedCreature, Adventurer
     /**
      *
      */
-    constructor(creature_name : string, date_of_birth : WorldDate, world : World,gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
-        super(creature_name,date_of_birth,world);
+    constructor(creature_name : string, date_of_birth : WorldDate, gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
+        super(creature_name,date_of_birth);
         this.naturalSpeed = 100
         this.naturalHealth = 100
         this.naturalBerserk = 0.5
