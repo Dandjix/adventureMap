@@ -1,4 +1,4 @@
-import { BodyPart, validateBodyPartOptions } from "../../BodyParts/BodyPart";
+import BodyPart from "../../BodyParts/BodyPart";
 import { Creature } from "../../Creature";
 import { Item } from "../Item";
 import { Material } from "../Materials/Material";
@@ -11,7 +11,7 @@ export abstract class ArmorPiece extends Item {
         if (bodyParts.length === 0 || creatures.length === 0) {
             throw new Error("Body parts and creatures arrays cannot be empty");
         }
-        if(!validateBodyPartOptions(bodyParts))
+        if(!BodyPart.validateBodyPartOptions(bodyParts))
         {
             throw new Error("the body part options for that armor piece are incorrect")
         }

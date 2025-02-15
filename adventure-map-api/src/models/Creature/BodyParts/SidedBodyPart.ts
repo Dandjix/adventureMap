@@ -1,6 +1,6 @@
-import { BodyPart } from "./BodyPart";
+import BodyPart from "./BodyPart";
 
-export interface SidedBodyPart extends BodyPart
+export default interface SidedBodyPart extends BodyPart
 {
     readonly side : "right"|"left"
 }

@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 
 import { WorldDate } from '../util/WorldDate';
-import { BodyPart, bodyPartIncludes, nameMatches } from './BodyParts/BodyPart';
+import BodyPart from './BodyParts/BodyPart';
 import { Item } from './Items/Item';
 import { Weapon } from './Items/Weapon';
 import { ArmorPiece } from './Items/Armor/ArmorPiece';
@@ -65,7 +65,7 @@ export abstract class Creature
             const bodyPart = this.bodyParts[i];
 
             if(
-                bodyPartIncludes(armorPieceToEquip.bodyParts,bodyPart.getName()) 
+                BodyPart.bodyPartIncludes(armorPieceToEquip.bodyParts,bodyPart.getName()) 
                 &&!bodyPart.isMissing()
                 &&!bodyPart.armorPiece)
             {
@@ -103,7 +103,7 @@ export abstract class Creature
             
 
             if(
-                bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
+                BodyPart.bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
                 &&!bodyPart.isMissing()
                 &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
             {
@@ -148,7 +148,7 @@ export abstract class Creature
             
             if(
                 bodyPartName == bodyPart.getName()
-                && bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
+                && BodyPart.bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
                 &&!bodyPart.isMissing()
                 &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
             {
@@ -178,7 +178,7 @@ export abstract class Creature
     {
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
-            if(nameMatches(bodyPart.getName(),bodyPartToUnequip) && bodyPart.accessories.length>index)
+            if(BodyPart.nameMatches(bodyPart.getName(),bodyPartToUnequip) && bodyPart.accessories.length>index)
             {
                 const accessory = bodyPart.accessories[index]
                 bodyPart.accessories.splice(index,1)

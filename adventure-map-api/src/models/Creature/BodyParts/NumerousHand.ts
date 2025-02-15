@@ -1,8 +1,8 @@
-import { BodyPart } from "./BodyPart";
-import { getQualificator, NumerousBodyPart } from "./NumerousBodyPart";
-import { SidedBodyPart } from "./SidedBodyPart";
+import BodyPart from "./BodyPart";
+import NumerousBodyPart, { getQualificator } from "./NumerousBodyPart";
+import SidedBodyPart from "./SidedBodyPart";
 
-export class NumerousHand extends BodyPart implements SidedBodyPart, NumerousBodyPart
+export default class NumerousHand extends BodyPart implements SidedBodyPart, NumerousBodyPart
 {
     getName(): string {
         return `${getQualificator(this.index)} ${this.side} hand`

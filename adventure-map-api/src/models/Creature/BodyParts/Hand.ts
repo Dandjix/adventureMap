@@ -1,5 +1,5 @@
-import { BodyPart } from "./BodyPart";
-import { SidedBodyPart } from "./SidedBodyPart";
+import BodyPart from "./BodyPart";
+import SidedBodyPart from "./SidedBodyPart";
 
 export class Hand extends BodyPart implements SidedBodyPart
 {

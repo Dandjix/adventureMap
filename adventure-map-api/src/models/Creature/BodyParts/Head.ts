@@ -1,4 +1,4 @@
-import { BodyPart } from "./BodyPart";
+import BodyPart from "./BodyPart";
 
 export class Head extends BodyPart
 {
