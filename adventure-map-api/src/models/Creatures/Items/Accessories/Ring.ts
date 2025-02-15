@@ -1,4 +1,5 @@
 import { Creature } from "../../Creature";
+import { Material } from "../Materials/Material";
 import { Accessory } from "./Accessory";
 
 export class Ring extends Accessory
@@ -7,7 +8,7 @@ export class Ring extends Accessory
         return
     }
     getName(): string {
-        return `${this.materialName} ring`
+        return `${this.material.name} ring`
     }
     getWeightMultiplier(): number {
         return 0.05
@@ -16,8 +17,8 @@ export class Ring extends Accessory
     /**
      *
      */
-    constructor(materialName : string) {
-        super(materialName,["#side hand","#index #side hand"],["human","abomination"]);
+    constructor(material : Material) {
+        super(material,["#side hand","#index #side hand"],["human","abomination"]);
     }
     
 }

@@ -20,8 +20,8 @@ test("human one backpack equipped, no other can be equipped", () => {
 
 
   const bob = new Human("Bob",WorldDate.now(world),world,"male")
-  const backpack1 = new Backpack("cow leather",10)
-  const backpack2 = new Backpack("cow leather",10)
+  const backpack1 = new Backpack(world.materialIndex.materials["cow leather"],10)
+  const backpack2 = new Backpack(world.materialIndex.materials["cow leather"],10)
 
   expect(bob.equip(backpack1)).toBe(true)
   expect(bob.equip(backpack2)).toBe(false)
@@ -32,7 +32,7 @@ test("human ring equip test", () => {
 
   const rings = []
   for (let i = 0; i < 11; i++) {
-    rings.push(new Ring("gold"))
+    rings.push(new Ring(world.materialIndex.materials["gold"]))
   }
 
   for (let i = 0; i < rings.length; i++) {
@@ -61,7 +61,7 @@ test("abomination ring equip test", () => {
 
   const rings = []
   for (let i = 0; i < numberOfLeftHands*5+1; i++) {
-      rings.push(new Ring("gold"))
+      rings.push(new Ring(world.materialIndex.materials["gold"]))
   }
 
   for (let i = 0; i < numberOfLeftHands; i++) {
@@ -70,7 +70,7 @@ test("abomination ring equip test", () => {
       expect(bob.equipAccessory(ring,`#${i} left hand`)).toBe(true)
     }
   }
-  expect(bob.equipAccessory(new Ring("gold"),`#0 left hand`)).toBe(false)
+  expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#0 left hand`)).toBe(false)
 });
 
 test("abomination unequip test", () => {
@@ -79,14 +79,14 @@ test("abomination unequip test", () => {
 
   const rings = []
   for (let i = 0; i < 5; i++) {
-      rings.push(new Ring("gold"))
+      rings.push(new Ring(world.materialIndex.materials["gold"]))
   }
 
   for (let i = 0; i < 5; i++) {
       const ring = rings[i];
       expect(bob.equipAccessory(ring,`#3 left hand`)).toBe(true)
   }
-  expect(bob.equipAccessory(new Ring("gold"),`#3 left hand`)).toBe(false)
+  expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(false)
 
   for (let i = 0; i < 5; i++) {
     // console.log(`unequipping ${i}`);
@@ -98,7 +98,7 @@ test("abomination unequip test", () => {
 test("ring equipped on correct hand",()=>{
   const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
 
-  expect(bob.equipAccessory(new Ring("gold"),`#3 left hand`)).toBe(true)
+  expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(true)
 
   for (let i = 0; i < bob.bodyParts.length; i++) {
     const part = bob.bodyParts[i]

@@ -1,6 +1,7 @@
 import { Torso } from "../../BodyParts/Torso";
 import { Creature } from "../../Creature";
 import { Human } from "../../Species/Human";
+import { Material } from "../Materials/Material";
 import { Accessory } from "./Accessory";
 
 export default class Backpack extends Accessory
@@ -11,7 +12,7 @@ export default class Backpack extends Accessory
         throw new Error("Method not implemented.");
     }
     getName(): string {
-        return `${this.materialName} backpack`
+        return `${this.material.name} backpack`
     }
     getWeightMultiplier(): number {
         return 10
@@ -19,8 +20,8 @@ export default class Backpack extends Accessory
     /**
      *
      */
-    constructor(materialName : string,capacity : number) {
-        super(materialName,["torso"],["human"]);
+    constructor(material : Material,capacity : number) {
+        super(material,["torso"],["human"]);
         this.capacity = capacity
     }
 }

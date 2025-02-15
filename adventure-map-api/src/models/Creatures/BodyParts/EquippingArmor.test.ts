@@ -18,8 +18,8 @@ test("equipping armor",()=>
 {
     const bob = new Human("bob",new WorldDate(0,world),world,"male")
 
-    const helmet1 = new Helmet("steel")
-    const helmet2 = new Helmet("steel")
+    const helmet1 = new Helmet(world.materialIndex.materials["gold"])
+    const helmet2 = new Helmet(world.materialIndex.materials["steel"])
 
     expect(bob.equip(helmet1)).toBe(true)
     expect(bob.equip(helmet2)).toBe(false)
@@ -32,8 +32,8 @@ test("equipping armor",()=>
 test("equipping sided armor (gauntlets)",()=>{
     const bob = new Human("bob",new WorldDate(0,world),world,"male")
 
-    const g1 = new Gauntlet("steel","left")
-    const g2 = new Gauntlet("steel","left")
+    const g1 = new Gauntlet(world.materialIndex.materials["steel"],"left")
+    const g2 = new Gauntlet(world.materialIndex.materials["steel"],"left")
 
     expect(bob.equip(g1)).toBe(true)
     expect(bob.equip(g2)).toBe(false)

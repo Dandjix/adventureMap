@@ -1,14 +1,16 @@
+import { Material } from "./Materials/Material"
+
 export abstract class Item
 {
 
 
-    public readonly materialName : string
+    public readonly material : Material
 
     /**
      *
      */
-    constructor(materialName : string) {
-        this.materialName = materialName
+    constructor(material : Material) {
+        this.material = material
         
     }
 
@@ -16,10 +18,10 @@ export abstract class Item
     /**
      * in kilograms, default reference material is steel.
      */
-    abstract getWeightMultiplier():number
+    protected abstract getWeightMultiplier():number
 
     public getWeight()
     {
-        return this.getWeightMultiplier()
+        return this.getWeightMultiplier()*this.material.density
     } 
 }
