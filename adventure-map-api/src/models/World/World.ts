@@ -4,6 +4,7 @@ import { StaticFeature } from './StaticFeature';
 import { ChangingFeature } from './ChangingFeature';
 import { Creature } from '../Creatures/Creature';
 import { Event } from './Event';
+import { MaterialIndex } from '../Creatures/Items/Materials/MaterialIndex';
 // Define the World interface
 export class World {
   world_name: string
@@ -12,7 +13,7 @@ export class World {
   changing_features: ChangingFeature[]
   creatures: Creature[]
   events: Event[]
-
+  materialIndex : MaterialIndex
   /**
    *
    */
@@ -23,5 +24,6 @@ export class World {
     this.changing_features = []
     this.creatures = []
     this.events = []
+    this.materialIndex = MaterialIndex.createDefaultMaterialIndex()
   }
 }

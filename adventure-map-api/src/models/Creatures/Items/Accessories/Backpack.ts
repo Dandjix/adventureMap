@@ -11,16 +11,16 @@ export default class Backpack extends Accessory
         throw new Error("Method not implemented.");
     }
     getName(): string {
-        return "backpack"
+        return `${this.materialName} backpack`
     }
-    getWeight(): number {
+    getWeightMultiplier(): number {
         return 10
     }
     /**
      *
      */
-    constructor(capacity : number) {
-        super(["torso"],["human"]);
+    constructor(materialName : string,capacity : number) {
+        super(materialName,["torso"],["human"]);
         this.capacity = capacity
     }
 }

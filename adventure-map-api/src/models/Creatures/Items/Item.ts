@@ -1,9 +1,25 @@
 export abstract class Item
 {
-    abstract getName():string
 
+
+    public readonly materialName : string
+
+    /**
+     *
+     */
+    constructor(materialName : string) {
+        this.materialName = materialName
+        
+    }
+
+    abstract getName():string
     /**
      * in kilograms, default reference material is steel.
      */
-    abstract getWeight():number
+    abstract getWeightMultiplier():number
+
+    public getWeight()
+    {
+        return this.getWeightMultiplier()
+    } 
 }

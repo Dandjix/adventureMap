@@ -7,17 +7,17 @@ export class Ring extends Accessory
         return
     }
     getName(): string {
-        return "ring"
+        return `${this.materialName} ring`
     }
-    getWeight(): number {
+    getWeightMultiplier(): number {
         return 0.05
     }
 
     /**
      *
      */
-    constructor() {
-        super(["#side hand","#index #side hand"],["human","abomination"]);
+    constructor(materialName : string) {
+        super(materialName,["#side hand","#index #side hand"],["human","abomination"]);
     }
     
 }

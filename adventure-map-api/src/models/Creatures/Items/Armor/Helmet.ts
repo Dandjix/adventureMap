@@ -5,16 +5,15 @@ import { Human } from "../../Species/Human";
 import { ArmorPiece } from "./ArmorPiece";
 
 export class Helmet extends ArmorPiece {
-    constructor(
-    ) {
-        super(["head"], ["human"]); // Create instances dynamically
+    constructor(materialName : string) {
+        super(materialName,["head"], ["human"]); // Create instances dynamically
     }
 
     getName(): string {
-        return "helmet";
+        return `${this.materialName} helmet`;
     }
 
-    getWeight(): number {
+    getWeightMultiplier(): number {
         return 3;
     }
 }

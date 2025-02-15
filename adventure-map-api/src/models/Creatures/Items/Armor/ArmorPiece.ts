@@ -6,7 +6,7 @@ export abstract class ArmorPiece extends Item {
     readonly bodyParts: string[];
     readonly creatures: string[];
 
-    constructor(bodyParts: string[], creatures: string[]) {
+    constructor(materialName:string,bodyParts: string[], creatures: string[]) {
         if (bodyParts.length === 0 || creatures.length === 0) {
             throw new Error("Body parts and creatures arrays cannot be empty");
         }
@@ -14,11 +14,11 @@ export abstract class ArmorPiece extends Item {
         {
             throw new Error("the body part options for that armor piece are incorrect")
         }
-        super();
+        super(materialName);
         this.bodyParts = bodyParts;
         this.creatures = creatures;
     }
 
     abstract getName(): string;
-    abstract getWeight(): number;
+    abstract getWeightMultiplier(): number;
 }

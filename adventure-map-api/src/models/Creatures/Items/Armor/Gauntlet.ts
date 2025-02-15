@@ -4,15 +4,15 @@ import { SidedArmorPiece } from "./SidedArmorPiece";
 export class Gauntlet extends ArmorPiece implements SidedArmorPiece{
     side: "right" | "left";
 
-    constructor(side : "right"|"left") {
-        super([`${side} hand`,`#index ${side} hand`],["human","abomination"])
+    constructor(materialName:string,side : "right"|"left") {
+        super(materialName,[`${side} hand`,`#index ${side} hand`],["human","abomination"])
         this.side = side
     }
 
     getName(): string {
-        return `${this.side} gauntlet`
+        return `${this.materialName} ${this.side} gauntlet`
     }
-    getWeight(): number {
+    getWeightMultiplier(): number {
         return 1
     }
 
