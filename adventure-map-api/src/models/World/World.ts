@@ -2,9 +2,9 @@ import { Schema, model, Document } from 'mongoose';
 
 import { StaticFeature } from './StaticFeature';
 import { ChangingFeature } from './ChangingFeature';
-import { Creature } from '../Creatures/Creature';
+import { Creature } from '../Creature/Creature';
 import { Event } from './Event';
-import { MaterialIndex } from '../Creatures/Items/Materials/MaterialIndex';
+import { MaterialIndex } from '../Creature/Items/Materials/MaterialIndex';
 // Define the World interface
 export class World {
   world_name: string
