@@ -35,12 +35,12 @@ test("ring equip test", () => {
   }
 
   for (let i = 0; i < rings.length; i++) {
-    console.log("equipping ",i," ring");
+    // console.log("equipping ",i," ring");
     
     expect(bob.equip(rings[i])).toBe(i<10)//the first ten are ok, the eleventh is false
   }
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 5; i++) {    
     expect(bob.unEquipAccessory("left hand",0)).toBeDefined()
   }
   expect(bob.unEquipAccessory("left hand",0)).toBeUndefined()

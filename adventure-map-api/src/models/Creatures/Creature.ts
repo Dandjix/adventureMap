@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 
 import { WorldDate } from '../util/WorldDate';
-import { BodyPart, bodyPartIncludes } from './BodyParts/BodyPart';
+import { BodyPart, bodyPartIncludes, nameMatches } from './BodyParts/BodyPart';
 import { Item } from './Items/Item';
 import { Weapon } from './Items/Weapon';
 import { ArmorPiece } from './Items/Armor/ArmorPiece';
@@ -179,7 +179,7 @@ export abstract class Creature
     {
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
-            if(bodyPart.getName()==bodyPartToUnequip && bodyPart.accessories.length>index)
+            if(nameMatches(bodyPart.getName(),bodyPartToUnequip) && bodyPart.accessories.length>index)
             {
                 const accessory = bodyPart.accessories[index]
                 bodyPart.accessories.splice(index,1)

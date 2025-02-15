@@ -1,6 +1,7 @@
 import { clamp } from "../../../util/clamp"
 import { Accessory } from "../Items/Accessories/Accessory"
 import { ArmorPiece } from "../Items/Armor/ArmorPiece"
+import { getQualificator } from "./NumerousBodyPart"
 
 export abstract class BodyPart
 {
@@ -84,4 +85,23 @@ export function bodyPartIncludes(bodyParts : string[],bodyPartName : string)
         }
     }
     return false
+}
+/**
+ * 
+ * @param realBodyPartName the real internal name of the body part, such as "3rd left hand"
+ * @param matcher a string either like 
+ * "3rd left hand" 
+ * or "#2 left hand" 
+ * @returns 
+ */
+export function nameMatches(realBodyPartName : string, matcher : string)
+{
+    const indicesRegexp = new RegExp(/(?<=(\s|^)#)[0-9]+(?=\s|$)/g).exec(matcher)
+
+    indicesRegexp && indicesRegexp.forEach(element => {
+        matcher = matcher.replace(`#${element}`,getQualificator(parseInt(element)))
+    });
+    // console.log("matcher : ",matcher,"real : ",realBodyPartName);
+    
+    return matcher == realBodyPartName
 }

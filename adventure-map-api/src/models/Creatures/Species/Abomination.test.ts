@@ -46,3 +46,25 @@ test("ring equip test", () => {
   }
   expect(bob.equipAccessory(new Ring(),`#0 left hand`)).toBe(false)
 });
+
+test("ring unequip test", () => {
+
+  const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
+
+  const rings = []
+  for (let i = 0; i < 5; i++) {
+      rings.push(new Ring())
+  }
+
+  for (let i = 0; i < 5; i++) {
+      const ring = rings[i];
+      expect(bob.equipAccessory(ring,`#3 left hand`)).toBe(true)
+  }
+  expect(bob.equipAccessory(new Ring(),`#3 left hand`)).toBe(false)
+
+  for (let i = 0; i < 5; i++) {
+    console.log(`unequipping ${i}`);
+    expect(bob.unEquipAccessory(`#3 left hand`,0)).toBeDefined()
+  }
+  expect(bob.unEquipAccessory(`#3 left hand`,0)).toBeUndefined()
+});
