@@ -7,7 +7,7 @@ export abstract class Material
     /**
      * water is 1 kg/liter or g/cc
      */
-        readonly density : number
+    readonly density : number
     /**
      * a sharp weapon made from this material has its damage multiplied by the material sharpness
      */
@@ -15,11 +15,17 @@ export abstract class Material
 
 
     /**
+     * gold is more valuable than steel. This is the price in €/kg
+     */
+    readonly valueMultiplier : number
+
+    /**
      *
      */
-    constructor(name : string, density : number, sharpnessMultiplier : number) {
+    constructor(name : string, density : number, sharpnessMultiplier : number, valueMultiplier : number) {
         this.name = name
         this.density = density
         this.sharpnessMultiplier = sharpnessMultiplier
+        this.valueMultiplier = valueMultiplier
     }
 }

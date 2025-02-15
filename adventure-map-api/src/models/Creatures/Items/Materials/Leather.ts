@@ -3,7 +3,7 @@ import { Material } from "./Material";
 export class Leather extends Material
 {
 
-    constructor(name : string, desnsity : number, sharpnnessMultiplier : number) {
-        super(name,desnsity,sharpnnessMultiplier);
+    constructor(name : string, density : number, sharpnessMultiplier : number,valueMultiplier : number) {
+        super(name,density,sharpnessMultiplier,valueMultiplier);
     }
 }
