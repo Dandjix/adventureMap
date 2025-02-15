@@ -1,6 +1,6 @@
-import { Turn } from "./Turn";
+import { IndividualTurn } from "./IndividualTurn";
 
-export class WeaponAttack extends Turn
+export class WeaponAttack extends IndividualTurn
 {
     play(): void {
         throw new Error("Method not implemented.");

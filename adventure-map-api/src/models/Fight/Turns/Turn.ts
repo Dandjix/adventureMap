@@ -1,4 +1,4 @@
-import { Creature } from "../Creature";
+import { Creature } from "../../Creature/Creature"
 
 /**
  * A fight action. This could for instance be "Alice Strikes Bob"
@@ -12,8 +12,7 @@ export abstract class Turn
         this.attacker = attacker
         this.defender = defender
     }
+    abstract recap:string
 
     abstract play() : void
-
-    abstract recap():string
 }

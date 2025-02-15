@@ -1,6 +1,7 @@
-import { BodyPart } from "../BodyParts/BodyPart";
-import { Creature } from "../Creature";
+import { BodyPart } from "../../Creature/BodyParts/BodyPart";
+import { Creature } from "../../Creature/Creature";
 import { Turn } from "./Turn";
+
 
 /**
  * Bob Bashes Alice with his head
@@ -12,9 +13,17 @@ export class Bash extends Turn
     /**
      *
      */
-    constructor(attacker : Creature,defender : Creature,bodyPart:BodyPart) {
+    constructor(attacker : Creature,defender : Creature,bodyPart:string|BodyPart) {
         super(attacker,defender);
-        this.bodyPart = bodyPart
+        if (bodyPart instanceof BodyPart) 
+        {
+            this.bodyPart = bodyPart
+        }
+        else
+        {
+            B
+        }
+
         attacker.
     }
 
