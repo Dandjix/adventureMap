@@ -1,5 +1,6 @@
 import { WorldDate } from "../../util/WorldDate"
 import { World } from "../../World/World"
+import { Gauntlet } from "../Items/Armor/Gauntlet"
 import { Helmet } from "../Items/Armor/Helmet"
 import { Human } from "../Species/Human"
 
@@ -26,4 +27,18 @@ test("equipping armor",()=>
     expect(bob.unEquipArmor("head")).toBeDefined()
 
     expect(bob.unEquipArmor("head")).toBeUndefined()
+})
+
+test("equipping sided armor",()=>{
+    const bob = new Human("bob",new WorldDate(0,world),world,"male")
+
+    const g1 = new Gauntlet("left")
+    const g2 = new Gauntlet("left")
+
+    expect(bob.equip(g1)).toBe(true)
+    expect(bob.equip(g2)).toBe(false)
+
+    expect(bob.unEquipArmor("left hand")).toBeDefined()
+
+    expect(bob.unEquipArmor("left hand")).toBeUndefined()
 })
