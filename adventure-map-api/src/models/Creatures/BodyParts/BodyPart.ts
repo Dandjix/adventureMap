@@ -51,3 +51,37 @@ export abstract class BodyPart
 
     accessories : Accessory[] = []
 }
+/**
+ * checks if a body part is included in the body part array provided.
+ * 
+ * This is used to check if the requirements are met, for instance when i try to equip a ring on the "21st left hand",
+ * ring should have a bodyParts string[] with "#index #side hand"
+ * 
+ * This checks stuff so that "1st left hand" matches "#index left hand"
+ * @param bodyParts the body parts that are allowed to equip the object
+ * @param bodyPartName the body part that will equip the item
+ */
+export function bodyPartIncludes(bodyParts : string[],bodyPartName : string)
+{
+    let matcherBodyPartName = bodyPartName.replace(/\b[0-9]{1,}[a-z]{2,2}\b/g,"#index")
+    matcherBodyPartName = matcherBodyPartName.replace(/\bleft|right\b/g,"#side")
+
+    // console.log(
+    //     "bodyParts : ",
+    //     bodyParts,
+    //     "matcher : ",
+    //     matcherBodyPartName);
+    
+
+    for (let i = 0; i < bodyParts.length; i++) {
+        const bodyPart = bodyParts[i];
+        // console.log("bodyPart ",bodyPart,"matcher : ",matcherBodyPartName);
+        
+        if(bodyPart==matcherBodyPartName)
+        {
+            // console.log("bodyPart ",bodyPart,"matches : ",matcherBodyPartName);
+            return true
+        }
+    }
+    return false
+}

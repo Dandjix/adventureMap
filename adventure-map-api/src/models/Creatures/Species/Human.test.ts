@@ -35,6 +35,8 @@ test("ring equip test", () => {
   }
 
   for (let i = 0; i < rings.length; i++) {
+    console.log("equipping ",i," ring");
+    
     expect(bob.equip(rings[i])).toBe(i<10)//the first ten are ok, the eleventh is false
   }
 

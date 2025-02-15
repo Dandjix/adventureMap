@@ -1,7 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 
 import { WorldDate } from '../util/WorldDate';
-import { BodyPart } from './BodyParts/BodyPart';
+import { BodyPart, bodyPartIncludes } from './BodyParts/BodyPart';
 import { Item } from './Items/Item';
 import { Weapon } from './Items/Weapon';
 import { ArmorPiece } from './Items/Armor/ArmorPiece';
@@ -65,7 +65,10 @@ export abstract class Creature
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
 
-            if(armorPieceToEquip.bodyParts.includes(bodyPart.getName())&&!bodyPart.isMissing()&&!bodyPart.armorPiece)
+            if(
+                bodyPartIncludes(armorPieceToEquip.bodyParts,bodyPart.getName()) 
+                &&!bodyPart.isMissing()
+                &&!bodyPart.armorPiece)
             {
 
                 bodyPart.armorPiece = armorPieceToEquip
@@ -101,7 +104,7 @@ export abstract class Creature
             
 
             if(
-                accessoryToEquip.bodyParts.includes(bodyPart.getName())
+                bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
                 &&!bodyPart.isMissing()
                 &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
             {
@@ -136,10 +139,17 @@ export abstract class Creature
 
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
-
+            // console.log("values : ",
+            //     "bpn ",bodyPartName,bodyPart.getName(),
+            //     "matches : ",bodyPart.getName()==bodyPartName,
+            //     "bodyPartIncludes ",bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName()),
+            //     "missing ",bodyPart.isMissing(),
+            //     "too many acc : ",bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()
+            // );
+            
             if(
                 bodyPartName == bodyPart.getName()
-                && accessoryToEquip.bodyParts.includes(bodyPart.getName())
+                && bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
                 &&!bodyPart.isMissing()
                 &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
             {
