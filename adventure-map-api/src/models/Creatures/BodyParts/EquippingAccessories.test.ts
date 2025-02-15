@@ -89,7 +89,7 @@ test("abomination unequip test", () => {
   expect(bob.equipAccessory(new Ring(),`#3 left hand`)).toBe(false)
 
   for (let i = 0; i < 5; i++) {
-    console.log(`unequipping ${i}`);
+    // console.log(`unequipping ${i}`);
     expect(bob.unEquipAccessory(`#3 left hand`,0)).toBeDefined()
   }
   expect(bob.unEquipAccessory(`#3 left hand`,0)).toBeUndefined()
