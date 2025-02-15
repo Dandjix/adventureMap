@@ -2,18 +2,29 @@ import { WorldDate } from "../../util/WorldDate";
 import { World } from "../../World/World";
 import Backpack from "../Items/Accessories/Backpack";
 import { Ring } from "../Items/Accessories/Ring";
+
+
+import { Adventurer } from "../Adventurer";
+import { BodyPart } from "../BodyParts/BodyPart";
+import { Hand } from "../BodyParts/Hand";
+import { Head } from "../BodyParts/Head";
+import { NumerousHand } from "../BodyParts/NumerousHand";
+import { Torso } from "../BodyParts/Torso";
+import { Creature } from "../Creature";
+import { GenderedCreature } from "../GenderedCreature";
+import { Item } from "../Items/Item";
 import { Abomination } from "./Abomination";
-import { Human } from "./Human";
 
-test("one backpack equipped, no other can be equipped", () => {
-
-});
+let world : World
+beforeAll(()=>{
+    world = new World(
+        "Tropica",
+        new Date()
+      )
+})
 
 test("ring equip test", () => {
-  const world = new World(
-    "Tropica",
-    new Date()
-  )
+
   const bob = new Abomination("Bob",WorldDate.now(world),world,"male")
 
   let numberOfLeftHands = 0
@@ -23,13 +34,15 @@ test("ring equip test", () => {
   })
 
   const rings = []
-  for (let i = 0; i < numberOfLeftHands+1; i++) {
-    rings.push(new Ring())
+  for (let i = 0; i < numberOfLeftHands*5+1; i++) {
+      rings.push(new Ring())
   }
 
-  for (let i = 0; i < rings.length; i++) {
-    const ring = rings[i];
-    expect(bob.equipAccessory(ring,`#${i} left hand`)).toBe(i<numberOfLeftHands)
+  for (let i = 0; i < numberOfLeftHands; i++) {
+    for (let j = 0; j < 5; j++) {
+      const ring = rings[i*5+j];
+      expect(bob.equipAccessory(ring,`#${i} left hand`)).toBe(true)
+    }
   }
-
+  expect(bob.equipAccessory(new Ring(),`#0 left hand`)).toBe(false)
 });

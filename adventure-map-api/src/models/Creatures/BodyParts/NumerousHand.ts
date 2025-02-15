@@ -8,13 +8,13 @@ export class NumerousHand extends BodyPart implements SidedBodyPart, NumerousBod
         return `${getQualificator(this.index)} ${this.side} hand`
     }
     getIsVital(): boolean {
-        throw new Error("Method not implemented.");
+        return false
     }
     getCanEquipArmor(): boolean {
-        throw new Error("Method not implemented.");
+        return true
     }
     getNumberOfEquipableAccessories(): number {
-        throw new Error("Method not implemented.");
+        return 5;
     }
     natural_toughness: number;
     size: number;

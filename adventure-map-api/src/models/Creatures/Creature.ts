@@ -7,6 +7,7 @@ import { Weapon } from './Items/Weapon';
 import { ArmorPiece } from './Items/Armor/ArmorPiece';
 import { Accessory } from './Items/Accessories/Accessory';
 import { World } from '../World/World';
+import { getQualificator } from './BodyParts/NumerousBodyPart';
 
 export abstract class Creature
 {
@@ -119,11 +120,26 @@ export abstract class Creature
             return false
         }
 
+        //this is code that determines the qualificator of a numerous body part special string (ie #2 left hand => 2nd left hand)
+        const numerousRegexp = /#(\d+)/.exec(bodyPartName);
+        if(
+            numerousRegexp && numerousRegexp.length>1){
+            const index = parseInt(numerousRegexp[1])
+            const qualification = getQualificator(index)
+            
+
+            bodyPartName = bodyPartName.replace(/#(\d+)/, (_, num) => qualification);
+        }
+        
+
+
+
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
 
             if(
                 bodyPartName == bodyPart.getName()
+                && accessoryToEquip.bodyParts.includes(bodyPart.getName())
                 &&!bodyPart.isMissing()
                 &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
             {

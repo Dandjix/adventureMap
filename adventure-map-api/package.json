@@ -6,7 +6,7 @@
     "start": "node dist/index.js",
     "build": "tsc",
     "dev": "nodemon",
-    "test": "jest"
+    "test": "jest --verbose"
   },
   "author": "Timon Dubreuil",
   "license": "ISC",

@@ -4,11 +4,18 @@ import Backpack from "../Items/Accessories/Backpack";
 import { Ring } from "../Items/Accessories/Ring";
 import { Human } from "./Human";
 
+let world : World
+
+beforeAll(()=>
+{
+  world = new World(
+    "Tropica",
+    new Date()
+)
+})
+
 test("one backpack equipped, no other can be equipped", () => {
-    const world = new World(
-      "Tropica",
-      new Date()
-  )
+
 
 
   const bob = new Human("Bob",WorldDate.now(world),world,"male")
@@ -20,10 +27,6 @@ test("one backpack equipped, no other can be equipped", () => {
 });
 
 test("ring equip test", () => {
-  const world = new World(
-    "Tropica",
-    new Date()
-  )
   const bob = new Human("Bob",WorldDate.now(world),world,"male")
 
   const rings = []
