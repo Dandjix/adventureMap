@@ -18,6 +18,7 @@ export class MaterialIndex
     {
         const index = new MaterialIndex()
         index.Add(new Liquid("water",1,0,10,0))
+        index.Add(new Metal("adamantine",8,1,300,0.95))
         index.Add(new Metal("steel",8,1,300,0.75))
         index.Add(new Metal("lead",11.3,0.5,100,0.5))
         index.Add(new Metal("gold",19.3,0.5,1000,0.25))

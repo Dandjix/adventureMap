@@ -3,6 +3,7 @@ import { Creature } from "../../Creature/Creature";
 import { Turn } from "./Turn";
 import Weapon from '../../Creature/Items/Weapon/Weapon';
 import { GenderedCreature } from '../../Creature/GenderedCreature';
+import { ArmorPiece } from '../../Creature/Items/Armor/ArmorPiece';
 
 
 /**
@@ -33,8 +34,9 @@ export abstract class AttackTurn extends Turn
      */
     abstract getLimbDamage() : number
 
-    abstract Weapon? : Weapon
+    weapon? : Weapon
 
+    armorPiece? : ArmorPiece
 
 
     private getRecap(healthDamage : number,limbDamage : number)
@@ -44,63 +46,64 @@ export abstract class AttackTurn extends Turn
 
 
         let action : string
-        if(this.Weapon){
+        if(this.weapon){
             action =  
-            `${this.attacker.creatureName} 
-            ${this.getVerb()} ${this.defender.creatureName} 
-            in the ${this.defenderBodyPart} 
-            with the ${this.Weapon.getName()} 
-            equipped on ${attackerPronoun} ${this.attackingBodyPart}.`
+            `${this.attacker.creatureName} `+
+            `${this.getVerb()} ${this.defender.creatureName} `+
+            `in the ${this.defenderBodyPart.getName()} `+
+            `with the ${this.weapon.getName()} `+
+            `equipped on ${attackerPronoun} ${this.attackerBodyPart.getName()}.`
         }
         else{
             action = 
-            `${this.attacker.creatureName} 
-            ${this.getVerb()} 
-            ${this.defender.creatureName} 
-            in the ${this.defenderBodyPart} 
-            with ${attackerPronoun} ${this.attackingBodyPart}.`
+            `${this.attacker.creatureName} `+
+            `${this.getVerb()} `+
+            `${this.defender.creatureName} ` +
+            `in the ${this.defenderBodyPart.getName()} `+
+            `with ${attackerPronoun} ${this.attackerBodyPart.getName()}.`
         }
 
         let effect : string
         effect = 
-        `${this.defender.creatureName} 
-        takes ${healthDamage} health damage,
-         plus ${limbDamage} in ${defenderPronoun} ${this.defenderBodyPart.getName()}.`
+        `${this.defender.creatureName} takes ${healthDamage} health damage, `+
+        `plus ${limbDamage} in ${defenderPronoun} ${this.defenderBodyPart.getName()}.`
 
         if(this.defenderBodyPart.armorPiece)
         {
             effect = `${effect} The ${this.defenderBodyPart.armorPiece.getName()} deflected some of the damage`
         }
 
-        return `${action}`
+        return `${action}\n${effect}`
     }
     defenderBodyPart : BodyPart
-    attackingBodyPart : BodyPart
+    attackerBodyPart : BodyPart
     /**
      *
      */
-    constructor(attacker : Creature,attackingBodyPart:string|BodyPart,defender : Creature,targetBodyPart:string|BodyPart) {
+    constructor(attacker : Creature,attackergBodyPart:string|BodyPart,defender : Creature,defenderBodyPart:string|BodyPart) {
         super(attacker,defender);
 
-        if (targetBodyPart instanceof BodyPart) 
-            this.defenderBodyPart = targetBodyPart
+        if (defenderBodyPart instanceof BodyPart) 
+            this.defenderBodyPart = defenderBodyPart
         else{
-            const optional = BodyPart.find(defender.bodyParts,targetBodyPart)
+            const optional = BodyPart.find(defender.bodyParts,defenderBodyPart)
             if(optional == undefined)
-                throw new Error(`could not find body part named ${targetBodyPart} in ${defender.getSpeciesName()} ${defender.creatureName}`)
+                throw new Error(`could not find body part named ${defenderBodyPart} in ${defender.getSpeciesName()} ${defender.creatureName}`)
 
             this.defenderBodyPart = optional
         }
 
 
-        if (attackingBodyPart instanceof BodyPart) 
-            this.attackingBodyPart = attackingBodyPart
+        if (attackergBodyPart instanceof BodyPart) 
+            this.attackerBodyPart = attackergBodyPart
         else{
-            const optional = BodyPart.find(defender.bodyParts,attackingBodyPart)
+            const optional = BodyPart.find(defender.bodyParts,attackergBodyPart)
             if(optional == undefined)
-                throw new Error(`could not find body part named ${attackingBodyPart} in ${attacker.getSpeciesName()} ${attacker.creatureName}`)
+                throw new Error(`could not find body part named ${attackergBodyPart} in ${attacker.getSpeciesName()} ${attacker.creatureName}`)
 
-            this.attackingBodyPart = optional
+            this.attackerBodyPart = optional
         }
+        this.weapon = this.attackerBodyPart.weapon
+        this.armorPiece = this.defenderBodyPart.armorPiece
     }
 }

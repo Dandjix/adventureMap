@@ -1,3 +1,4 @@
+import Random from "../../../random/random"
 import { Creature } from "../../Creature/Creature"
 
 /**
@@ -12,7 +13,5 @@ export abstract class Turn
         this.attacker = attacker
         this.defender = defender
     }
-    abstract recap:string|undefined
-
-    abstract play() : void
+    abstract play(random : Random) : string
 }

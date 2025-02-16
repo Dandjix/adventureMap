@@ -23,7 +23,7 @@ export default class Pistol extends Weapon implements SidedItem{
         return 999999
     }
     getName(): string {
-        return `${this.material.name} short sword`
+        return `${this.material.name} pistol`
     }
     protected getWeightMultiplier(): number {
         return 0.6
