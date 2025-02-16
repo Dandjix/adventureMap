@@ -80,7 +80,7 @@ export abstract class AttackTurn extends Turn
     /**
      *
      */
-    constructor(attacker : Creature,attackergBodyPart:string|BodyPart,defender : Creature,defenderBodyPart:string|BodyPart) {
+    constructor(attacker : Creature,attackerBodyPart:string|BodyPart,defender : Creature,defenderBodyPart:string|BodyPart) {
         super(attacker,defender);
 
         if (defenderBodyPart instanceof BodyPart) 
@@ -94,12 +94,12 @@ export abstract class AttackTurn extends Turn
         }
 
 
-        if (attackergBodyPart instanceof BodyPart) 
-            this.attackerBodyPart = attackergBodyPart
+        if (attackerBodyPart instanceof BodyPart) 
+            this.attackerBodyPart = attackerBodyPart
         else{
-            const optional = BodyPart.find(defender.bodyParts,attackergBodyPart)
+            const optional = BodyPart.find(attacker.bodyParts,attackerBodyPart)
             if(optional == undefined)
-                throw new Error(`could not find body part named ${attackergBodyPart} in ${attacker.getSpeciesName()} ${attacker.creatureName}`)
+                throw new Error(`could not find body part named ${attackerBodyPart} in ${attacker.getSpeciesName()} ${attacker.creatureName}`)
 
             this.attackerBodyPart = optional
         }
