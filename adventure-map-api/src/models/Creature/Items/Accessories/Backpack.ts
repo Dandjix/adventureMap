@@ -20,8 +20,8 @@ export default class Backpack extends Accessory
     /**
      *
      */
-    constructor(material : Material,capacity : number) {
-        super(material,["torso"],["human"]);
+    constructor(material : Material,capacity : number,quality:number=0) {
+        super(material,quality,["torso"],["human"]);
         this.capacity = capacity
     }
 }

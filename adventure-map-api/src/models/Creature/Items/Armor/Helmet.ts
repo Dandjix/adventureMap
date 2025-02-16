@@ -6,8 +6,8 @@ import { Material } from "../Materials/Material";
 import { ArmorPiece } from "./ArmorPiece";
 
 export class Helmet extends ArmorPiece {
-    constructor(material : Material) {
-        super(material,["head"], ["human"]); // Create instances dynamically
+    constructor(material : Material,quality:number=0) {
+        super(material,quality,["head"], ["human"]); // Create instances dynamically
     }
 
     getName(): string {

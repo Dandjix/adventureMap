@@ -13,7 +13,7 @@ export abstract class Item
     /**
      *
      */
-    constructor(material : Material,quality:number=1) {
+    constructor(material : Material,quality:number) {
         this.material = material
         this.quality = quality
     }

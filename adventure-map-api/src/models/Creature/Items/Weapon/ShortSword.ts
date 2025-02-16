@@ -14,8 +14,8 @@ export default class ShortSword extends Weapon{
     /**
      *
      */
-    constructor(material : Material) {
-        super(material,["#side hand","#index #side hand"],["human","abomination"])
+    constructor(material : Material,quality:number=0) {
+        super(material,quality,["#side hand","#index #side hand"],["human","abomination"])
     }
 
     protected getWeightMultiplier(): number {

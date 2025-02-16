@@ -11,8 +11,8 @@ export default class Pistol extends Weapon implements SidedItem{
     /**
      *
      */
-    constructor(material : Material,side : "left"|"right" = "right") {
-        super(material,[`${side} hand`,`#index ${side} hand`],["human","abomination"])
+    constructor(material : Material,side : "left"|"right" = "right",quality:number=0) {
+        super(material,quality,[`${side} hand`,`#index ${side} hand`],["human","abomination"])
         this.side = side
     }
 

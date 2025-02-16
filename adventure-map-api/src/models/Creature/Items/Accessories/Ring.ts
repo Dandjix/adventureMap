@@ -17,8 +17,8 @@ export class Ring extends Accessory
     /**
      *
      */
-    constructor(material : Material) {
-        super(material,["#side hand","#index #side hand"],["human","abomination"]);
+    constructor(material : Material,quality:number=0) {
+        super(material,quality,["#side hand","#index #side hand"],["human","abomination"]);
     }
     
 }

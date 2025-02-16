@@ -11,13 +11,13 @@ export abstract class Accessory extends Item
     /**
      *
      */
-    constructor(material : Material,bodyParts : string[],creatures : string[]) {
+    constructor(material : Material,quality:number,bodyParts : string[],creatures : string[]) {
         if(!BodyPart.validateBodyPartOptions(bodyParts))
         {
             throw new Error("the body part options for that armor piece are incorrect")
         }
 
-        super(material);
+        super(material,quality);
         this.bodyParts = bodyParts
         this.creatures = creatures
     }
