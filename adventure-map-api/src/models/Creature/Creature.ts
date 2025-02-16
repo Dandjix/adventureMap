@@ -110,7 +110,7 @@ export abstract class Creature
     {
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
-            if(bodyPart.getName()==bodyPartToUnequip && bodyPart.armorPiece)
+            if(BodyPart.nameMatches(bodyPart.getName(),bodyPartToUnequip) && bodyPart.armorPiece)
             {
                 const armorPiece = bodyPart.armorPiece
                 bodyPart.armorPiece = undefined
@@ -138,7 +138,7 @@ export abstract class Creature
     {
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
-            if(bodyPart.getName()==bodyPartToUnequip && bodyPart.weapon)
+            if(BodyPart.nameMatches(bodyPart.getName(),bodyPartToUnequip) && bodyPart.weapon)
             {
                 const weapon = bodyPart.weapon
                 bodyPart.weapon = undefined
