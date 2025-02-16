@@ -6,7 +6,7 @@ import { Material } from "../Materials/Material";
 export abstract class Accessory extends Item
 {
     readonly bodyParts: string[];
-    readonly species: string[];
+    readonly creatures: string[];
     
     /**
      *
@@ -19,7 +19,7 @@ export abstract class Accessory extends Item
 
         super(material);
         this.bodyParts = bodyParts
-        this.species = creatures
+        this.creatures = creatures
     }
 
     /**

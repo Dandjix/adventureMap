@@ -49,70 +49,32 @@ export abstract class Creature
         this.dateOfBirth = date_of_birth
     }
 
-    public equip(item : ArmorPiece|Accessory|Weapon): boolean
+    public equip(item : ArmorPiece|Accessory|Weapon, bodyPart : string | BodyPart | undefined = undefined): boolean
     {
-        if(item instanceof ArmorPiece)
-            return this.equipArmorInternal(item)
-        if(item instanceof Accessory)
-            return this.equipAccessoryInternal(item)
-        // if(item instanceof Weapon)
-        return this.equipWeaponInternal(item)
-    }
-
-    private equipArmorInternal(armorPieceToEquip:ArmorPiece) : boolean
-    {
-        if(!armorPieceToEquip.creatures.includes(this.getSpeciesName())){
-            return false
-        }
-
-
-        for (let i = 0; i < this.bodyParts.length; i++) {
-            const bodyPart = this.bodyParts[i];
-
-            if(
-                BodyPart.bodyPartIncludes(armorPieceToEquip.bodyParts,bodyPart.getName()) 
-                &&!bodyPart.isMissing()
-                &&!bodyPart.armorPiece)
-            {
-
-                bodyPart.armorPiece = armorPieceToEquip
-                return true
-            }
-            
-        }
-
-        return false
-    }
-
-    private equipAccessoryInternal(accessoryToEquip:Accessory) : boolean
-    {
-        if(!accessoryToEquip.species.includes(this.getSpeciesName()))
+        if(!item.creatures.includes(this.getSpeciesName()))
         {
-            // console.log("wrong species");
-            
             return false
         }
 
-
         for (let i = 0; i < this.bodyParts.length; i++) {
             const bodyPart = this.bodyParts[i];
-            
-            // console.log(JSON.stringify(bodyPart));
-            // console.log(bodyPart.getName());
-            
-            // console.log(accessoryToEquip.bodyParts.includes(bodyPart.getName())
-            // ,!bodyPart.isMissing()
-            // ,!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()));
-            
-            // console.log();
-            
-
+        
             if(
-                BodyPart.bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
+                BodyPart.bodyPartIncludes(item.bodyParts,bodyPart.getName())
                 &&!bodyPart.isMissing()
-                &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
+                &&(!(item instanceof Accessory) || !(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
+                &&(!(item instanceof Weapon) || !(bodyPart.weapon))
+                &&(!(item instanceof ArmorPiece) || !(bodyPart.armorPiece))
+                )
             {
-                bodyPart.accessories.push(accessoryToEquip)
+                if(item instanceof Accessory)
+                    bodyPart.accessories.push(item)
+
+                else if(item instanceof ArmorPiece)
+                    bodyPart.armorPiece = item
+
+                else //if (item instanceof Weapon)
+                    bodyPart.weapon = item
                 
                 return true
             }
@@ -120,75 +82,50 @@ export abstract class Creature
         return false
     }
 
-    private equipWeaponInternal(weapon:Weapon) : boolean
-    {
-        if(!weapon.creatures.includes(this.getSpeciesName())){
-            return false
-        }
+    // public equipAccessory(accessoryToEquip:Accessory,bodyPartName:string)
+    // {
+    //     if(!accessoryToEquip.species.includes(this.getSpeciesName()))
+    //     {
+    //         return false
+    //     }
 
-
-        for (let i = 0; i < this.bodyParts.length; i++) {
-            const bodyPart = this.bodyParts[i];
-
-            if(
-                BodyPart.bodyPartIncludes(weapon.bodyParts,bodyPart.getName()) 
-                &&!bodyPart.isMissing()
-                &&!bodyPart.weapon)
-            {
-
-                bodyPart.weapon = weapon
-                return true
-            }
-            
-        }
-
-        return false
-    }
-
-    public equipAccessory(accessoryToEquip:Accessory,bodyPartName:string)
-    {
-        if(!accessoryToEquip.species.includes(this.getSpeciesName()))
-        {
-            return false
-        }
-
-        //this is code that determines the qualificator of a numerous body part special string (ie #2 left hand => 2nd left hand)
-        const numerousRegexp = /#(\d+)/.exec(bodyPartName);
-        if(
-            numerousRegexp && numerousRegexp.length>1){
-            const index = parseInt(numerousRegexp[1])
-            const qualification = getQualificator(index)
+    //     //this is code that determines the qualificator of a numerous body part special string (ie #2 left hand => 2nd left hand)
+    //     const numerousRegexp = /#(\d+)/.exec(bodyPartName);
+    //     if(
+    //         numerousRegexp && numerousRegexp.length>1){
+    //         const index = parseInt(numerousRegexp[1])
+    //         const qualification = getQualificator(index)
             
 
-            bodyPartName = bodyPartName.replace(/#(\d+)/, (_, num) => qualification);
-        }
+    //         bodyPartName = bodyPartName.replace(/#(\d+)/, (_, num) => qualification);
+    //     }
         
 
 
 
-        for (let i = 0; i < this.bodyParts.length; i++) {
-            const bodyPart = this.bodyParts[i];
-            // console.log("values : ",
-            //     "bpn ",bodyPartName,bodyPart.getName(),
-            //     "matches : ",bodyPart.getName()==bodyPartName,
-            //     "bodyPartIncludes ",bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName()),
-            //     "missing ",bodyPart.isMissing(),
-            //     "too many acc : ",bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()
-            // );
+    //     for (let i = 0; i < this.bodyParts.length; i++) {
+    //         const bodyPart = this.bodyParts[i];
+    //         // console.log("values : ",
+    //         //     "bpn ",bodyPartName,bodyPart.getName(),
+    //         //     "matches : ",bodyPart.getName()==bodyPartName,
+    //         //     "bodyPartIncludes ",bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName()),
+    //         //     "missing ",bodyPart.isMissing(),
+    //         //     "too many acc : ",bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()
+    //         // );
             
-            if(
-                bodyPartName == bodyPart.getName()
-                && BodyPart.bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
-                &&!bodyPart.isMissing()
-                &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
-            {
-                bodyPart.accessories.push(accessoryToEquip)
+    //         if(
+    //             bodyPartName == bodyPart.getName()
+    //             && BodyPart.bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
+    //             &&!bodyPart.isMissing()
+    //             &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
+    //         {
+    //             bodyPart.accessories.push(accessoryToEquip)
                 
-                return true
-            }
-        }
-        return false
-    }
+    //             return true
+    //         }
+    //     }
+    //     return false
+    // }
 
     public unEquipArmor(bodyPartToUnequip : string)
     {
