@@ -22,31 +22,50 @@ export abstract class Creature
      * Can be negative to denote a creature that is freaky or frightfull.
      * Regular humans start at 0, orcs at -100, unspeakable horrors at -1000, elves at 250, dwarves at 0
      */
-    abstract naturalAttractiveness : number
+    naturalAttractiveness : number
 
     //fight attributes
-    abstract naturalSpeed : number
-    abstract naturalHealth : number
+    naturalSpeed : number
+    naturalHealth : number
     /**
      * this ranges from 0 to 1 (and possibly beyond but wtf). 
      * 0 means that at 0 natural_health, this creatures natural_strength becomes 0, 
      * 1 means it stays at 1, 2 means it gets to 2
      */
-    abstract naturalBerserk : number 
-    abstract naturalStrength : number
+    naturalBerserk : number 
+    naturalStrength : number
 
-    abstract bodyParts : BodyPart[]
+    bodyParts : BodyPart[]
 
-    abstract stowedItems : Item[]
+    stowedItems : Item[]
 
     /**
      * This is NOT the first or last name of the creature. This is the name of the species, for example new Human("Bob").getSpeciesName() returns "human"
      */
     abstract getSpeciesName() : string
 
-    constructor(creature_name : string, date_of_birth :WorldDate) {
+    constructor(
+        creature_name : string,
+        date_of_birth :WorldDate,
+        naturalAttractiveness:number,
+        naturalSpeed : number,
+        naturalHealth : number,
+        naturalBerserk : number,
+        naturalStrength : number,
+        bodyParts : BodyPart[],
+        stowedItems : Item[]
+    ) {
         this.creatureName = creature_name
         this.dateOfBirth = date_of_birth
+
+        this.naturalAttractiveness = naturalAttractiveness
+        this.naturalSpeed = naturalSpeed
+        this.naturalHealth = naturalHealth
+        this.naturalBerserk = naturalBerserk
+        this.naturalStrength = naturalStrength
+
+        this.bodyParts = bodyParts
+        this.stowedItems = stowedItems
     }
 
     private firstSuitableBodyPartFor(item : ArmorPiece|Accessory|Weapon) : BodyPart | false
