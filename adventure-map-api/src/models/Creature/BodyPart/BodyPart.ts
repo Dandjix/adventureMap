@@ -13,9 +13,9 @@ export default abstract class BodyPart
     abstract getIsVital() : boolean
     abstract getNumberOfEquipableAccessories() : number
     /**
-     * this goes from 0 to 1. At 0, the body part should be removed as it has been pulverized.
+     * this goes from 0 and up. At 0, the body part should be removed as it has been pulverized.
      */
-    private health : number = 1
+    private health : number
 
     setHealth(health:number)
     {
@@ -32,12 +32,12 @@ export default abstract class BodyPart
      * at 99999, the body part is for all intents and purposes indestructible.
      * a hit on an indestructible body part still transfers 100% of the damage to the creature itself.
      */
-    abstract natural_toughness : number
+    natural_health : number
 
     /**
      * this is the size of the body part. A bigger size means it will be picked more frequently as a target in a fight.
      */
-    abstract size : number
+    size : number
 
     /**
      * default implementation of whether a body part is al.
@@ -53,6 +53,15 @@ export default abstract class BodyPart
     weapon? : Weapon
 
     accessories : Accessory[] = []
+
+    /**
+     *
+     */
+    constructor(natural_health : number,size : number) {
+        this.natural_health = natural_health
+        this.health = natural_health
+        this.size = size
+    }
 
         /**
      * checks if a body part is included in the body part array provided.

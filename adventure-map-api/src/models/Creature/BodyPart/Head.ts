@@ -2,16 +2,8 @@ import BodyPart from "./BodyPart";
 
 export class Head extends BodyPart
 {
-    natural_toughness: number
-    size: number
-
-    /**
-     *
-     */
-    constructor(natural_toughness : number, size : number = 0.5) {
-        super();
-        this.natural_toughness = natural_toughness
-        this.size = size
+    constructor(natural_health : number, size : number = 0.5) {
+        super(natural_health,size);
     }
     getIsVital(): boolean {
         return true
