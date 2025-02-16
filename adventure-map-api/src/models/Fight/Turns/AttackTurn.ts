@@ -52,7 +52,7 @@ export abstract class AttackTurn extends Turn
             `${this.getVerb()} ${this.defender.creatureName} `+
             `in the ${this.defenderBodyPart.getName()} `+
             `with the ${this.weapon.getName()} `+
-            `equipped on ${attackerPronoun} ${this.attackerBodyPart.getName()}.`
+            `equipped in ${attackerPronoun} ${this.attackerBodyPart.getName()}.`
         }
         else{
             action = 
@@ -70,7 +70,7 @@ export abstract class AttackTurn extends Turn
 
         if(this.defenderBodyPart.armorPiece)
         {
-            effect = `${effect} The ${this.defenderBodyPart.armorPiece.getName()} deflected some of the damage`
+            effect = `${effect} The ${this.defenderBodyPart.armorPiece.getName()} deflected some of the damage.`
         }
 
         return `${action}\n${effect}`
