@@ -14,7 +14,7 @@ export abstract class AttackTurn extends Turn
 {
     play() {
         const healthDamage = this.getHealthDamage()
-        const limbDamage = this.getHealthDamage()
+        const limbDamage = this.getLimbDamage()
 
         return this.getRecap(healthDamage,limbDamage)
     }
