@@ -54,7 +54,7 @@ export abstract class Creature
 
     public get health()
     {
-        return this.health
+        return this._health
     }
 
     /** 

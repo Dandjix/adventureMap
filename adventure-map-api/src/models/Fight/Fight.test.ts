@@ -22,7 +22,7 @@ test('bob executes alice', () => {
     expect(Alice.equip(new Helmet(world.materialIndex.materials["adamantine"],1))).toBe(true)
 
     const bobFuckingKillsAlice = new FireAt(Bob,"right hand",Alice,"head")
-    const recap = bobFuckingKillsAlice.play()
+    const {recap} = bobFuckingKillsAlice.play()
 
     console.log("recap : ",recap);
     

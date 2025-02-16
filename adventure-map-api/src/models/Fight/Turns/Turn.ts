@@ -13,5 +13,5 @@ export abstract class Turn
         this.attacker = attacker
         this.defender = defender
     }
-    abstract play(random : Random) : string
+    abstract play(random : Random) : {recap:string,affected:Creature[]}
 }

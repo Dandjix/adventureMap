@@ -16,7 +16,10 @@ export abstract class AttackTurn extends Turn
         const healthDamage = this.getHealthDamage()
         const limbDamage = this.getLimbDamage()
 
-        return this.getRecap(healthDamage,limbDamage)
+        this.defender.health -= healthDamage
+        this.defenderBodyPart.health -= limbDamage
+
+        return {recap:this.getRecap(healthDamage,limbDamage),affected:[this.defender]}
     }
 
     /**

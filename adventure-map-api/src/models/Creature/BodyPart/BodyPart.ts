@@ -15,16 +15,21 @@ export default abstract class BodyPart
     /**
      * this goes from 0 and up. At 0, the body part should be removed as it has been pulverized.
      */
-    private health : number
+    private _health : number
 
-    setHealth(health:number)
+    public set health(health:number)
     {
-        this.health = clamp(health,0,1)
+        this._health = clamp(health,0,1)
+    }
+
+    public get health()
+    {
+        return this._health
     }
 
     isMissing()
     {
-        return this.health == 0
+        return this._health == 0
     }
 
     /**
@@ -45,7 +50,7 @@ export default abstract class BodyPart
      * @returns whether this body part is al.
      */
     getIsFunctionnal() {
-        return this.health > 0.5
+        return this._health > 0.5
     }
 
     armorPiece? : ArmorPiece
@@ -59,7 +64,7 @@ export default abstract class BodyPart
      */
     constructor(natural_health : number,size : number) {
         this.natural_health = natural_health
-        this.health = natural_health
+        this._health = natural_health
         this.size = size
     }
 
