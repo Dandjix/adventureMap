@@ -12,9 +12,8 @@ export abstract class ArmorPiece extends Item {
      */
     public getDamageDeflected()
     {
-        // damageDeflected = Math.pow(this.material.protection,)
-        // return 
-        return 0.5
+        const qualityMultiplier = (this.quality +1)/2
+        return qualityMultiplier*this.material.protection
     }
 
     constructor(material : Material,quality:number,bodyParts: string[], creatures: string[]) {
