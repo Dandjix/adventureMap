@@ -1,9 +1,9 @@
 import BodyPart from "../../Creature/BodyPart/BodyPart";
-import { Creature } from "../../Creature/Creature";
 import Pistol from "../../Creature/Items/Weapon/Pistol";
-import { AttackTurn } from "./AttackTurn";
+import Fighter from "../Fighter";
+import { OneOnOneAttackTurn } from "./OneOnOneAttackTurn";
 
-export default class FireAt extends AttackTurn
+export default class FireAt extends OneOnOneAttackTurn
 {
     getVerb(): string {
         return "fires at"
@@ -17,10 +17,10 @@ export default class FireAt extends AttackTurn
     /**
      *
      */
-    constructor(attacker : Creature,attackerBodyPart : BodyPart|string,defender:Creature,defenderBodyPart : BodyPart|string) {
+    constructor(attacker : Fighter,attackerBodyPart : BodyPart|string,defender:Fighter,defenderBodyPart : BodyPart|string) {
         super(attacker,attackerBodyPart,defender,defenderBodyPart);
         if(!(this.weapon)||!(this.weapon instanceof Pistol))
-            throw new Error(`${attacker.creatureName} cannot fire at ${defender.creatureName} : it does not have a pistol in its ${attackerBodyPart} (it has : ${this.weapon})`)
+            throw new Error(`${attacker.creature.creatureName} cannot fire at ${defender.creature.creatureName} : it does not have a pistol in its ${attackerBodyPart} (it has : ${this.weapon})`)
     }
     
 }

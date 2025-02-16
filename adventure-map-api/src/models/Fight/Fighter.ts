@@ -55,5 +55,35 @@ export default class Fighter
         });
         return allies
     }
+
+    static getEveryone(fighterGroups : Fighter[][])
+    {
+        const everyone : Fighter[] = []
+        fighterGroups.forEach(group => {
+            group.forEach(fighter => {
+                everyone.push(fighter)
+            });
+        });
+        return everyone
+    }
+
+    static removeFighter(fighterGroups:Fighter[][],fighter:Fighter)
+    {
+        for (let i = 0; i < fighterGroups.length; i++) {
+            const group = fighterGroups[i];
+            for (let j = 0; j < group.length; j++) {
+                const f = group[j];
+                if(f == fighter)
+                {
+                    group.splice(j,1)
+                    if(group.length<=0)
+                        fighterGroups.splice(i,1)
+                    return
+                }
+            }
+        }
+    }
 }
+
+
 

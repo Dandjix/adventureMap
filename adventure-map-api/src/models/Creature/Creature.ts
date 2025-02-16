@@ -84,8 +84,8 @@ export abstract class Creature
     abstract getSpeciesName() : string
 
     constructor(
-        creature_name : string,
-        date_of_birth :WorldDate,
+        creatureName : string,
+        dateOfBirth :WorldDate,
         naturalAttractiveness:number,
         naturalSpeed : number,
         naturalHealth : number,
@@ -96,8 +96,8 @@ export abstract class Creature
     ) {
         this._isAlive = true
 
-        this.creatureName = creature_name
-        this.dateOfBirth = date_of_birth
+        this.creatureName = creatureName
+        this.dateOfBirth = dateOfBirth
 
         this.naturalAttractiveness = naturalAttractiveness
         this.naturalSpeed = naturalSpeed

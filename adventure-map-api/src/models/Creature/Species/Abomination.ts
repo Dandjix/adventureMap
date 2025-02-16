@@ -26,7 +26,15 @@ export class Abomination extends Creature implements GenderedCreature
             bodyParts.push(new NumerousHand("left",0.25,i))
         }
         
-        super(creature_name,date_of_birth,-100,100,100,0.5,100,bodyParts,[]);
+        super(creature_name,
+            date_of_birth,
+            -100,
+            100,
+            1,
+            0.5,
+            10,
+            bodyParts,
+            []);
 
         this.gender = gender
         this.sexual_orientation = sexual_orientation

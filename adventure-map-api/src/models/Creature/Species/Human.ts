@@ -16,7 +16,7 @@ export class Human extends Creature implements GenderedCreature, Adventurer
         return "human"
     }
 
-    constructor(creature_name : string, date_of_birth : WorldDate, gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
+    constructor(creatureName : string, dateOfBirth : WorldDate, gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
         const bodyParts = [
             new Hand("left",0.75),
             new Hand("right",0.75),
@@ -26,13 +26,13 @@ export class Human extends Creature implements GenderedCreature, Adventurer
             new Leg("right",0.9)
             ]
         
-        super(creature_name,
-            date_of_birth,
+        super(creatureName,
+            dateOfBirth,
             0,
-            100,
+            1,
             100,
             0.5,
-            100,
+            5,
             bodyParts,
             []);
 

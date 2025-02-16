@@ -1,7 +1,8 @@
 import BodyPart from '../../Creature/BodyPart/BodyPart';
 import { Creature } from "../../Creature/Creature";
 import Weapon from '../../Creature/Items/Weapon/Weapon';
-import { AttackTurn } from './AttackTurn';
+import Fighter from '../Fighter';
+import { OneOnOneAttackTurn } from './OneOnOneAttackTurn';
 import { Turn } from "./Turn";
 
 
@@ -9,20 +10,25 @@ import { Turn } from "./Turn";
  * Bob Bashes Alice with his head
  * or Bob Bashes Alice with the Battle Axe in his right hand
  */
-export class Bash extends AttackTurn
+export class Bash extends OneOnOneAttackTurn
 {
     recap: string | undefined;
     getVerb(): string {
-        throw new Error('Method not implemented.');
+        return "bashes"
     }
     getHealthDamage(): number {
-        throw new Error('Method not implemented.');
+        let damage = 0
+        if(this.weapon)
+            damage = this.weapon.getWeight()*this.attacker.creature.naturalStrength
+
+        //we return the max
+        return Math.max(this.attacker.creature.naturalStrength,damage)
     }
     getLimbDamage(): number {
-        throw new Error('Method not implemented.');
+        return this.getHealthDamage()
     }
 
-    constructor(attacker : Creature,attackerBodyPart:string|BodyPart,defender : Creature,defenderBodypart:string|BodyPart) {
+    constructor(attacker : Fighter,attackerBodyPart:string|BodyPart,defender : Fighter,defenderBodypart:string|BodyPart) {
         super(attacker,attackerBodyPart,defender,defenderBodypart);
     }
 }

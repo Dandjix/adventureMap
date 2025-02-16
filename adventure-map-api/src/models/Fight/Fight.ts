@@ -2,9 +2,10 @@ import Random from '../../random/random';
 import { Creature } from '../Creature/Creature';
 import { Turn } from './Turns/Turn';
 import Fighter from './Fighter';
+
 export default class Fight
 {
-    turns : Turn[] = []
+    turnRecaps : string[] = []
     fighterGroups : Fighter[][] 
     /**
      * the timeline is in seconds. The timeline advances with the fight. It allows to know the length of the fight.
@@ -15,6 +16,20 @@ export default class Fight
      * the random object can be overriden and passed for unit tests
      */
     random : Random
+
+    get isOver()
+    {
+        return this.fighterGroups.length<=1
+    }
+
+    get recap()
+    {
+        let recap = ""
+        this.turnRecaps.forEach(turnRecap => {
+            recap += turnRecap+"\n"
+        });
+        return recap
+    }
 
     constructor(fighterGroups : Fighter[][],random? : Random) {
         this.fighterGroups = fighterGroups
@@ -27,28 +42,105 @@ export default class Fight
 
     advance()
     {
-        const readyToFight : Fighter[] = []
+        let readyToFight : Fighter[] = []
         this.fighterGroups.forEach(fighterGroup => {
             fighterGroup.forEach(fighter => {
                 if(fighter.cooldown<=0)
-                {
                     readyToFight.push(fighter)
-                }
             });
         });
 
-        while(readyToFight.length>1)
+        if(readyToFight.length>0)
         {
-            const i = Math.floor(this.random.random()*(readyToFight.length))
-            const nextFighter = readyToFight[i]
-            readyToFight.splice(i,1)
-            
-            const{cooldown, turn} = nextFighter.fightBehavior.doTurn(this.fighterGroups)
+            readyToFight = Fight.getMinimunCooldowns(readyToFight)
 
-            nextFighter.cooldown = cooldown
-            this.turns.push(turn)
-        }        
-        this.timeLine+=1
+            const index = Math.floor(this.random.random()*readyToFight.length)
+    
+            const fighter = readyToFight[index]
+    
+            this.playTurn(fighter)
+        }
+        this.fighterGroups.forEach(fighterGroup => {
+            fighterGroup.forEach(fighter => {
+                fighter.cooldown -=1
+            });
+        });
+    }
+
+    /**
+     * returns all the fighters whose cooldowns are equal and are the minimum. This is not sorted randomly.
+     * @param fighters 
+     * @returns 
+     */
+    private static getMinimunCooldowns(fighters : Fighter[])
+    {
+        if(fighters.length<=1)
+            return fighters
+
+        fighters.sort((a:Fighter,b:Fighter)=>a.cooldown - b.cooldown)
+
+        const minCooldownFighters : Fighter[] = [fighters[0]]
+
+        const minCooldown = fighters[0].cooldown
+        let nextCooldown = fighters[1].cooldown
+
+        let i = 1
+        while(minCooldown == nextCooldown && i<fighters.length)
+        {
+            nextCooldown = fighters[i].cooldown
+            minCooldownFighters.push(fighters[i])
+            i++
+        }
+        return minCooldownFighters
+    }
+
+    public end()
+    {
+        if(this.fighterGroups.length == 0)
+        {
+            this.turnRecaps.push(`there is no clear winner : no one is still standing.`)
+        }
+        else if(this.fighterGroups.length == 1)
+        {
+            if(this.fighterGroups[0].length==1)
+            {
+                this.turnRecaps.push(`the winner of the fight is ${this.fighterGroups[0][0].creature.creatureName}.`)
+            }
+            else
+            {
+                let recap = `the winners of the fight are `
+                for (let i = 0; i < this.fighterGroups[0].length; i++) {
+                    const fighter = this.fighterGroups[0][i];
+                    recap = `${recap} ${fighter.creature.creatureName}`
+                    if(i<this.fighterGroups[0].length-1)
+                        recap = `${recap}, `
+                }
+            }
+        }
+    }
+
+    private playTurn(fighter : Fighter)
+    {
+        const{cooldown, turn} = fighter.fightBehavior.doTurn(this.fighterGroups)
+
+        const {recap,affected} = turn.play()
+
+        const deadFighters : Fighter[] = []
+
+        for (let i = 0; i < affected.length; i++) {
+            const affectedFighter = affected[i];
+            if(!affectedFighter.creature.isAlive)
+            {
+                Fighter.removeFighter(this.fighterGroups,affectedFighter)
+                deadFighters.push(affectedFighter)
+            }
+        }
+
+        fighter.cooldown = cooldown
+        this.turnRecaps.push(recap)
+        for (let i = 0; i < deadFighters.length; i++) {
+            this.turnRecaps.push(`${deadFighters[i].creature.creatureName} is dead !`)
+        }
     }
 
 

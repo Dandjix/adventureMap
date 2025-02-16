@@ -1,24 +1,22 @@
 import { Material } from "../Materials/Material";
 import Weapon from "./Weapon";
 
-export default class ShortSword extends Weapon{
+export default class Nuke extends Weapon{
     getBaseCooldown(): number {
         return 10
     }
     getBaseDamage(): number {
-        return this.material.sharpnessMultiplier*(this.quality+2)*5
+        return 999999
     }
     getName(): string {
-        return `${this.material.name} short sword`
+        return `${this.material.name} nuke`
     }
-    /**
-     *
-     */
+
     constructor(material : Material,quality:number=0) {
         super(material,quality,["#side hand","#index #side hand"],["human","abomination"])
     }
 
     protected getWeightMultiplier(): number {
-        return 1
+        return 10
     }
 }
