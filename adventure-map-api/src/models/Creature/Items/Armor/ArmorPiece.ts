@@ -7,6 +7,16 @@ export abstract class ArmorPiece extends Item {
     readonly bodyParts: string[];
     readonly creatures: string[];
 
+    /**
+     * @returns 0 if no damage is deflected, 1 if all damage is deflected
+     */
+    public getDamageDeflected()
+    {
+        // damageDeflected = Math.pow(this.material.protection,)
+        // return 
+        return 0.5
+    }
+
     constructor(material : Material,bodyParts: string[], creatures: string[]) {
         if (bodyParts.length === 0 || creatures.length === 0) {
             throw new Error("Body parts and creatures arrays cannot be empty");

@@ -12,7 +12,7 @@ export abstract class Turn
         this.attacker = attacker
         this.defender = defender
     }
-    abstract recap():string|undefined
+    abstract recap:string|undefined
 
     abstract play() : void
 }
