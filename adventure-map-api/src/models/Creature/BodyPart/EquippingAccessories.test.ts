@@ -67,10 +67,15 @@ test("abomination ring equip test", () => {
   for (let i = 0; i < numberOfLeftHands; i++) {
     for (let j = 0; j < 5; j++) {
       const ring = rings[i*5+j];
-      expect(bob.equipAccessory(ring,`#${i} left hand`)).toBe(true)
+      expect(bob.equip(ring,`#${i} left hand`)).toBe(true)
     }
   }
-  expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#0 left hand`)).toBe(false)
+  // console.log("before : ",bob.bodyParts.find(bodyPart => bodyPart.getName()=="1st left hand")?.accessories.length);
+  
+  const equipped = bob.equip(new Ring(world.materialIndex.materials["gold"]),`#0 left hand`)
+  expect(equipped).toBe(false)
+
+  // console.log("after : ",bob.bodyParts.find(bodyPart => bodyPart.getName()=="1st left hand")?.accessories.length);
 });
 
 test("abomination unequip test", () => {
@@ -84,9 +89,9 @@ test("abomination unequip test", () => {
 
   for (let i = 0; i < 5; i++) {
       const ring = rings[i];
-      expect(bob.equipAccessory(ring,`#3 left hand`)).toBe(true)
+      expect(bob.equip(ring,`#3 left hand`)).toBe(true)
   }
-  expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(false)
+  expect(bob.equip(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(false)
 
   for (let i = 0; i < 5; i++) {
     // console.log(`unequipping ${i}`);
@@ -98,7 +103,7 @@ test("abomination unequip test", () => {
 test("ring equipped on correct hand",()=>{
   const bob = new Abomination("Bob",WorldDate.now(world),"male")
 
-  expect(bob.equipAccessory(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(true)
+  expect(bob.equip(new Ring(world.materialIndex.materials["gold"]),`#3 left hand`)).toBe(true)
 
   for (let i = 0; i < bob.bodyParts.length; i++) {
     const part = bob.bodyParts[i]
@@ -109,3 +114,22 @@ test("ring equipped on correct hand",()=>{
     }
   }
 })
+
+// test.only("check",()=>
+// {
+//   const bob = new Abomination("Bob",WorldDate.now(world),"male")
+
+//   const ring1 = new Ring(world.materialIndex.materials["gold"])
+//   const ring2 = new Ring(world.materialIndex.materials["gold"])
+//   const ring3 = new Ring(world.materialIndex.materials["gold"])
+//   const ring4 = new Ring(world.materialIndex.materials["gold"])
+
+//   bob.equip(ring1,"#3 left hand")
+//   bob.equip(ring2,"#3 left hand")
+//   bob.equip(ring3,"#3 left hand")
+//   bob.equip(ring4,"#3 left hand")
+
+//   bob.bodyParts.forEach(element => {
+//     console.log(element.getName()," : ",JSON.stringify(element.accessories),"\n");
+//   });
+// })

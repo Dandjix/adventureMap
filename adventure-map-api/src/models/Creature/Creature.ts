@@ -49,6 +49,22 @@ export abstract class Creature
         this.dateOfBirth = date_of_birth
     }
 
+    private firstSuitableBodyPartFor(item : ArmorPiece|Accessory|Weapon) : BodyPart | false
+    {
+        for (let i = 0; i < this.bodyParts.length; i++) {
+            const bodyPart = this.bodyParts[i];
+            if(
+                BodyPart.bodyPartIncludes(item.bodyParts,bodyPart.getName())
+                &&!bodyPart.isMissing()
+                &&(!(item instanceof Accessory) || (bodyPart.accessories.length<bodyPart.getNumberOfEquipableAccessories()))
+                &&(!(item instanceof Weapon) || !(bodyPart.weapon))
+                &&(!(item instanceof ArmorPiece) || !(bodyPart.armorPiece))
+                )
+            return bodyPart
+        }
+        return false
+    }
+
     public equip(item : ArmorPiece|Accessory|Weapon, bodyPart : string | BodyPart | undefined = undefined): boolean
     {
         if(!item.creatures.includes(this.getSpeciesName()))
@@ -56,76 +72,39 @@ export abstract class Creature
             return false
         }
 
-        for (let i = 0; i < this.bodyParts.length; i++) {
-            const bodyPart = this.bodyParts[i];
-        
-            if(
-                BodyPart.bodyPartIncludes(item.bodyParts,bodyPart.getName())
-                &&!bodyPart.isMissing()
-                &&(!(item instanceof Accessory) || !(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
-                &&(!(item instanceof Weapon) || !(bodyPart.weapon))
-                &&(!(item instanceof ArmorPiece) || !(bodyPart.armorPiece))
-                )
-            {
-                if(item instanceof Accessory)
-                    bodyPart.accessories.push(item)
-
-                else if(item instanceof ArmorPiece)
-                    bodyPart.armorPiece = item
-
-                else //if (item instanceof Weapon)
-                    bodyPart.weapon = item
-                
-                return true
-            }
+        if(typeof bodyPart == "string")
+        {
+            const result = BodyPart.find(this.bodyParts,bodyPart)
+            if (result === undefined)
+                return false
+            bodyPart = result
         }
-        return false
-    }
+        else if(bodyPart == undefined)
+        {
+            const result = this.firstSuitableBodyPartFor(item)
+            if (result === false)
+                return false
+            bodyPart = result
+        }
 
-    // public equipAccessory(accessoryToEquip:Accessory,bodyPartName:string)
-    // {
-    //     if(!accessoryToEquip.species.includes(this.getSpeciesName()))
-    //     {
-    //         return false
-    //     }
+        if(!(BodyPart.bodyPartIncludes(item.bodyParts,bodyPart.getName())
+        &&!bodyPart.isMissing()
+        &&(!(item instanceof Accessory) || (bodyPart.accessories.length<bodyPart.getNumberOfEquipableAccessories()))
+        &&(!(item instanceof Weapon) || !(bodyPart.weapon))
+        &&(!(item instanceof ArmorPiece) || !(bodyPart.armorPiece))))
+            return false
 
-    //     //this is code that determines the qualificator of a numerous body part special string (ie #2 left hand => 2nd left hand)
-    //     const numerousRegexp = /#(\d+)/.exec(bodyPartName);
-    //     if(
-    //         numerousRegexp && numerousRegexp.length>1){
-    //         const index = parseInt(numerousRegexp[1])
-    //         const qualification = getQualificator(index)
-            
+        if(item instanceof Accessory)
+            bodyPart.accessories.push(item)
 
-    //         bodyPartName = bodyPartName.replace(/#(\d+)/, (_, num) => qualification);
-    //     }
+        else if(item instanceof ArmorPiece)
+            bodyPart.armorPiece = item
+
+        else //if (item instanceof Weapon)
+            bodyPart.weapon = item
         
-
-
-
-    //     for (let i = 0; i < this.bodyParts.length; i++) {
-    //         const bodyPart = this.bodyParts[i];
-    //         // console.log("values : ",
-    //         //     "bpn ",bodyPartName,bodyPart.getName(),
-    //         //     "matches : ",bodyPart.getName()==bodyPartName,
-    //         //     "bodyPartIncludes ",bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName()),
-    //         //     "missing ",bodyPart.isMissing(),
-    //         //     "too many acc : ",bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()
-    //         // );
-            
-    //         if(
-    //             bodyPartName == bodyPart.getName()
-    //             && BodyPart.bodyPartIncludes(accessoryToEquip.bodyParts,bodyPart.getName())
-    //             &&!bodyPart.isMissing()
-    //             &&!(bodyPart.accessories.length>=bodyPart.getNumberOfEquipableAccessories()))
-    //         {
-    //             bodyPart.accessories.push(accessoryToEquip)
-                
-    //             return true
-    //         }
-    //     }
-    //     return false
-    // }
+        return true
+    }
 
     public unEquipArmor(bodyPartToUnequip : string)
     {

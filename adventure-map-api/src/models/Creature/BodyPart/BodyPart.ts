@@ -147,6 +147,12 @@ export default abstract class BodyPart
         return {anySide:anySide,specificSide:specificSide}
     }
 
+    /**
+     * finds the first body part by name. this matches "#0 left hand" with first left hand. 
+     * @param bodyParts 
+     * @param bodyPartName 
+     * @returns 
+     */
     static find(bodyParts : BodyPart[],bodyPartName : string)
     {
         for (let i = 0; i < bodyParts.length; i++) {
