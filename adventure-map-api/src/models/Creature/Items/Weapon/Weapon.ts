@@ -1,9 +1,12 @@
 import BodyPart from "../../BodyPart/BodyPart";
-import { Creature } from "../../Creature";
 import { Item } from "../Item";
 import { Material } from "../Materials/Material";
 
-export abstract class ArmorPiece extends Item {
+export default abstract class Weapon extends Item
+{
+    abstract getBaseCooldown():number
+    abstract getBaseDamage():number
+
     readonly bodyParts: string[];
     readonly creatures: string[];
 
@@ -13,13 +16,10 @@ export abstract class ArmorPiece extends Item {
         }
         if(!BodyPart.validateBodyPartOptions(bodyParts))
         {
-            throw new Error("the body part options for that armor piece are incorrect")
+            throw new Error("the body part options for that weapon are incorrect")
         }
         super(material);
         this.bodyParts = bodyParts;
         this.creatures = creatures;
     }
-
-    // abstract getName(): string;
-    // abstract getWeightMultiplier(): number;
 }

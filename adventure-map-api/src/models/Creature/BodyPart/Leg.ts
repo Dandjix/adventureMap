@@ -3,9 +3,9 @@ import SidedBodyPart from "./SidedBodyPart";
 
 export class Leg extends BodyPart implements SidedBodyPart
 {
-    side: "right" | "left";
+    readonly side: "right" | "left";
     natural_toughness: number
-    size: number
+    readonly size: number
 
     constructor(side:"right"|"left",natural_toughness : number, size : number = 0.7) {
         super();

@@ -5,7 +5,7 @@ export class Hand extends BodyPart implements SidedBodyPart
 {
     natural_toughness: number
     size: number
-    side:"right"|"left"
+    readonly side:"right"|"left"
     /**
      * a hand is kinda small, so 0.5.
      */

@@ -1,7 +1,7 @@
 import { clamp } from "../../../util/clamp"
 import { Accessory } from "../Items/Accessories/Accessory"
 import { ArmorPiece } from "../Items/Armor/ArmorPiece"
-import { Weapon } from "../Items/Weapon"
+import Weapon from "../Items/Weapon/Weapon"
 import { getIndex, getQualificator } from "./NumerousBodyPart"
 
 export default abstract class BodyPart
