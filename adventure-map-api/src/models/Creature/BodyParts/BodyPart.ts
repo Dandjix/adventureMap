@@ -144,4 +144,14 @@ export default abstract class BodyPart
         }
         return {anySide:anySide,specificSide:specificSide}
     }
+
+    static find(bodyParts : BodyPart[],bodyPartName : string)
+    {
+        for (let i = 0; i < bodyParts.length; i++) {
+            const bp = bodyParts[i];
+            if(BodyPart.nameMatches(bp.getName(),bodyPartName))
+                return bp
+        }
+        return undefined
+    }
 }

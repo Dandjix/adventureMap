@@ -4,25 +4,34 @@ import { Turn } from "./Turn";
 
 
 /**
- * Bob Bashes Alice with his head
- * or Bob Bashes Alice with the Battle Axe in his right hand
+ * Bob [verb] Alice with his head
+ * or Bob [verb] Alice with the Battle Axe in his right hand
  */
-export class Bash extends Turn
+export abstract class AttackTurn extends Turn
 {
     play(): void {
         this.targetBodyPart
     }
 
+    /**
+     * can be "bashes", "shoots", "obliterates", "kisses"
+     */
+    abstract getVerb() : string
+
+    abstract getHealthDamage() : number
+
+    abstract getLimbDamage() : number
+
     recap()
     {
-        return `${this.attacker.creatureName} bashes ${this.defender.creatureName} in the ${this.targetBodyPart} with his ${this.attackingBodyPart}`
+        return `${this.attacker.creatureName} ${this.getVerb()} ${this.defender.creatureName} in the ${this.targetBodyPart} with his ${this.attackingBodyPart}`
     }
     targetBodyPart : BodyPart
     attackingBodyPart : BodyPart
     /**
      *
      */
-    constructor(attacker : Creature,defender : Creature,targetBodyPart:string|BodyPart,attackingBodyPart:string|BodyPart) {
+    constructor(attacker : Creature,attackingBodyPart:string|BodyPart,defender : Creature,targetBodyPart:string|BodyPart) {
         super(attacker,defender);
 
         if (targetBodyPart instanceof BodyPart) 

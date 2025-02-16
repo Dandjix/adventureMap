@@ -23,7 +23,7 @@ export default class FightBehavior
     {
         const ennemies = Fighter.getEnnemies(this.fighter,fighterGroups)
 
-        const  turn : Turn = new Bash(this.fighter.creature,ennemies[0].creature,"head")
+        const  turn : Turn = new Bash(this.fighter.creature,ennemies[0].creature,"head","right hand")
         return {cooldown:1 , turn:turn}
     }
 }
