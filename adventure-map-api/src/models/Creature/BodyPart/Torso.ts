@@ -20,10 +20,6 @@ export class Torso extends BodyPart
     getName(): string {
         return "torso"
     }
-
-    getCanEquipArmor(): boolean {
-        return true
-    }
     /**
      * one backback
      */

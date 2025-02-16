@@ -13,15 +13,11 @@ export class Head extends BodyPart
         this.natural_toughness = natural_toughness
         this.size = size
     }
-
     getIsVital(): boolean {
         return true
     }
     getName(): string {
         return "head"
-    }
-    getCanEquipArmor(): boolean {
-        return true
     }
     getNumberOfEquipableAccessories(): number {
         return 5

@@ -1,35 +1,17 @@
 import BodyPart from "./BodyPart";
+import { Hand } from "./Hand";
 import NumerousBodyPart, { getQualificator } from "./NumerousBodyPart";
-import SidedBodyPart from "./SidedBodyPart";
 
-export default class NumerousHand extends BodyPart implements SidedBodyPart, NumerousBodyPart
+export default class NumerousHand extends Hand implements NumerousBodyPart
 {
-    getName(): string {
-        return `${getQualificator(this.index)} ${this.side} hand`
-    }
-    getIsVital(): boolean {
-        return false
-    }
-    getCanEquipArmor(): boolean {
-        return true
-    }
-    getNumberOfEquipableAccessories(): number {
-        return 5;
-    }
-    natural_toughness: number;
-    size: number;
-    side: "right" | "left";
     index: number;
 
-    /**
-     *
-     */
     constructor(side : "right"|"left",natural_toughness : number ,index:number, size:number = 0.5) {
-        super();
-        this.side = side
-        this.natural_toughness = natural_toughness
-        this.size = size
+        super(side,natural_toughness,size);
         this.index = index
     }
 
+    getName(): string {
+        return `${getQualificator(this.index)} ${super.getName()}`
+    }
 }

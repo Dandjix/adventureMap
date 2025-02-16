@@ -11,8 +11,6 @@ export default abstract class BodyPart
      */
     abstract getName():string
     abstract getIsVital() : boolean
-    abstract getCanEquipArmor() : boolean
-    abstract getCanEquipWeapon() : boolean
     abstract getNumberOfEquipableAccessories() : number
     /**
      * this goes from 0 to 1. At 0, the body part should be removed as it has been pulverized.

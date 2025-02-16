@@ -14,15 +14,11 @@ export class Leg extends BodyPart implements SidedBodyPart
         this.size = size
     }
 
-    
     getIsVital(): boolean {
         return false
     }
     getName(): string {
         return this.side+" leg"
-    }
-    getCanEquipArmor(): boolean {
-        return true
     }
     getNumberOfEquipableAccessories(): number {
         return 4

@@ -25,9 +25,6 @@ export class Hand extends BodyPart implements SidedBodyPart
     getName(): string {
         return this.side+" hand"
     }
-    getCanEquipArmor(): boolean {
-        return true
-    }
     /**
      * one for each finger
      * @returns 
