@@ -9,7 +9,7 @@ import { Human } from '../models/Creature/Species/Human';
 import { WorldDate } from '../models/util/WorldDate';
 import {World} from '../models/World/World';
 import Backpack from '../models/Creature/Items/Accessories/Backpack';
-import { Torso } from '../models/Creature/BodyParts/Torso';
+import { Torso } from '../models/Creature/BodyPart/Torso';
 import { Helmet } from '../models/Creature/Items/Armor/Helmet';
 import { Ring } from '../models/Creature/Items/Accessories/Ring';
 import { Abomination } from '../models/Creature/Species/Abomination';

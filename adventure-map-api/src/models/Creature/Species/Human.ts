@@ -1,11 +1,11 @@
 import { WorldDate } from "../../util/WorldDate";
 import { World } from "../../World/World";
 import { Adventurer } from "../Adventurer";
-import BodyPart from "../BodyParts/BodyPart";
-import { Hand } from "../BodyParts/Hand";
-import { Head } from "../BodyParts/Head";
-import { Leg } from "../BodyParts/Leg";
-import { Torso } from "../BodyParts/Torso";
+import BodyPart from "../BodyPart/BodyPart";
+import { Hand } from "../BodyPart/Hand";
+import { Head } from "../BodyPart/Head";
+import { Leg } from "../BodyPart/Leg";
+import { Torso } from "../BodyPart/Torso";
 import { Creature } from "../Creature";
 import { GenderedCreature } from "../GenderedCreature";
 import { Item } from "../Items/Item";

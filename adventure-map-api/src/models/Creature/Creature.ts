@@ -1,13 +1,13 @@
 import { Schema, model, Document } from 'mongoose';
 
 import { WorldDate } from '../util/WorldDate';
-import BodyPart from './BodyParts/BodyPart';
+import BodyPart from './BodyPart/BodyPart';
 import { Item } from './Items/Item';
 import { Weapon } from './Items/Weapon';
 import { ArmorPiece } from './Items/Armor/ArmorPiece';
 import { Accessory } from './Items/Accessories/Accessory';
 import { World } from '../World/World';
-import { getQualificator } from './BodyParts/NumerousBodyPart';
+import { getQualificator } from './BodyPart/NumerousBodyPart';
 
 export abstract class Creature
 {

@@ -1,4 +1,4 @@
-import BodyPart from '../../Creature/BodyParts/BodyPart';
+import BodyPart from '../../Creature/BodyPart/BodyPart';
 import { Creature } from "../../Creature/Creature";
 import { Turn } from "./Turn";
 

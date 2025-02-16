@@ -1,6 +1,7 @@
 import { clamp } from "../../../util/clamp"
 import { Accessory } from "../Items/Accessories/Accessory"
 import { ArmorPiece } from "../Items/Armor/ArmorPiece"
+import { Weapon } from "../Items/Weapon"
 import { getIndex, getQualificator } from "./NumerousBodyPart"
 
 export default abstract class BodyPart
@@ -11,6 +12,7 @@ export default abstract class BodyPart
     abstract getName():string
     abstract getIsVital() : boolean
     abstract getCanEquipArmor() : boolean
+    abstract getCanEquipWeapon() : boolean
     abstract getNumberOfEquipableAccessories() : number
     /**
      * this goes from 0 to 1. At 0, the body part should be removed as it has been pulverized.
@@ -49,6 +51,8 @@ export default abstract class BodyPart
     }
 
     armorPiece? : ArmorPiece
+
+    weapon? : Weapon
 
     accessories : Accessory[] = []
 

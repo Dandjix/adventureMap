@@ -1,5 +1,5 @@
-import BodyPart from "../../BodyParts/BodyPart";
-import { Head } from "../../BodyParts/Head";
+import BodyPart from "../../BodyPart/BodyPart";
+import { Head } from "../../BodyPart/Head";
 import { Creature } from "../../Creature";
 import { Human } from "../../Species/Human";
 import { Material } from "../Materials/Material";

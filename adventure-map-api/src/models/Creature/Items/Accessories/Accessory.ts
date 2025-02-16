@@ -1,4 +1,4 @@
-import BodyPart from "../../BodyParts/BodyPart";
+import BodyPart from "../../BodyPart/BodyPart";
 import { Creature } from "../../Creature";
 import { Item } from "../Item";
 import { Material } from "../Materials/Material";
