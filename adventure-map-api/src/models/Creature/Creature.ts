@@ -8,6 +8,9 @@ import { ArmorPiece } from './Items/Armor/ArmorPiece';
 import { Accessory } from './Items/Accessories/Accessory';
 import { World } from '../World/World';
 import { getQualificator } from './BodyPart/NumerousBodyPart';
+import { Helmet } from './Items/Armor/Helmet';
+import { Material } from './Items/Materials/Material';
+import { Metal } from './Items/Materials/Metal';
 
 export abstract class Creature
 {
@@ -46,12 +49,14 @@ export abstract class Creature
         this.dateOfBirth = date_of_birth
     }
 
-    public equip(item : ArmorPiece|Accessory): boolean
+    public equip(item : ArmorPiece|Accessory|Weapon): boolean
     {
         if(item instanceof ArmorPiece)
             return this.equipArmorInternal(item)
-
-        return this.equipAccessoryInternal(item)
+        if(item instanceof Accessory)
+            return this.equipAccessoryInternal(item)
+        // if(item instanceof Weapon)
+        return this.equipWeaponInternal(item)
     }
 
     private equipArmorInternal(armorPieceToEquip:ArmorPiece) : boolean
@@ -112,6 +117,31 @@ export abstract class Creature
                 return true
             }
         }
+        return false
+    }
+
+    private equipWeaponInternal(weapon:Weapon) : boolean
+    {
+        if(!weapon.creatures.includes(this.getSpeciesName())){
+            return false
+        }
+
+
+        for (let i = 0; i < this.bodyParts.length; i++) {
+            const bodyPart = this.bodyParts[i];
+
+            if(
+                BodyPart.bodyPartIncludes(weapon.bodyParts,bodyPart.getName()) 
+                &&!bodyPart.isMissing()
+                &&!bodyPart.weapon)
+            {
+
+                bodyPart.weapon = weapon
+                return true
+            }
+            
+        }
+
         return false
     }
 
@@ -183,6 +213,20 @@ export abstract class Creature
                 const accessory = bodyPart.accessories[index]
                 bodyPart.accessories.splice(index,1)
                 return accessory
+            }
+        }
+        return undefined
+    }
+
+    public unEquipWeapon(bodyPartToUnequip : string)
+    {
+        for (let i = 0; i < this.bodyParts.length; i++) {
+            const bodyPart = this.bodyParts[i];
+            if(bodyPart.getName()==bodyPartToUnequip && bodyPart.weapon)
+            {
+                const weapon = bodyPart.weapon
+                bodyPart.weapon = undefined
+                return weapon
             }
         }
         return undefined

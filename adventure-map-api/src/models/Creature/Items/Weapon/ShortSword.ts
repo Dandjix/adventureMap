@@ -1,3 +1,4 @@
+import { Material } from "../Materials/Material";
 import Weapon from "./Weapon";
 
 export default class ShortSword extends Weapon{
@@ -10,6 +11,13 @@ export default class ShortSword extends Weapon{
     getName(): string {
         return `${this.material.name} short sword`
     }
+    /**
+     *
+     */
+    constructor(material : Material) {
+        super(material,["#side hand","#index #side hand"],["human","abomination"])
+    }
+
     protected getWeightMultiplier(): number {
         return 1
     }

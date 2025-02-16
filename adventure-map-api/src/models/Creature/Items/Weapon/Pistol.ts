@@ -1,8 +1,10 @@
 import Weapon from "./Weapon";
-import { SidedWeapon } from './SidedWeapon';
 import { SidedItem } from "../SidedItem";
 import { Material } from "../Materials/Material";
 
+/**
+ * lol, lmao
+ */
 export default class Pistol extends Weapon implements SidedItem{
     readonly side: "left" | "right";
 
@@ -15,9 +17,10 @@ export default class Pistol extends Weapon implements SidedItem{
     }
 
     getBaseCooldown(): number {
+        return 1
     }
     getBaseDamage(): number {
-        throw new Error("Method not implemented.");
+        return 999999
     }
     getName(): string {
         return `${this.material.name} short sword`
