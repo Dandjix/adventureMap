@@ -11,6 +11,7 @@ import { getQualificator } from './BodyPart/NumerousBodyPart';
 import { Helmet } from './Items/Armor/Helmet';
 import { Material } from './Items/Materials/Material';
 import { Metal } from './Items/Materials/Metal';
+import { clamp } from '../../util/clamp';
 
 export abstract class Creature
 {
@@ -26,7 +27,45 @@ export abstract class Creature
 
     //fight attributes
     naturalSpeed : number
+    /**
+     * this is the maximum health of the creature
+     */
     naturalHealth : number
+
+    private _health : number
+
+
+    private _isAlive : boolean
+    /**
+     * when this is set to false, the creature is a corpse. The undead that are not defeated also have this on true.
+     */
+    public get isAlive()
+    {
+        return this._isAlive
+    }
+    /**
+     * this is the current health of the creature.
+     */
+    public set health(newHealth : number)
+    {
+        this._health = clamp(newHealth,0,this.naturalHealth)
+        this._isAlive = this._health > 0
+    }
+
+    public get health()
+    {
+        return this.health
+    }
+
+    /** 
+     * a creature that is on the edge of death will be very tired. Unless they have a high berserk attribute.
+     */
+    public get stamina()
+    {
+        const healthPercentage = this.naturalHealth/this.health
+        return Math.max(healthPercentage + this.naturalBerserk - (healthPercentage*this.naturalBerserk),0)
+    }
+
     /**
      * this ranges from 0 to 1 (and possibly beyond but wtf). 
      * 0 means that at 0 natural_health, this creatures natural_strength becomes 0, 
@@ -55,12 +94,15 @@ export abstract class Creature
         bodyParts : BodyPart[],
         stowedItems : Item[]
     ) {
+        this._isAlive = true
+
         this.creatureName = creature_name
         this.dateOfBirth = date_of_birth
 
         this.naturalAttractiveness = naturalAttractiveness
         this.naturalSpeed = naturalSpeed
         this.naturalHealth = naturalHealth
+        this._health = naturalHealth
         this.naturalBerserk = naturalBerserk
         this.naturalStrength = naturalStrength
 
