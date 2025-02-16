@@ -13,7 +13,7 @@ import { Item } from "../Items/Item";
 export class Abomination extends Creature implements GenderedCreature
 {
     getSpeciesName(): string {
-        return "human"
+        return "abomination"
     }
 
     constructor(creature_name : string, date_of_birth : WorldDate,gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
