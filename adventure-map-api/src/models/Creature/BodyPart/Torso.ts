@@ -9,7 +9,7 @@ export class Torso extends BodyPart
         super(natural_health,size);
     }
 
-    getIsVital(): boolean {
+    get isVital(): boolean {
         return true
     }
     getName(): string {

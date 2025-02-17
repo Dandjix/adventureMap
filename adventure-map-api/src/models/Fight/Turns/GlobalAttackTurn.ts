@@ -1,6 +1,6 @@
 import BodyPart from '../../Creature/BodyPart/BodyPart';
 import { Creature } from "../../Creature/Creature";
-import { Turn } from "./Turn";
+import Turn, { Affected } from "./Turn";
 import Weapon from '../../Creature/Items/Weapon/Weapon';
 import { GenderedCreature } from '../../Creature/GenderedCreature';
 import { ArmorPiece } from '../../Creature/Items/Armor/ArmorPiece';
@@ -18,13 +18,27 @@ export abstract class GlobalAttackTurn extends Turn
 
     play() {
         const healthDamage = this.getHealthDamage()
-
+        const limbDamage = this.getLimbDamage()
+        const affected :Affected[] = []
         for (let i = 0; i < this.defenders.length; i++) {
             const defender = this.defenders[i];
+            const affectedLimbs : BodyPart[] = []
+            if(limbDamage>0)
+            {
+                defender.creature.bodyParts.forEach(bodyPart => {
+                    if(!bodyPart.isMissing)
+                    {
+                        bodyPart.health -= limbDamage
+                        affectedLimbs.push(bodyPart)
+                    }
+                });
+            }
+            affected.push(new Affected(defender,affectedLimbs))
+
             defender.creature.health -= healthDamage
         }
 
-        return {recap:this.getRecap(healthDamage),affected:this.defenders}
+        return {recap:this.getRecap(healthDamage,limbDamage),affected:affected}
     }
 
     /**
@@ -37,10 +51,20 @@ export abstract class GlobalAttackTurn extends Turn
      */
     abstract getHealthDamage() : number
 
-    public getRecap(healthDamage : number)
+    /**
+     * this is only used once
+     */
+    abstract getLimbDamage() : number
+
+    public getRecap(healthDamage : number,limbDamage : number)
     {
         const attackerPronoun = (('gender' in this.attacker.creature) && this.attacker.creature.gender=="female") ? "her" : "his"
-        return `${this.attacker.creature.creatureName} ${this.getVerb()} ${this.getDefendersNames()} using ${attackerPronoun} ${this.weapon!.getName()}  for ${this.getHealthDamage()} health of damage.`
+        let recap = `${this.attacker.creature.creatureName} ${this.getVerb()} ${this.getDefendersNames()} `
+        if(this.weapon)
+            recap += ` using the ${this.weapon.getName()} in ${attackerPronoun} ${this.attackerBodyPart.getName()}`
+        else
+            recap += ` using ${attackerPronoun} ${this.attackerBodyPart.getName()}`
+        return `${recap} for ${healthDamage} health damage and ${limbDamage} limb damage.`
     }
 
     private getDefendersNames()

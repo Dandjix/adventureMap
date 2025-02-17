@@ -12,10 +12,10 @@ export class Hand extends BodyPart implements SidedBodyPart
         this.side = side
     }
 
-    getIsVital(): boolean {
+    get isVital(): boolean {
         return false
     }
-    static getIsVital(): boolean {
+    static get isVital(): boolean {
         return false
     }
     getName(): string {

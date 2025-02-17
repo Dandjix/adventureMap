@@ -19,11 +19,11 @@ export class Abomination extends Creature implements GenderedCreature
     constructor(creature_name : string, date_of_birth : WorldDate,gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
         const bodyParts = [
             new Torso(1),
-            new Head(0.66)
+            new Head(66)
         ]
         for (let i = 0; i < 10; i++) {
-            bodyParts.push(new NumerousHand("right",0.25,i))
-            bodyParts.push(new NumerousHand("left",0.25,i))
+            bodyParts.push(new NumerousHand("right",25,i))
+            bodyParts.push(new NumerousHand("left",25,i))
         }
         
         super(creature_name,

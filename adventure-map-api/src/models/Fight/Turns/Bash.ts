@@ -3,7 +3,7 @@ import { Creature } from "../../Creature/Creature";
 import Weapon from '../../Creature/Items/Weapon/Weapon';
 import Fighter from '../Fighter';
 import { OneOnOneAttackTurn } from './OneOnOneAttackTurn';
-import { Turn } from "./Turn";
+import Turn from "./Turn";
 
 
 /**

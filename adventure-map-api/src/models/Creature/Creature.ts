@@ -12,6 +12,7 @@ import { Helmet } from './Items/Armor/Helmet';
 import { Material } from './Items/Materials/Material';
 import { Metal } from './Items/Materials/Metal';
 import { clamp } from '../../util/clamp';
+import { createCreatureName } from './Naming/CreatureName';
 
 export abstract class Creature
 {
@@ -84,7 +85,7 @@ export abstract class Creature
     abstract getSpeciesName() : string
 
     constructor(
-        creatureName : string,
+        creatureName : string|undefined = undefined,
         dateOfBirth :WorldDate,
         naturalAttractiveness:number,
         naturalSpeed : number,
@@ -95,8 +96,10 @@ export abstract class Creature
         stowedItems : Item[]
     ) {
         this._isAlive = true
-
-        this.creatureName = creatureName
+        if(creatureName)
+            this.creatureName = creatureName
+        else
+            this.creatureName = createCreatureName()
         this.dateOfBirth = dateOfBirth
 
         this.naturalAttractiveness = naturalAttractiveness
@@ -116,7 +119,7 @@ export abstract class Creature
             const bodyPart = this.bodyParts[i];
             if(
                 BodyPart.bodyPartIncludes(item.bodyParts,bodyPart.getName())
-                &&!bodyPart.isMissing()
+                &&!bodyPart.isMissing
                 &&(!(item instanceof Accessory) || (bodyPart.accessories.length<bodyPart.getNumberOfEquipableAccessories()))
                 &&(!(item instanceof Weapon) || !(bodyPart.weapon))
                 &&(!(item instanceof ArmorPiece) || !(bodyPart.armorPiece))
@@ -149,7 +152,7 @@ export abstract class Creature
         }
 
         if(!(BodyPart.bodyPartIncludes(item.bodyParts,bodyPart.getName())
-        &&!bodyPart.isMissing()
+        &&!bodyPart.isMissing
         &&(!(item instanceof Accessory) || (bodyPart.accessories.length<bodyPart.getNumberOfEquipableAccessories()))
         &&(!(item instanceof Weapon) || !(bodyPart.weapon))
         &&(!(item instanceof ArmorPiece) || !(bodyPart.armorPiece))))

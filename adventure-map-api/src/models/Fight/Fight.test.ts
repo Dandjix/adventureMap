@@ -9,6 +9,10 @@ import Fight from "./Fight"
 import Fighter from "./Fighter"
 import { OneOnOneAttackTurn } from "./Turns/OneOnOneAttackTurn"
 import FireAt from "./Turns/FireAt"
+import BodyPart from "../Creature/BodyPart/BodyPart"
+import { createCreatureName } from "../Creature/Naming/CreatureName"
+import Random from "../../random/random"
+import { Gauntlet } from "../Creature/Items/Armor/Gauntlet"
 
 let world : World
 
@@ -34,22 +38,20 @@ test('bob executes alice', () => {
     const Alice = new Human("alice",WorldDate.now(world),"female")
     const Bob = new Human("bob",WorldDate.now(world),"male")
 
-    expect(Bob.equip(new ShortSword(world.materialIndex.materials["steel"],1),"right hand")).toBe(true)
-    
+    // expect(Bob.equip(new ShortSword(world.materialIndex.materials["steel"],1),"right hand")).toBe(true)
+    // console.log("health of b head : "+Bob.bodyParts.find((bp)=>BodyPart.nameMatches(bp.getName(),"head"))?.health);
+    // console.log("health of a head : "+Alice.bodyParts.find((bp)=>BodyPart.nameMatches(bp.getName(),"head"))?.health);
+
     expect(Alice.equip(new Helmet(world.materialIndex.materials["steel"],1))).toBe(true)
 
     const fight = new Fight([[new Fighter(Bob)],[new Fighter(Alice)]])
-    while(!fight.isOver)
-    {
-        fight.advance()
-    }
-    fight.end()
+    fight.playAll()
 
     console.log(fight.recap);
     
  })
 
- test('lol, lmao',()=>{
+ test('nuke test, lmao',()=>{
     const Alice = new Human("alice",WorldDate.now(world),"female")
     const Bob = new Human("bob",WorldDate.now(world),"male")
 
@@ -58,11 +60,37 @@ test('bob executes alice', () => {
     expect(Alice.equip(new Helmet(world.materialIndex.materials["steel"],1))).toBe(true)
 
     const fight = new Fight([[new Fighter(Bob)],[new Fighter(Alice)]])
-    while(!fight.isOver)
-    {
-        fight.advance()
+
+    fight.playAll()
+
+    console.log(fight.recap);
+    
+ })
+
+ test('full scale battle',()=>{
+    const random = new Random()
+    const side1 : Fighter[] = []
+    const side2 : Fighter[] = []
+    for (let i = 0; i < 10; i++) {
+        const gender = random.random()<0.5 ? "male" : "female"
+        const creature = new Human(createCreatureName(gender,random),WorldDate.now(world),gender)
+
+        creature.equip(new Helmet(world.materialIndex.materials["steel"]))
+        creature.equip(new Gauntlet(world.materialIndex.materials["steel"],"left"))
+        creature.equip(new Gauntlet(world.materialIndex.materials["steel"],"right"))
+
+        creature.equip(new ShortSword(world.materialIndex.materials["steel"]),"right hand")
+
+        if(random.random()<0.5)
+            side1.push(new Fighter(creature))
+        else
+            side2.push(new Fighter(creature))
+        
     }
-    fight.end()
+
+    const fight = new Fight([side1,side2])
+
+    fight.playAll()
 
     console.log(fight.recap);
     

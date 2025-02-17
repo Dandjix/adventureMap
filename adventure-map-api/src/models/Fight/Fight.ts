@@ -1,6 +1,6 @@
 import Random from '../../random/random';
 import { Creature } from '../Creature/Creature';
-import { Turn } from './Turns/Turn';
+import Turn from './Turns/Turn';
 import Fighter from './Fighter';
 
 export default class Fight
@@ -115,32 +115,45 @@ export default class Fight
                     if(i<this.fighterGroups[0].length-1)
                         recap = `${recap}, `
                 }
+                this.turnRecaps.push(recap)
             }
         }
+    }
+
+    public playAll()
+    {
+        while(!this.isOver)
+        {
+            this.advance()
+        }
+        this.end()
     }
 
     private playTurn(fighter : Fighter)
     {
         const{cooldown, turn} = fighter.fightBehavior.doTurn(this.fighterGroups)
+        fighter.cooldown = cooldown
 
         const {recap,affected} = turn.play()
-
-        const deadFighters : Fighter[] = []
+        this.turnRecaps.push(recap)
 
         for (let i = 0; i < affected.length; i++) {
             const affectedFighter = affected[i];
-            if(!affectedFighter.creature.isAlive)
+            affectedFighter.bodyParts.forEach(bodyPart => {
+                this.turnRecaps.push(`${affectedFighter.fighter.creature.creatureName}'s ${bodyPart.getName()} is ${bodyPart.status}`)
+                if(!bodyPart.isFunctionnal && bodyPart.isVital)
+                {
+                    affectedFighter.fighter.creature.health = 0
+                }
+            });
+            if(!affectedFighter.fighter.creature.isAlive)
             {
-                Fighter.removeFighter(this.fighterGroups,affectedFighter)
-                deadFighters.push(affectedFighter)
+                Fighter.removeFighter(this.fighterGroups,affectedFighter.fighter)
+                
+                this.turnRecaps.push(`${affectedFighter.fighter.creature.creatureName} is dead !`)
             }
         }
 
-        fighter.cooldown = cooldown
-        this.turnRecaps.push(recap)
-        for (let i = 0; i < deadFighters.length; i++) {
-            this.turnRecaps.push(`${deadFighters[i].creature.creatureName} is dead !`)
-        }
     }
 
 

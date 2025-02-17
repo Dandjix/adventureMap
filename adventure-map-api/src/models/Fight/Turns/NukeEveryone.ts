@@ -4,6 +4,7 @@ import Pistol from "../../Creature/Items/Weapon/Pistol";
 import Fighter from "../Fighter";
 import { GlobalAttackTurn } from "./GlobalAttackTurn";
 import { OneOnOneAttackTurn } from "./OneOnOneAttackTurn";
+import { Affected } from "./Turn";
 
 export default class NukeEveryone extends GlobalAttackTurn
 {

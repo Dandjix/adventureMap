@@ -18,12 +18,12 @@ export class Human extends Creature implements GenderedCreature, Adventurer
 
     constructor(creatureName : string, dateOfBirth : WorldDate, gender:"male"|"female",sexual_orientation:"heterosexual" | "homosexual" | "bisexual" | "asexual" = "heterosexual") {
         const bodyParts = [
-            new Hand("left",0.75),
-            new Hand("right",0.75),
-            new Torso(1),
-            new Head(0.66),
-            new Leg("left",0.9),
-            new Leg("right",0.9)
+            new Hand("left",75),
+            new Hand("right",75),
+            new Torso(100),
+            new Head(66),
+            new Leg("left",90),
+            new Leg("right",90)
             ]
         
         super(creatureName,

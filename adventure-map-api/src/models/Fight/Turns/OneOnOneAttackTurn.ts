@@ -1,10 +1,11 @@
 import BodyPart from '../../Creature/BodyPart/BodyPart';
 import { Creature } from "../../Creature/Creature";
-import { Turn } from "./Turn";
+import Turn from "./Turn";
 import Weapon from '../../Creature/Items/Weapon/Weapon';
 import { GenderedCreature } from '../../Creature/GenderedCreature';
 import { ArmorPiece } from '../../Creature/Items/Armor/ArmorPiece';
 import Fighter from '../Fighter';
+import { Affected } from './Turn';
 
 
 /**
@@ -53,7 +54,7 @@ export abstract class OneOnOneAttackTurn extends Turn
         this.defender.creature.health -= healthDamage
         this.defenderBodyPart.health -= limbDamage
 
-        return {recap:this.getRecap(healthDamage,limbDamage),affected:[this.defender]}
+        return {recap:this.getRecap(healthDamage,limbDamage),affected:[new Affected(this.defender,[this.defenderBodyPart])]}
     }
 
     /**
@@ -89,7 +90,7 @@ export abstract class OneOnOneAttackTurn extends Turn
             `${this.getVerb()} ${this.defender.creature.creatureName} `+
             `in the ${this.defenderBodyPart.getName()} `+
             `with the ${this.weapon.getName()} `+
-            `equipped in ${attackerPronoun} ${this.attackerBodyPart.getName()}.`
+            `equipped in ${attackerPronoun} ${this.attackerBodyPart.getName()}`
         }
         else{
             action = 
@@ -97,19 +98,19 @@ export abstract class OneOnOneAttackTurn extends Turn
             `${this.getVerb()} `+
             `${this.defender.creature.creatureName} ` +
             `in the ${this.defenderBodyPart.getName()} `+
-            `with ${attackerPronoun} ${this.attackerBodyPart.getName()}.`
+            `with ${attackerPronoun} ${this.attackerBodyPart.getName()}`
         }
 
-        let effect : string
-        effect = 
-        `${this.defender.creature.creatureName} takes ${healthDamage} health damage, `+
-        `plus ${limbDamage} in ${defenderPronoun} ${this.defenderBodyPart.getName()}.`
+        // let effect : string
+        // effect = 
+        // `${this.defender.creature.creatureName} takes ${healthDamage} health damage, `+
+        // `plus ${limbDamage} in ${defenderPronoun} ${this.defenderBodyPart.getName()}.`
 
-        if(this.defenderBodyPart.armorPiece)
-        {
-            effect = `${effect} The ${this.defenderBodyPart.armorPiece.getName()} deflected some of the damage.`
-        }
+        // if(this.defenderBodyPart.armorPiece)
+        // {
+        //     effect = `${effect} The ${this.defenderBodyPart.armorPiece.getName()} deflected some of the damage.`
+        // }
 
-        return `${action}\n${effect}`
+        return `${action} for ${healthDamage} health damage and ${limbDamage} limb damage.`
     }
 }

@@ -10,7 +10,7 @@ export default abstract class BodyPart
      * The name of the body part. Only one bodypart should have the same name for a given creature.
      */
     abstract getName():string
-    abstract getIsVital() : boolean
+    abstract get isVital() : boolean
     abstract getNumberOfEquipableAccessories() : number
     /**
      * this goes from 0 and up. At 0, the body part should be removed as it has been pulverized.
@@ -19,7 +19,7 @@ export default abstract class BodyPart
 
     public set health(health:number)
     {
-        this._health = clamp(health,0,1)
+        this._health = clamp(health,0,this.natural_health)
     }
 
     public get health()
@@ -27,7 +27,12 @@ export default abstract class BodyPart
         return this._health
     }
 
-    isMissing()
+    public get healthPercentage()
+    {
+        return this._health/this.natural_health
+    }
+
+    get isMissing()
     {
         return this._health == 0
     }
@@ -45,12 +50,38 @@ export default abstract class BodyPart
     size : number
 
     /**
-     * default implementation of whether a body part is al.
-     * a vital body part that is not al results in death.
+     * default implementation of whether a body part is functional.
+     * a vital body part that is not functional results in death.
+     * a body part that is not functionnal drops it's weapon.
      * @returns whether this body part is al.
      */
-    getIsFunctionnal() {
-        return this._health > 0.5
+    get isFunctionnal() {
+        return this.healthPercentage > 0.5
+    }
+
+    get status()
+    {
+        if(this.isMissing)
+        {
+            return "missing"
+        }
+        let suffix : string = ""
+        if(!this.isFunctionnal)
+        {
+            suffix = "(not functionnal)"
+        }
+        let body : string
+        if(this.healthPercentage<0.25)
+            body = "terribly mangled"
+        else if(this.healthPercentage<0.5)
+            body = "mangled"
+        else if(this.healthPercentage<0.75)
+            body = "damaged"
+        else if(this.healthPercentage<1)
+            body = "bruised"
+        else
+            body = "intact"
+        return `${body}${suffix ? ` ${suffix}`:''}`
     }
 
     armorPiece? : ArmorPiece

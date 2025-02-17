@@ -4,7 +4,7 @@ import Fighter from "./Fighter";
 import { OneOnOneAttackTurn } from "./Turns/OneOnOneAttackTurn";
 import { Bash } from "./Turns/Bash";
 import Slash from "./Turns/Slash";
-import { Turn } from "./Turns/Turn";
+import Turn from "./Turns/Turn";
 import Nuke from "../Creature/Items/Weapon/Nuke";
 import NukeEveryone from "./Turns/NukeEveryone";
 

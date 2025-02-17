@@ -1,11 +1,12 @@
 import Random from "../../../random/random"
+import BodyPart from "../../Creature/BodyPart/BodyPart"
 import { Creature } from "../../Creature/Creature"
 import Fighter from "../Fighter"
 
 /**
  * A fight action. This could for instance be "Alice Strikes Bob"
  */
-export abstract class Turn
+export default abstract class Turn
 {
     random : Random
     attacker : Fighter
@@ -14,5 +15,18 @@ export abstract class Turn
         this.attacker = attacker
         this.random = random
     }
-    abstract play() : {recap:string,affected:Fighter[]}
+    abstract play() : {recap:string,affected:Affected[]}
+}
+
+export class Affected
+{
+    fighter : Fighter
+    bodyParts : BodyPart[]
+
+    constructor(fighter : Fighter,bodyParts : BodyPart[]=[]) {
+        this.fighter = fighter,
+        this.bodyParts = bodyParts
+    }
+
+
 }

@@ -5,7 +5,7 @@ export class Head extends BodyPart
     constructor(natural_health : number, size : number = 0.5) {
         super(natural_health,size);
     }
-    getIsVital(): boolean {
+    get isVital(): boolean {
         return true
     }
     getName(): string {
