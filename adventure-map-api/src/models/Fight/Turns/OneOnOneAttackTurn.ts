@@ -17,11 +17,21 @@ export abstract class OneOnOneAttackTurn extends Turn
     attackerBodyPart : BodyPart
     defender: Fighter;
     defenderBodyPart:BodyPart;
+    armorPenetration:number
 
-    constructor(attacker : Fighter,attackerBodyPart:string|BodyPart,defender : Fighter,defenderBodyPart:string|BodyPart) {
+    /**
+     * 
+     * @param attacker 
+     * @param attackerBodyPart 
+     * @param defender 
+     * @param defenderBodyPart 
+     * @param armorPenetration at 0, the armor is nullified, at 1 it is normal, at >1, it is more than normal
+     */
+    constructor(attacker : Fighter,attackerBodyPart:string|BodyPart,defender : Fighter,defenderBodyPart:string|BodyPart,armorPenetration:number=1) {
         super(attacker);
 
         this.defender = defender
+        this.armorPenetration = armorPenetration
 
         if (defenderBodyPart instanceof BodyPart) 
             this.defenderBodyPart = defenderBodyPart
@@ -48,13 +58,18 @@ export abstract class OneOnOneAttackTurn extends Turn
     }
 
     play() {
-        const healthDamage = this.getHealthDamage()
-        const limbDamage = this.getLimbDamage()
+        const armorProtection = this.defenderBodyPart.armorPiece ? this.defenderBodyPart.armorPiece.getDamageDeflected() : 0
 
-        this.defender.creature.health -= healthDamage
-        this.defenderBodyPart.health -= limbDamage
+        let healthDamage = this.getHealthDamage()
+        let limbDamage = this.getLimbDamage()
 
-        return {recap:this.getRecap(healthDamage,limbDamage),affected:[new Affected(this.defender,[this.defenderBodyPart])]}
+        healthDamage -= healthDamage*armorProtection
+        limbDamage -= limbDamage*armorProtection
+
+        this.defender.creature.health -= healthDamage 
+        this.defenderBodyPart.health -= limbDamage 
+
+        return {recap:this.getRecap(healthDamage,limbDamage,armorProtection),affected:[new Affected(this.defender,[this.defenderBodyPart])]}
     }
 
     /**
@@ -77,7 +92,7 @@ export abstract class OneOnOneAttackTurn extends Turn
     armorPiece? : ArmorPiece
 
 
-    public getRecap(healthDamage : number,limbDamage : number)
+    public getRecap(healthDamage : number,limbDamage : number,armorProtection : number)
     {
         const attackerPronoun = (('gender' in this.attacker.creature) && this.attacker.creature.gender=="female") ? "her" : "his"
         const defenderPronoun = (('gender' in this.defender.creature) && this.defender.creature.gender=="female") ? "her" : "his"
@@ -100,17 +115,12 @@ export abstract class OneOnOneAttackTurn extends Turn
             `in the ${this.defenderBodyPart.getName()} `+
             `with ${attackerPronoun} ${this.attackerBodyPart.getName()}`
         }
-
-        // let effect : string
-        // effect = 
-        // `${this.defender.creature.creatureName} takes ${healthDamage} health damage, `+
-        // `plus ${limbDamage} in ${defenderPronoun} ${this.defenderBodyPart.getName()}.`
-
-        // if(this.defenderBodyPart.armorPiece)
-        // {
-        //     effect = `${effect} The ${this.defenderBodyPart.armorPiece.getName()} deflected some of the damage.`
-        // }
-
+        if(armorProtection>0)
+        {
+            if(this.armorPiece) 
+                return `${action} for ${healthDamage} health damage and ${limbDamage} limb damage. The ${this.armorPiece.getName()} deflected ${(armorProtection*100).toFixed(2)}% of the damage.`
+            return `${action} for ${healthDamage} health damage and ${limbDamage} limb damage. ${(armorProtection*100).toFixed(2)}% of the damage was deflected.`
+        }
         return `${action} for ${healthDamage} health damage and ${limbDamage} limb damage.`
     }
 }
