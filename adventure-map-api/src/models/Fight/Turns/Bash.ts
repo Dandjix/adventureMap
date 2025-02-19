@@ -19,10 +19,10 @@ export class Bash extends OneOnOneAttackTurn
     getHealthDamage(): number {
         let damage = 0
         if(this.weapon)
-            damage = this.weapon.getWeight()*this.attacker.creature.naturalStrength
+            damage = this.weapon.getWeight()*this.actor.creature.naturalStrength
 
         //we return the max
-        return Math.max(this.attacker.creature.naturalStrength,damage)
+        return Math.max(this.actor.creature.naturalStrength,damage)
     }
     getLimbDamage(): number {
         return this.getHealthDamage()

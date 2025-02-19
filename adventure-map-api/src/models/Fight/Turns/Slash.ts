@@ -11,7 +11,7 @@ export default class Slash extends OneOnOneAttackTurn
         return "slashes"
     }
     getHealthDamage(): number {
-        return this.weapon!.getBaseDamage()*this.attacker.creature.naturalStrength
+        return this.weapon!.getBaseDamage()*this.actor.creature.naturalStrength
     }
     getLimbDamage(): number {
         return this.getHealthDamage()

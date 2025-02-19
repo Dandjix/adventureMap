@@ -58,8 +58,8 @@ export abstract class GlobalAttackTurn extends Turn
 
     public getRecap(healthDamage : number,limbDamage : number)
     {
-        const attackerPronoun = (('gender' in this.attacker.creature) && this.attacker.creature.gender=="female") ? "her" : "his"
-        let recap = `${this.attacker.creature.creatureName} ${this.getVerb()} ${this.getDefendersNames()} `
+        const attackerPronoun = (('gender' in this.actor.creature) && this.actor.creature.gender=="female") ? "her" : "his"
+        let recap = `${this.actor.creature.creatureName} ${this.getVerb()} ${this.getDefendersNames()} `
         if(this.weapon)
             recap += ` using the ${this.weapon.getName()} in ${attackerPronoun} ${this.attackerBodyPart.getName()}`
         else

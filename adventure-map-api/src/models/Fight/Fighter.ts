@@ -18,6 +18,8 @@ export default class Fighter
 
     cooldown : number = 0
 
+    surrendering : boolean = false
+
     static getEnnemies(fighter : Fighter,fighterGroups : Fighter[][])
     {
 
@@ -65,6 +67,21 @@ export default class Fighter
             });
         });
         return everyone
+    }
+
+    static getFighterGroup(fighterGroups:Fighter[][],fighter:Fighter)
+    {
+        for (let i = 0; i < fighterGroups.length; i++) {
+            const group = fighterGroups[i];
+            for (let j = 0; j < group.length; j++) {
+                const f = group[j];
+                if(f == fighter)
+                {
+                    return group
+                }
+            }
+        }
+        throw new Error(`fighter ${fighter.creature.creatureName} is not a part of this fight`)
     }
 
     static removeFighter(fighterGroups:Fighter[][],fighter:Fighter)

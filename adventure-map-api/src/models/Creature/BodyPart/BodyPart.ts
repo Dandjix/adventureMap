@@ -46,8 +46,22 @@ export default abstract class BodyPart
 
     /**
      * this is the size of the body part. A bigger size means it will be picked more frequently as a target in a fight.
+     * Since body parts are generally homogenous enough, this is equal to the weight.
      */
     size : number
+
+
+    get equippedWeight()
+    {
+        const weight = this.size + (this.weapon ? this.weapon.getWeight() : 0)+(this.armorPiece ? this.armorPiece.getWeight() : 0)
+        return weight
+    }
+
+    //this is a multiplier that signifies how functionnal the body part is.
+    get efficiency()
+    {
+        return Math.max(0.25,Math.pow(this.healthPercentage,0.5))
+    }
 
     /**
      * default implementation of whether a body part is functional.

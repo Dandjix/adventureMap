@@ -7,6 +7,7 @@ import Slash from "./Turns/Slash";
 import Turn from "./Turns/Turn";
 import Nuke from "../Creature/Items/Weapon/Nuke";
 import NukeEveryone from "./Turns/NukeEveryone";
+import Surrender from "./Turns/Surrender";
 
 /**
  * AI behavior of a creature. it's a state machine. This is never going to be saved.
@@ -21,7 +22,7 @@ export default class FightBehavior
         this.fighter = fighter
     }
     /**
-     * @param fighterGroups the ennemies to choose from (or not fight and run away, whatever)
+     * @param fighterGroups the ennemies and allies to choose from (or not fight and run away, whatever)
      * @returns the number of seconds until the next turn
      */
     doTurn(fighterGroups : Fighter[][])
@@ -29,21 +30,23 @@ export default class FightBehavior
         const ennemies = Fighter.getEnnemies(this.fighter,fighterGroups)  
         const everyone = Fighter.getEveryone(fighterGroups)
         
+        if(this.fighter.creature.healthPercentage<0.25 || ennemies.length/everyone.length>0.75)
+            return  new Surrender(this.fighter)
+
         if(this.fighter.creature.bodyParts.find((bp)=>bp.getName()=="right hand")?.weapon instanceof Nuke)
         {
             const turn = new NukeEveryone(this.fighter,"right hand",everyone)
-            return {cooldown:4 , turn:turn}
+            return turn
         }
         else if(this.fighter.creature.bodyParts.find((bp)=>bp.getName()=="right hand")?.weapon instanceof ShortSword)
         {
             const turn = new Slash(this.fighter,"right hand",ennemies[0],"head")
-            return {cooldown:4 , turn:turn}
+            return turn
         }
         else
         {
             const turn = new Bash(this.fighter,"right hand",ennemies[0],"head")
-            return {cooldown:2 , turn:turn}
+            return turn
         }
-
     }
 }

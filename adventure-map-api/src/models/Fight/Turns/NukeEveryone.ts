@@ -8,6 +8,9 @@ import { Affected } from "./Turn";
 
 export default class NukeEveryone extends GlobalAttackTurn
 {
+    get cooldown(): number {
+        return 10
+    }
     getVerb(): string {
         return "nukes"
     }

@@ -58,13 +58,44 @@ export abstract class Creature
         return this._health
     }
 
+    public get healthPercentage()
+    {
+        return this.naturalHealth/this.health
+    }
+
+    /**
+     * unequips all armor, weapons, accessories and stowed items of a creature
+     * @returns all the unequipped items of the creature
+     */
+    public strip() : Item[]
+    {
+        const items : Item[] = [...this.stowedItems]
+        this.bodyParts.forEach(bodyPart => {
+            bodyPart.accessories.forEach(accessory => {
+                items.push(accessory)
+            });
+            bodyPart.accessories = []
+            if(bodyPart.weapon)
+            {
+                items.push(bodyPart.weapon)
+                bodyPart.weapon = undefined
+            }
+            if(bodyPart.armorPiece)
+            {
+                items.push(bodyPart.armorPiece)
+                bodyPart.armorPiece = undefined
+            }
+        });
+        return items
+    }
+
     /** 
      * a creature that is on the edge of death will be very tired. Unless they have a high berserk attribute.
      */
     public get stamina()
     {
-        const healthPercentage = this.naturalHealth/this.health
-        return Math.max(healthPercentage + this.naturalBerserk - (healthPercentage*this.naturalBerserk),0)
+
+        return Math.max(this.healthPercentage + this.naturalBerserk - (this.healthPercentage*this.naturalBerserk),0)
     }
 
     /**

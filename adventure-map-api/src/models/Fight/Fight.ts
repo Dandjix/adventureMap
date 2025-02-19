@@ -2,11 +2,28 @@ import Random from '../../random/random';
 import { Creature } from '../Creature/Creature';
 import Turn from './Turns/Turn';
 import Fighter from './Fighter';
+import Surrender from './Turns/Surrender';
+import { Item } from '../Creature/Items/Item';
 
+class Prisoner
+{
+    fighter : Fighter
+    group : Fighter[]
+    /**
+     *
+     */
+    constructor(fighter : Fighter, group : Fighter[]) {
+        this.fighter = fighter
+        this.group = group
+    }
+}
 export default class Fight
 {
     turnRecaps : string[] = []
     fighterGroups : Fighter[][] 
+    prisoners : Prisoner[] = []
+    victors? : Fighter[] = undefined
+    loot : Item[] = []
     /**
      * the timeline is in seconds. The timeline advances with the fight. It allows to know the length of the fight.
      */
@@ -99,25 +116,86 @@ export default class Fight
         if(this.fighterGroups.length == 0)
         {
             this.turnRecaps.push(`there is no clear winner : no one is still standing.`)
+            if(this.prisoners.length>0)
+            {
+                this.prisoners.forEach(prisoner => {
+                    prisoner.fighter.creature.health = 0
+                });
+                this.turnRecaps.push(`the ${this.prisoners.length} prisoners starve to death.`)
+            }
         }
         else if(this.fighterGroups.length == 1)
         {
+            this.prisoners.forEach(prisoner => {
+                if(prisoner.group == this.fighterGroups[0])
+                {
+                    this.turnRecaps.push(`${prisoner.fighter.creature.creatureName} is liberated by the victors.`)
+                    this.fighterGroups[0].push(prisoner.fighter)
+                }
+            })
+
             if(this.fighterGroups[0].length==1)
             {
                 this.turnRecaps.push(`the winner of the fight is ${this.fighterGroups[0][0].creature.creatureName}.`)
             }
             else
             {
-                let recap = `the winners of the fight are `
-                for (let i = 0; i < this.fighterGroups[0].length; i++) {
-                    const fighter = this.fighterGroups[0][i];
-                    recap = `${recap} ${fighter.creature.creatureName}`
-                    if(i<this.fighterGroups[0].length-1)
-                        recap = `${recap}, `
+                this.victors = this.fighterGroups[0]
+                let recap = `the winners of the fight are`
+                if(this.victors.length<=13)
+                {
+                    for (let i = 0; i < this.victors.length; i++) {
+                        const fighter = this.victors[i];
+                        recap = `${recap} ${fighter.creature.creatureName}`
+                        if(i<this.victors.length-1)
+                            recap = `${recap}, `
+                    }
+                    recap = `${recap}.`
+                }
+                else
+                {
+                    recap = `there are ${this.victors.length} victors.`
                 }
                 this.turnRecaps.push(recap)
             }
         }
+        if(this.loot.length>0)
+        {
+            this.turnRecaps.push(`the loot consists of ${this.loot.length} items.`)
+        }
+        this.turnRecaps.push(this.getPrisonersRecap())
+    }
+
+    private getPrisonersRecap()
+    {
+        let prisonnersRecap : string
+        if(this.prisoners.length<=0)
+        {
+            prisonnersRecap = `there are no prisoners.`
+        }
+        else if(this.prisoners.length==1)
+        {
+            prisonnersRecap = `${this.prisoners[0].fighter.creature.creatureName} is taken prisoner.`
+        }
+        else //if(this.prisoners.length>1)
+        {
+            prisonnersRecap = `the prisoners are`
+            if(this.prisoners.length<=13)
+            {
+                for (let i = 0; i < this.prisoners.length; i++) {
+                    const prisoner = this.prisoners[i];
+                    prisonnersRecap = `${prisonnersRecap} ${prisoner.fighter.creature.creatureName}`
+                    if(i<this.prisoners.length-1)
+                        prisonnersRecap = `${prisonnersRecap}, `
+                }
+                prisonnersRecap = `${prisonnersRecap}.`
+            }
+            else
+            {
+                prisonnersRecap = `there are ${this.prisoners.length} prisoners.`
+            }
+        }
+        return prisonnersRecap
     }
 
     public playAll()
@@ -131,8 +209,9 @@ export default class Fight
 
     private playTurn(fighter : Fighter)
     {
-        const{cooldown, turn} = fighter.fightBehavior.doTurn(this.fighterGroups)
-        fighter.cooldown = cooldown
+        const turn = fighter.fightBehavior.doTurn(this.fighterGroups)
+
+        fighter.cooldown = turn.cooldown
 
         const {recap,affected} = turn.play()
         this.turnRecaps.push(recap)
@@ -149,13 +228,14 @@ export default class Fight
             if(!affectedFighter.fighter.creature.isAlive)
             {
                 Fighter.removeFighter(this.fighterGroups,affectedFighter.fighter)
-                
+                this.loot.push(...affectedFighter.fighter.creature.strip())
                 this.turnRecaps.push(`${affectedFighter.fighter.creature.creatureName} is dead !`)
             }
+            else if(affectedFighter.fighter.surrendering)
+            {
+                this.prisoners.push(new Prisoner(affectedFighter.fighter,Fighter.getFighterGroup(this.fighterGroups,affectedFighter.fighter)))
+                Fighter.removeFighter(this.fighterGroups,affectedFighter.fighter)
+            }
         }
-
     }
-
-
-
 }

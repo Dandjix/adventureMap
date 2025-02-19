@@ -6,6 +6,7 @@ import { GenderedCreature } from '../../Creature/GenderedCreature';
 import { ArmorPiece } from '../../Creature/Items/Armor/ArmorPiece';
 import Fighter from '../Fighter';
 import { Affected } from './Turn';
+import { clamp } from '../../../util/clamp';
 
 
 /**
@@ -72,6 +73,11 @@ export abstract class OneOnOneAttackTurn extends Turn
         return {recap:this.getRecap(healthDamage,limbDamage,armorProtection),affected:[new Affected(this.defender,[this.defenderBodyPart])]}
     }
 
+    get cooldown(): number {
+        const cooldown = this.attackerBodyPart.equippedWeight/(this.attackerBodyPart.efficiency*this.actor.creature.naturalStrength)
+        return cooldown
+    }
+
     /**
      * can be "bashes", "shoots", "obliterates", "kisses"
      */
@@ -94,14 +100,14 @@ export abstract class OneOnOneAttackTurn extends Turn
 
     public getRecap(healthDamage : number,limbDamage : number,armorProtection : number)
     {
-        const attackerPronoun = (('gender' in this.attacker.creature) && this.attacker.creature.gender=="female") ? "her" : "his"
+        const attackerPronoun = (('gender' in this.actor.creature) && this.actor.creature.gender=="female") ? "her" : "his"
         const defenderPronoun = (('gender' in this.defender.creature) && this.defender.creature.gender=="female") ? "her" : "his"
 
 
         let action : string
         if(this.weapon){
             action =  
-            `${this.attacker.creature.creatureName} `+
+            `${this.actor.creature.creatureName} `+
             `${this.getVerb()} ${this.defender.creature.creatureName} `+
             `in the ${this.defenderBodyPart.getName()} `+
             `with the ${this.weapon.getName()} `+
@@ -109,7 +115,7 @@ export abstract class OneOnOneAttackTurn extends Turn
         }
         else{
             action = 
-            `${this.attacker.creature.creatureName} `+
+            `${this.actor.creature.creatureName} `+
             `${this.getVerb()} `+
             `${this.defender.creature.creatureName} ` +
             `in the ${this.defenderBodyPart.getName()} `+

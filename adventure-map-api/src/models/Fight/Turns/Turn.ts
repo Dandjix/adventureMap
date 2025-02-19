@@ -8,11 +8,18 @@ import Fighter from "../Fighter"
  */
 export default abstract class Turn
 {
-    random : Random
-    attacker : Fighter
+    random? : Random
+    actor : Fighter
 
-    constructor(attacker : Fighter,random : Random = new Random()) {
-        this.attacker = attacker
+    abstract get cooldown():number
+
+    /**
+     * most turns have a random element, if they don't, you can just provide undefined
+     * @param actor 
+     * @param random 
+     */
+    constructor(actor : Fighter,random : Random|undefined = undefined) {
+        this.actor = actor
         this.random = random
     }
     abstract play() : {recap:string,affected:Affected[]}

@@ -96,6 +96,35 @@ test('bob executes alice', () => {
     
  })
 
+ test('full scale battle with prisoners',()=>{
+    const random = new Random()
+    const side1 : Fighter[] = []
+    const side2 : Fighter[] = []
+    for (let i = 0; i < 100; i++) {
+        const gender = random.random()<0.5 ? "male" : "female"
+        const creature = new Human(createCreatureName(gender,random),WorldDate.now(world),gender)
+
+        creature.equip(new Helmet(world.materialIndex.materials["steel"]))
+        creature.equip(new Gauntlet(world.materialIndex.materials["steel"],"left"))
+        creature.equip(new Gauntlet(world.materialIndex.materials["steel"],"right"))
+
+        creature.equip(new ShortSword(world.materialIndex.materials["steel"]),"right hand")
+
+        if(random.random()<0.1)
+            side1.push(new Fighter(creature))
+        else
+            side2.push(new Fighter(creature))
+        
+    }
+
+    const fight = new Fight([side1,side2])
+
+    fight.playAll()
+
+    console.log(fight.recap);
+    
+ })
+
 //below are the tests for a method that is private
 
 //  test('testing the minimums function',()=>{
