@@ -13,6 +13,8 @@ import { Material } from './Items/Materials/Material';
 import { Metal } from './Items/Materials/Metal';
 import { clamp } from '../../util/clamp';
 import { createCreatureName } from './Naming/CreatureName';
+import Personality from './Personalities/Personality';
+import Random from '../../random/random';
 
 export abstract class Creature
 {
@@ -37,6 +39,18 @@ export abstract class Creature
 
 
     private _isAlive : boolean
+
+    /** 
+     * determines how easily this creature will surrender -> 0 : instant surrender, 1 -> never surrender
+     */
+    courage : number
+
+    /**
+     * determines the depth of the fight computations : 0 -> random moves, 1 -> maximum reasonable computations
+     */
+    intelligence : number
+
+    personality : Personality
     /**
      * when this is set to false, the creature is a corpse. The undead that are not defeated also have this on true.
      */
@@ -123,14 +137,23 @@ export abstract class Creature
         naturalHealth : number,
         naturalBerserk : number,
         naturalStrength : number,
+        courage : number,
+        intelligence : number,
         bodyParts : BodyPart[],
-        stowedItems : Item[]
+        stowedItems : Item[],
+        personality? : Personality,
+        random? : Random
     ) {
         this._isAlive = true
         if(creatureName)
             this.creatureName = creatureName
         else
             this.creatureName = createCreatureName()
+        if(personality)
+            this.personality = personality
+        else
+            this.personality = new Personality()
+
         this.dateOfBirth = dateOfBirth
 
         this.naturalAttractiveness = naturalAttractiveness
@@ -139,6 +162,8 @@ export abstract class Creature
         this._health = naturalHealth
         this.naturalBerserk = naturalBerserk
         this.naturalStrength = naturalStrength
+        this.courage = courage
+        this.intelligence = intelligence
 
         this.bodyParts = bodyParts
         this.stowedItems = stowedItems
