@@ -30,7 +30,7 @@ export default class FightBehavior
         const ennemies = Fighter.getEnnemies(this.fighter,fighterGroups)  
         const everyone = Fighter.getEveryone(fighterGroups)
         
-        if(this.fighter.creature.healthPercentage<0.25 || ennemies.length/everyone.length>0.75)
+        if((this.fighter.creature.healthPercentage)*this.fighter.creature.courage<0.25 || (ennemies.length/everyone.length)*this.fighter.creature.courage>0.75)
             return  new Surrender(this.fighter)
 
         if(this.fighter.creature.bodyParts.find((bp)=>bp.getName()=="right hand")?.weapon instanceof Nuke)

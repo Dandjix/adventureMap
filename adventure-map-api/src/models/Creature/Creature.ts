@@ -145,14 +145,9 @@ export abstract class Creature
         random? : Random
     ) {
         this._isAlive = true
-        if(creatureName)
-            this.creatureName = creatureName
-        else
-            this.creatureName = createCreatureName()
-        if(personality)
-            this.personality = personality
-        else
-            this.personality = new Personality()
+
+        this.creatureName = creatureName ?? createCreatureName()
+        this.personality = personality ?? new Personality()
 
         this.dateOfBirth = dateOfBirth
 
