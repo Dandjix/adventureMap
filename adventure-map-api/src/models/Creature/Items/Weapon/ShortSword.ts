@@ -1,7 +1,18 @@
+import Fighter from "../../../Fight/Fighter";
+import Slash from "../../../Fight/Turns/Slash";
+import Turn from "../../../Fight/Turns/Turn";
+import BodyPart from "../../BodyPart/BodyPart";
 import { Material } from "../Materials/Material";
+import BodyPartTargetterWeapon from "./BodyPartTargetterWeapon";
 import Weapon from "./Weapon";
 
-export default class ShortSword extends Weapon{
+export default class ShortSword extends BodyPartTargetterWeapon{
+    getBodyPartTargetterTurns(attacker: Fighter, attackerBodypart: BodyPart, defender: Fighter, defenderBodypart: BodyPart): Turn[] {
+        return [new Slash(attacker,attackerBodypart,defender,defenderBodypart)]
+    }
+    get turns(): string[] {
+        return ["slash"]
+    }
     getBaseCooldown(): number {
         return 10
     }

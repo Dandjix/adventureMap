@@ -8,6 +8,9 @@ import { Affected } from "./Turn";
  */
 export default class Surrender extends IndividualTurn
 {
+    get score(): number {
+        throw new Error("Method not implemented.");
+    }
     get cooldown(): number {
         return 1
     }

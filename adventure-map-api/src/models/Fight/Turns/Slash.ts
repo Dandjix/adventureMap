@@ -10,11 +10,11 @@ export default class Slash extends OneOnOneAttackTurn
     getVerb(): string {
         return "slashes"
     }
-    getHealthDamage(): number {
+    getBaseHealthDamage(): number {
         return this.weapon!.getBaseDamage()*this.actor.creature.naturalStrength
     }
-    getLimbDamage(): number {
-        return this.getHealthDamage()
+    getBaseLimbDamage(): number {
+        return this.getBaseHealthDamage()
     }
 
     constructor(attacker : Fighter,attackerBodyPart : BodyPart|string,defender:Fighter,defenderBodyPart : BodyPart|string) {

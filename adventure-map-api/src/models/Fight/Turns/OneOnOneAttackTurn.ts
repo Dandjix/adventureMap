@@ -61,11 +61,8 @@ export abstract class OneOnOneAttackTurn extends Turn
     play() {
         const armorProtection = this.defenderBodyPart.armorPiece ? this.defenderBodyPart.armorPiece.getDamageDeflected() : 0
 
-        let healthDamage = this.getHealthDamage()
-        let limbDamage = this.getLimbDamage()
-
-        healthDamage -= healthDamage*armorProtection
-        limbDamage -= limbDamage*armorProtection
+        let healthDamage = this.healthDamage
+        let limbDamage = this.limbDamage
 
         this.defender.creature.health -= healthDamage 
         this.defenderBodyPart.health -= limbDamage 
@@ -77,21 +74,43 @@ export abstract class OneOnOneAttackTurn extends Turn
         const cooldown = this.attackerBodyPart.equippedWeight/(this.attackerBodyPart.efficiency*this.actor.creature.naturalStrength)
         return cooldown
     }
+    
+    public get score()
+    {
+        const lethalPercentage = Math.max(this.healthDamage/this.defender.creature.health,1)
 
+        return lethalPercentage*this.cooldown
+    }
     /**
      * can be "bashes", "shoots", "obliterates", "kisses"
      */
     abstract getVerb() : string
 
     /**
-     * this is only used once
+     * 
      */
-    abstract getHealthDamage() : number
+    abstract getBaseHealthDamage() : number
+
+    public get healthDamage() : number
+    {
+        const armorProtection = this.defenderBodyPart.armorPiece ? this.defenderBodyPart.armorPiece.getDamageDeflected() : 0
+
+        const basedmg = this.getBaseHealthDamage()
+        return basedmg - basedmg*armorProtection
+    }
+
+    public get limbDamage():number
+    {
+        const armorProtection = this.defenderBodyPart.armorPiece ? this.defenderBodyPart.armorPiece.getDamageDeflected() : 0
+
+        const basedmg = this.getBaseLimbDamage()
+        return basedmg - basedmg*armorProtection
+    }
 
     /**
-     * this is also only used once : no need to make it consistent.
+     * 
      */
-    abstract getLimbDamage() : number
+    abstract getBaseLimbDamage() : number
 
     weapon? : Weapon
 

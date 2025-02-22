@@ -115,6 +115,7 @@ export default class Fight
     {
         if(this.fighterGroups.length == 0)
         {
+            this.victors = []
             this.turnRecaps.push(`there is no clear winner : no one is still standing.`)
             if(this.prisoners.length>0)
             {
@@ -136,6 +137,7 @@ export default class Fight
 
             if(this.fighterGroups[0].length==1)
             {
+                this.victors = this.fighterGroups[0]
                 this.turnRecaps.push(`the winner of the fight is ${this.fighterGroups[0][0].creature.creatureName}.`)
             }
             else
@@ -209,7 +211,7 @@ export default class Fight
 
     private playTurn(fighter : Fighter)
     {
-        const turn = fighter.fightBehavior.doTurn(this.fighterGroups)
+        const turn = fighter.fightBehavior.chooseTurn(this.fighterGroups)
 
         fighter.cooldown = turn.cooldown
 

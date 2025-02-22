@@ -8,10 +8,10 @@ export default class FireAt extends OneOnOneAttackTurn
     getVerb(): string {
         return "fires at"
     }
-    getHealthDamage(): number {
+    getBaseHealthDamage(): number {
         return this.weapon!.getBaseDamage()
     }
-    getLimbDamage(): number {
+    getBaseLimbDamage(): number {
         return this.weapon!.getBaseDamage()
     }
     /**

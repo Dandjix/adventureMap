@@ -14,10 +14,10 @@ export default class NukeEveryone extends GlobalAttackTurn
     getVerb(): string {
         return "nukes"
     }
-    getHealthDamage(): number {
+    getBaseHealthDamage(): number {
         return this.weapon!.getBaseDamage()
     }
-    getLimbDamage(): number {
+    getBaseLimbDamage(): number {
         return this.weapon!.getBaseDamage()
     }
 

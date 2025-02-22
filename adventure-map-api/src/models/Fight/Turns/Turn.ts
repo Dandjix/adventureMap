@@ -13,6 +13,8 @@ export default abstract class Turn
 
     abstract get cooldown():number
 
+    abstract get score():number
+
     /**
      * most turns have a random element, if they don't, you can just provide undefined
      * @param actor 

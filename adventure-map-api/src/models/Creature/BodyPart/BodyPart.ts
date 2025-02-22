@@ -1,4 +1,8 @@
+import Random from "../../../random/random"
 import { clamp } from "../../../util/clamp"
+import Fighter from "../../Fight/Fighter"
+import { Bash } from "../../Fight/Turns/Bash"
+import Turn from "../../Fight/Turns/Turn"
 import { Accessory } from "../Items/Accessories/Accessory"
 import { ArmorPiece } from "../Items/Armor/ArmorPiece"
 import Weapon from "../Items/Weapon/Weapon"
@@ -61,6 +65,32 @@ export default abstract class BodyPart
     get efficiency()
     {
         return Math.max(0.25,Math.pow(this.healthPercentage,0.5))
+    }
+
+    getPossibleOneOnOneAttackTurns(attacker : Fighter,defender : Fighter,depth:number,random : Random)
+    {
+        if(!this.isFunctionnal)
+            return []
+        const turns : Turn[] = []
+
+        if(this.weapon)
+        {
+            turns.push(...this.weapon.getOneOnOneAttackTurns(attacker,this,defender,depth,random))
+        }
+        return turns
+    }
+
+    getPossibleGlobalAttackTurns(attacker : Fighter,everyone : Fighter[],depth:number,random : Random)
+    {
+        if(!this.isFunctionnal)
+            return []
+        const turns : Turn[] = []
+
+        if(this.weapon)
+        {
+            turns.push(...this.weapon.getGlobalAttackTurns(attacker,this,everyone,depth,random))
+        }
+        return turns
     }
 
     /**

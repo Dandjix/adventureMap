@@ -51,20 +51,22 @@ test('bob executes alice', () => {
     
  })
 
- test('nuke test, lmao',()=>{
+ test.only('nuke test, lmao',()=>{
     const Alice = new Human("alice",WorldDate.now(world),"female")
     const Bob = new Human("bob",WorldDate.now(world),"male")
+    const Johnson = new Human("johnson",WorldDate.now(world),"male")
 
     expect(Bob.equip(new Nuke(world.materialIndex.materials["steel"],1),"right hand")).toBe(true)
     
     expect(Alice.equip(new Helmet(world.materialIndex.materials["steel"],1))).toBe(true)
 
-    const fight = new Fight([[new Fighter(Bob)],[new Fighter(Alice)]])
+    const fight = new Fight([[new Fighter(Bob)],[new Fighter(Alice)],[new Fighter(Johnson)]])
 
     fight.playAll()
 
     console.log(fight.recap);
     
+    expect(fight.victors!.length).toBe(0)
  })
 
  test('full scale battle',()=>{

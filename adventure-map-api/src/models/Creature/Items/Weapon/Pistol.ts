@@ -1,11 +1,22 @@
 import Weapon from "./Weapon";
 import { SidedItem } from "../SidedItem";
 import { Material } from "../Materials/Material";
+import Fighter from "../../../Fight/Fighter";
+import Turn from "../../../Fight/Turns/Turn";
+import BodyPart from '../../BodyPart/BodyPart';
+import FireAt from "../../../Fight/Turns/FireAt";
+import Random from "../../../../random/random";
+import BodyPartTargetterWeapon from "./BodyPartTargetterWeapon";
 
 /**
  * lol, lmao
  */
-export default class Pistol extends Weapon implements SidedItem{
+export default class Pistol extends BodyPartTargetterWeapon implements SidedItem{
+
+    getBodyPartTargetterTurns(attacker: Fighter, attackerBodypart: BodyPart, defender: Fighter, defenderBodypart: BodyPart): Turn[] {
+        return [new FireAt(attacker,attackerBodypart,defender,defenderBodypart)]
+    }
+
     readonly side: "left" | "right";
 
     /**

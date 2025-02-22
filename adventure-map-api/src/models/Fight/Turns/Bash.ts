@@ -16,7 +16,7 @@ export class Bash extends OneOnOneAttackTurn
     getVerb(): string {
         return "bashes"
     }
-    getHealthDamage(): number {
+    getBaseHealthDamage(): number {
         let damage = 0
         if(this.weapon)
             damage = this.weapon.getWeight()*this.actor.creature.naturalStrength
@@ -24,8 +24,8 @@ export class Bash extends OneOnOneAttackTurn
         //we return the max
         return Math.max(this.actor.creature.naturalStrength,damage)
     }
-    getLimbDamage(): number {
-        return this.getHealthDamage()
+    getBaseLimbDamage(): number {
+        return this.getBaseHealthDamage()
     }
 
     constructor(attacker : Fighter,attackerBodyPart:string|BodyPart,defender : Fighter,defenderBodypart:string|BodyPart) {

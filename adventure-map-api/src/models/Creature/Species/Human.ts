@@ -35,6 +35,7 @@ export class Human extends Creature implements GenderedCreature, Adventurer
             5,
             0.5,
             0.5,
+            0.5,
             bodyParts,
             []);
 

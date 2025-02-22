@@ -50,6 +50,11 @@ export abstract class Creature
      */
     intelligence : number
 
+    /**
+     * A honor of 0 means the creature will target weak ennemies. A honor of 1 means it will target strong ennemies.
+     */
+    honor : number
+
     personality : Personality
     /**
      * when this is set to false, the creature is a corpse. The undead that are not defeated also have this on true.
@@ -139,6 +144,7 @@ export abstract class Creature
         naturalStrength : number,
         courage : number,
         intelligence : number,
+        honor : number,
         bodyParts : BodyPart[],
         stowedItems : Item[],
         personality? : Personality,
@@ -159,6 +165,7 @@ export abstract class Creature
         this.naturalStrength = naturalStrength
         this.courage = courage
         this.intelligence = intelligence
+        this.honor = honor
 
         this.bodyParts = bodyParts
         this.stowedItems = stowedItems

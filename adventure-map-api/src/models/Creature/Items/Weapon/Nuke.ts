@@ -1,7 +1,14 @@
+import Fighter from "../../../Fight/Fighter";
+import NukeEveryone from "../../../Fight/Turns/NukeEveryone";
+import Turn from "../../../Fight/Turns/Turn";
+import BodyPart from "../../BodyPart/BodyPart";
 import { Material } from "../Materials/Material";
 import Weapon from "./Weapon";
 
 export default class Nuke extends Weapon{
+    getGlobalAttackTurns(attacker: Fighter, attackerBodypart: BodyPart, everyone: Fighter[]): Turn[] {
+        return [new NukeEveryone(attacker,attackerBodypart,everyone)]
+    }
     getBaseCooldown(): number {
         return 10
     }

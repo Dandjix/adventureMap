@@ -16,9 +16,19 @@ export abstract class GlobalAttackTurn extends Turn
     weapon? : Weapon
     defenders : Fighter[]
 
+    public get score()
+    {
+        const totalLethal = this.defenders.reduce((totalLethal : number,currentDefender:Fighter) => {
+            const lethalPercentage = Math.max(this.healthDamage/currentDefender.creature.health,1)
+
+            return totalLethal+ lethalPercentage*this.cooldown
+        },0);
+        return totalLethal
+    }
+
     play() {
-        const healthDamage = this.getHealthDamage()
-        const limbDamage = this.getLimbDamage()
+        const healthDamage = this.getBaseHealthDamage()
+        const limbDamage = this.getBaseLimbDamage()
         const affected :Affected[] = []
         for (let i = 0; i < this.defenders.length; i++) {
             const defender = this.defenders[i];
@@ -46,15 +56,18 @@ export abstract class GlobalAttackTurn extends Turn
      */
     abstract getVerb() : string
 
-    /**
-     * this is only used once
-     */
-    abstract getHealthDamage() : number
 
-    /**
-     * this is only used once
-     */
-    abstract getLimbDamage() : number
+    abstract getBaseHealthDamage() : number
+    public get healthDamage()
+    {
+        return this.getBaseHealthDamage()
+    }
+
+    abstract getBaseLimbDamage() : number
+    public get limbDamage()
+    {
+        return this.getBaseLimbDamage()
+    }
 
     public getRecap(healthDamage : number,limbDamage : number)
     {

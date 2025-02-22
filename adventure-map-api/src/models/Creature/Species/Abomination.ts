@@ -35,6 +35,7 @@ export class Abomination extends Creature implements GenderedCreature
             10,
             1,
             0.25,
+            0,
             bodyParts,
             []);
 
