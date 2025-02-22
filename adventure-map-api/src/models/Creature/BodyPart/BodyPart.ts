@@ -100,7 +100,7 @@ export default abstract class BodyPart
      * @returns whether this body part is al.
      */
     get isFunctionnal() {
-        return this.healthPercentage > 0.5
+        return this.healthPercentage >= 0.25
     }
 
     get status()
