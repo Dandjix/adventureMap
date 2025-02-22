@@ -38,7 +38,7 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
 });
 
 authRoutes.post('/register',async (req:Request,res:Response):Promise<void>=>{
-    console.log("body : ",JSON.stringify(req.body));
+    // console.log("body : ",JSON.stringify(req.body));
     
     const { username, email, password } = req.body;
 
