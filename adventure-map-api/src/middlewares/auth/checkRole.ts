@@ -14,9 +14,9 @@ export const checkRole = (allowedRoles : ("Player"|"Admin"|"GameMaker")[]): Requ
         {
             next();
         }
-        res.status(400).send(`This route requires a role in ${allowedRoles}.`)
+        res.status(400).send({message:`This route requires a role in ${allowedRoles}.`})
     } catch (err) {
-        res.status(400).send('Invalid token');
+        res.status(400).send({message:'Invalid token'});
     }
 };
 
