@@ -10,7 +10,7 @@ import { checkRole } from '../middlewares/auth/checkRole';
 
 export const mapRoutes = express.Router();
 
-mapRoutes.get('/static'), async (req: Request, res: Response) :Promise<void> => {
+mapRoutes.get('/static', async (req: Request, res: Response) :Promise<void> => {
     try {
         const userId = (req as any).user.id;
         const user = await User.findById(userId).select('-password')
