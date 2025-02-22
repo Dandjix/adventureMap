@@ -26,7 +26,8 @@ export default abstract class BodyPartTargetterWeapon extends Weapon
 
         const turns : Turn[] = []
         bodyPartsToEvaluate.forEach(bodypart => {
-            turns.push(...this.getBodyPartTargetterTurns(attacker,attackerBodypart,defender,bodypart))
+            if(attackerBodypart.isFunctionnal && !bodypart.isMissing)
+                turns.push(...this.getBodyPartTargetterTurns(attacker,attackerBodypart,defender,bodypart))
         });
 
         return turns
