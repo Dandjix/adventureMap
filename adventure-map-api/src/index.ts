@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(passport.initialize());
 
 app.use(cors({
-  origin: 'http://localhost:3000', // Allow requests from this frontend URL
+  origin: '*', // Allow requests from this frontend URL
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // You can adjust this based on the methods your app uses
   allowedHeaders: ['Content-Type', 'Authorization'], // If you're using authorization headers
 }));
