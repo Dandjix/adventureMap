@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'pages/home_page.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(AdventureMap());
 }
 
@@ -10,21 +13,8 @@ class AdventureMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: const Text("Adventure Map"),
-        ),
-        body: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(Icons.backpack),
-            const Icon(Icons.star),
-            const Icon(Icons.ac_unit)
-          ],
-        ),
-      ),
+      debugShowCheckedModeBanner: false,
+      home: const HomePage(), // Start with Home Page
     );
   }
 }

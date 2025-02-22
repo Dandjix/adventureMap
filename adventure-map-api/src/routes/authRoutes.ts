@@ -10,7 +10,8 @@ export const authRoutes = express.Router();
 
 authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => {
     const { username, password } = req.body;
-
+    console.log(username,password);
+    
     try {
         // Find the user by username
         const user = await User.findOne({ username });
