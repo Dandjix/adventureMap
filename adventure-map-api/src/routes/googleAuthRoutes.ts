@@ -24,7 +24,7 @@ router.get(
 
     // Send token in response
     res.setHeader('Authorization', `Bearer ${token}`);
-    res.status(200).json(`Google login successful ${token}`);
+    res.status(200).json({ message:`Google login successful ${token}`,token:token});
   }
 );
 

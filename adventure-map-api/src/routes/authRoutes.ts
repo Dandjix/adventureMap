@@ -15,14 +15,14 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
         // Find the user by username
         const user = await User.findOne({ username });
         if (!user || user.account_type!="Password") {
-            res.status(400).send('Invalid username or password');
+            res.status(400).send({message:'Invalid username or password'});
             return 
         }
 
         // Compare passwords
         const isMatch = await user.comparePassword(password);
         if (!isMatch) {
-            res.status(400).send('Invalid username or password');
+            res.status(400).send({message:'Invalid username or password'});
             return 
         }
 
@@ -32,7 +32,7 @@ authRoutes.post('/login', async (req: Request, res: Response): Promise<void> => 
 
         res.send({message:`Logged in successfully.`,token});
     } catch (err) {
-        res.status(500).send('Error logging in');
+        res.status(500).send({message:'Error logging in'});
     }
 });
 
