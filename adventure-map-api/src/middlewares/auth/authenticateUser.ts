@@ -5,7 +5,7 @@ export const authenticateUser = (req: Request, res: Response, next: Function): v
     const token = req.header('Authorization')?.split(' ')[1]; // Extract token from header
 
     if (!token) {
-        res.status(401).send('Access denied. No token provided.');
+        res.status(401).send({message:'Access denied. No token provided.'});
         return
     }
 
@@ -14,7 +14,7 @@ export const authenticateUser = (req: Request, res: Response, next: Function): v
         (req as any).user = decoded; // Attach user data to request
         next(); // Proceed to the next middleware
     } catch (err) {
-        res.status(400).send('Invalid token');
+        res.status(400).send({message:'Invalid token'});
     }
 };
 
