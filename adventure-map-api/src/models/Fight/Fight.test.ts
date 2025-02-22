@@ -51,7 +51,7 @@ test('bob executes alice', () => {
     
  })
 
- test.only('nuke test, lmao',()=>{
+ test('nuke test, lmao',()=>{
     const Alice = new Human("alice",WorldDate.now(world),"female")
     const Bob = new Human("bob",WorldDate.now(world),"male")
     const Johnson = new Human("johnson",WorldDate.now(world),"male")
