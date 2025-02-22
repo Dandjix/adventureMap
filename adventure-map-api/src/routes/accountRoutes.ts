@@ -14,12 +14,12 @@ accountRoutes.get('/', authenticateUser, async (req: Request, res: Response) :Pr
         const user = await User.findById(userId).select('-password')
 
         if (!user) {
-            res.status(404).send('User not found')
+            res.status(404).send({message:'User not found'})
             return 
         }
 
         res.json(user);
     } catch (err) {
-        res.status(500).send('Error fetching user profile');
+        res.status(500).send({message:'Error fetching user profile'});
     }
 })
