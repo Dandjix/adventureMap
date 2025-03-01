@@ -32,11 +32,32 @@ class AuthProvider extends ChangeNotifier {
 
   String? get jwt => _jwt;
 
+  Future<void> _loadUserFromStorage() async {
+    String storedJwt = await readJWT();
+    if (storedJwt.isNotEmpty) {
+      await login(storedJwt);
+    }
+  }
+
+  AuthProvider() {
+    _loadUserFromStorage();
+  }
+
   Future<void> login(String jwt) async {
+    AccountInfo account;
+    try {
+      account = await AccountService.getCurrentAccount(jwt);
+    } catch (e) {
+      if (kDebugMode) {
+        debugPrint("failed to log in : $e");
+      }
+      return;
+    }
+
     _isAuthenticated = true;
     _jwt = jwt;
     writeJWT(jwt);
-    var account = await AccountService.getCurrentAccount(jwt);
+
     _username = account.username;
     _email = account.email;
     _accountType = account.accountType;
