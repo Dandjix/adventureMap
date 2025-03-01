@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
 // Function to generate a gradient based on coordinates
@@ -18,12 +20,13 @@ class WorldMapPainter extends CustomPainter {
   final int dimension;
   final Color startColor;
   final Color endColor;
+  final double overlap;
 
-  WorldMapPainter({
-    required this.dimension,
-    required this.startColor,
-    required this.endColor,
-  });
+  WorldMapPainter(
+      {required this.dimension,
+      required this.startColor,
+      required this.endColor,
+      this.overlap = 0.33});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -40,12 +43,14 @@ class WorldMapPainter extends CustomPainter {
           paint.color = generateGradient(
               x, y, dimension, dimension, startColor, endColor);
         }
-
+        // if (Random().nextDouble() < 0.9) {
         // Draw the tile at (x, y)
         canvas.drawRect(
-          Rect.fromLTWH(x * tileSize, y * tileSize, tileSize, tileSize),
+          Rect.fromLTWH(x * tileSize - overlap, y * tileSize - overlap,
+              tileSize + overlap * 2, tileSize + overlap * 2),
           paint,
         );
+        // }
       }
     }
   }
@@ -57,7 +62,7 @@ class WorldMapPainter extends CustomPainter {
 class WorldMap extends StatelessWidget {
   const WorldMap({super.key});
 
-  final int dimension = 12; // Adjust dimension as needed
+  final int dimension = 32; // Adjust dimension as needed
 
   @override
   Widget build(BuildContext context) {
@@ -67,22 +72,29 @@ class WorldMap extends StatelessWidget {
       ),
       body: LayoutBuilder(
         builder: (context, constraints) {
-          final double size = constraints.maxWidth; // Available width
+// Available width
+          final double availableWidth = constraints.maxWidth;
+          final double availableHeight = constraints.maxHeight;
+
+          // Ensure the map fits within the available space while maintaining aspect ratio
+          final double size = min(availableWidth, availableHeight);
 
           return InteractiveViewer(
-            panEnabled: true,
-            scaleEnabled: true,
-            minScale: 1, // Allow zooming out
-            maxScale: 40.0, // Allow zooming in
-            child: CustomPaint(
-              size: Size(size, size), // Dynamically adjust the size of the map
-              painter: WorldMapPainter(
-                dimension: dimension,
-                startColor: Colors.blue, // Start color (e.g., for water)
-                endColor: Colors.green, // End color (e.g., for land)
-              ),
-            ),
-          );
+              panEnabled: true,
+              scaleEnabled: true,
+              minScale: 1, // Allow zooming out
+              maxScale: 40.0, // Allow zooming in
+              child: RepaintBoundary(
+                child: CustomPaint(
+                  size: Size(
+                      size, size), // Dynamically adjust the size of the map
+                  painter: WorldMapPainter(
+                    dimension: dimension,
+                    startColor: Colors.blue, // Start color (e.g., for water)
+                    endColor: Colors.green, // End color (e.g., for land)
+                  ),
+                ),
+              ));
         },
       ),
     );
