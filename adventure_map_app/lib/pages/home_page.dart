@@ -1,3 +1,4 @@
+import 'package:adventure_map_app/pages/map/world_map.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,11 +13,6 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        isLoggedIn ? "Home page logged in" : "Home page not logged in",
-        style: const TextStyle(fontSize: 24),
-      ),
-    );
+    return Center(child: WorldMap());
   }
 }
