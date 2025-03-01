@@ -1,13 +1,15 @@
 import { Schema, model, Document } from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+export type role = 'player'|'admin'|'gameMaker'
+
 // Define the User interface
 export interface IUser extends Document {
   username: string
   email: string
   password: string | undefined
   account_type:'Password'|'Google'
-  role:'Player'|'Admin'|'GameMaker'
+  role:role
   comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
@@ -16,7 +18,7 @@ const userSchema = new Schema<IUser>({
   username: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   account_type:{type:String,enum:['Password','Google'],default:'Password'},
-  role:{type:String,enum:['Player','Admin','GameMaker'],default:'Player'},
+  role:{type:String,enum:['player','admin','gameMaker'],default:'player'},
   password: { type: String},
 });
 

@@ -26,7 +26,7 @@ mapRoutes.get('/static', async (req: Request, res: Response) :Promise<void> => {
     }
 })
 
-mapRoutes.post('/static', authenticateUser,checkRole(["GameMaker"]), async (req: Request, res: Response) :Promise<void> => {
+mapRoutes.post('/static', authenticateUser,checkRole(["gameMaker"]), async (req: Request, res: Response) :Promise<void> => {
     try {
         const userId = (req as any).user.id;
         const user = await User.findById(userId).select('-password')

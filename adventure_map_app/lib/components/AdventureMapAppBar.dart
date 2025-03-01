@@ -14,13 +14,22 @@ class AdventureMapAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _AdventureMapAppBarState extends State<AdventureMapAppBar> {
+  final roleColors = {
+    "guest": Colors.green,
+    "player": Colors.green,
+    "admin": Colors.blue,
+    "gameMaker": Colors.red,
+  };
+
   @override
   Widget build(BuildContext context) {
     final authProvider = Provider.of<AuthProvider>(context);
 
     return AppBar(
       title: const Text("Adventure Map"),
-      backgroundColor: Colors.red,
+      backgroundColor: authProvider.isAuthenticated
+          ? roleColors[authProvider.role!]
+          : roleColors["guest"],
       actions: [
         if (authProvider.isAuthenticated) ...[
           Text("${authProvider.username!} - ${authProvider.email}"),

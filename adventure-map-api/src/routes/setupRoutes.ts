@@ -41,7 +41,7 @@ setupRoutes.patch('/makeAdmin', async (req: Request, res: Response) :Promise<voi
     try {
         const {userId,role} = req.body
 
-        if(!['Player','Admin','GameMaker'].includes(role))
+        if(!['player','admin','gameMaker'].includes(role))
             throw new Error ("incorrect role")
 
         const user = await User.findById(userId)

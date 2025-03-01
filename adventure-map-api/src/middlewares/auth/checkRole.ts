@@ -1,7 +1,7 @@
 import { Request,RequestHandler,Response } from 'express';
-import { IUser } from '../../models/User';
+import { IUser, role } from '../../models/User';
 
-export const checkRole = (allowedRoles : ("Player"|"Admin"|"GameMaker")[]): RequestHandler =>
+export const checkRole = (allowedRoles : role[]): RequestHandler =>
 (req: Request, res: Response, next: Function): void => {
     try {
         if(!req.user){
