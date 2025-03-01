@@ -22,21 +22,23 @@ class _AdventureMapAppBarState extends State<AdventureMapAppBar> {
       title: const Text("Adventure Map"),
       backgroundColor: Colors.red,
       actions: [
-        authProvider.isAuthenticated
-            ? IconButton(
-                icon: const Icon(Icons.logout),
-                onPressed: () {
-                  setState(() {
-                    authProvider.logout(); // Logout
-                  });
-                },
-              )
-            : IconButton(
-                icon: const Icon(Icons.login),
-                onPressed: () async {
-                  context.go("/login");
-                },
-              ),
+        if (authProvider.isAuthenticated) ...[
+          Text("${authProvider.username!} - ${authProvider.email}"),
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              setState(() {
+                authProvider.logout(); // Logout
+              });
+            },
+          )
+        ] else
+          IconButton(
+            icon: const Icon(Icons.login),
+            onPressed: () async {
+              context.go("/login");
+            },
+          ),
       ],
     );
   }
