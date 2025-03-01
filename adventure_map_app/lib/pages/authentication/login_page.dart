@@ -1,6 +1,8 @@
+import 'package:adventure_map_app/providers/auth_provider.dart';
 import 'package:adventure_map_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -43,13 +45,18 @@ class _LoginPageState extends State<LoginPage> {
               String username = _usernameController.text;
               String password = _passwordController.text;
 
-              var response = await LoginService.login(username, password);
+              var response = await AuthService.login(username, password);
               var success = response["success"];
               var message = response["message"];
 
               if (success) {
                 if (context.mounted) {
-                  context.go("/");
+                  // print(response);
+                  await Provider.of<AuthProvider>(context, listen: false)
+                      .login(response["token"]);
+                  if (context.mounted) {
+                    context.go("/");
+                  }
                 }
               } else {
                 if (context.mounted) {

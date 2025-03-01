@@ -1,8 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 
-class LoginService {
+class AuthService {
   static String get _apiURL => dotenv.env['API_URL']!;
 
   static Future<Map<String, dynamic>> login(
@@ -15,8 +16,12 @@ class LoginService {
       );
 
       if (response.statusCode == 200) {
-        // Return a success response
-        return {'success': true, 'message': 'Login successful'};
+        final data = jsonDecode(response.body);
+        return {
+          'success': true,
+          'message': 'Login successful',
+          'token': data["token"]
+        };
       } else {
         // Handle failure
         final data = jsonDecode(response.body);
@@ -24,7 +29,9 @@ class LoginService {
       }
     } catch (e) {
       // Handle error
-      print("error : $e");
+      if (kDebugMode) {
+        debugPrint("error : $e");
+      }
       return {'success': false, 'message': 'Error connecting to the server'};
     }
   }
